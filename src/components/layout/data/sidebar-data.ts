@@ -1,28 +1,15 @@
 import {
-  Construction,
   LayoutDashboard,
-  Monitor,
-  Bug,
-  ListTodo,
-  FileX,
-  HelpCircle,
-  Lock,
-  Bell,
-  Package,
-  Palette,
-  ServerOff,
-  Settings,
-  Wrench,
-  UserCog,
-  UserX,
+  ShieldAlert,
+  Trees,
   Users,
-  MessagesSquare,
-  ShieldCheck,
-  AudioWaveform,
+  HeartPulse,
+  GraduationCap,
+  Coins,
   Command,
   GalleryVerticalEnd,
+  AudioWaveform,
 } from 'lucide-react'
-import { ClerkLogo } from '@/assets/clerk-logo'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
@@ -33,9 +20,9 @@ export const sidebarData: SidebarData = {
   },
   teams: [
     {
-      name: 'Shadcn Admin',
+      name: 'Lapor Pak RT',
       logo: Command,
-      plan: 'Vite + ShadcnUI',
+      plan: 'Warga',
     },
     {
       name: 'Acme Inc',
@@ -50,7 +37,7 @@ export const sidebarData: SidebarData = {
   ],
   navGroups: [
     {
-      title: 'General',
+      title: 'Menu Utama',
       items: [
         {
           title: 'Dashboard',
@@ -58,146 +45,94 @@ export const sidebarData: SidebarData = {
           icon: LayoutDashboard,
         },
         {
-          title: 'Tasks',
-          url: '/tasks',
-          icon: ListTodo,
+          title: 'Keamanan',
+          url: '/keamanan',
+          icon: ShieldAlert,
+          items: [
+            {
+              title: 'Monitoring',
+              url: '/keamanan/monitoring',
+            },
+            {
+              title: 'Laporan',
+              url: '/keamanan/laporan',
+            },
+          ],
         },
         {
-          title: 'Apps',
-          url: '/apps',
-          icon: Package,
+          title: 'Lingkungan',
+          url: '/lingkungan',
+          icon: Trees,
+          items: [
+            {
+              title: 'Monitoring',
+              url: '/lingkungan/monitoring',
+            },
+            {
+              title: 'Laporan',
+              url: '/lingkungan/laporan',
+            },
+          ],
         },
         {
-          title: 'Chats',
-          url: '/chats',
-          badge: '3',
-          icon: MessagesSquare,
-        },
-        {
-          title: 'Users',
-          url: '/users',
+          title: 'Sosial',
+          url: '/sosial',
           icon: Users,
-        },
-        {
-          title: 'Secured by Clerk',
-          icon: ClerkLogo,
           items: [
             {
-              title: 'Sign In',
-              url: '/clerk/sign-in',
+              title: 'Monitoring',
+              url: '/sosial/monitoring',
             },
             {
-              title: 'Sign Up',
-              url: '/clerk/sign-up',
-            },
-            {
-              title: 'User Management',
-              url: '/clerk/user-management',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: 'Pages',
-      items: [
-        {
-          title: 'Auth',
-          icon: ShieldCheck,
-          items: [
-            {
-              title: 'Sign In',
-              url: '/sign-in',
-            },
-            {
-              title: 'Sign In (2 Col)',
-              url: '/sign-in-2',
-            },
-            {
-              title: 'Sign Up',
-              url: '/sign-up',
-            },
-            {
-              title: 'Forgot Password',
-              url: '/forgot-password',
-            },
-            {
-              title: 'OTP',
-              url: '/otp',
+              title: 'Laporan',
+              url: '/sosial/laporan',
             },
           ],
         },
         {
-          title: 'Errors',
-          icon: Bug,
+          title: 'Kesehatan',
+          url: '/kesehatan',
+          icon: HeartPulse,
           items: [
             {
-              title: 'Unauthorized',
-              url: '/errors/unauthorized',
-              icon: Lock,
+              title: 'Monitoring',
+              url: '/kesehatan/monitoring',
             },
             {
-              title: 'Forbidden',
-              url: '/errors/forbidden',
-              icon: UserX,
-            },
-            {
-              title: 'Not Found',
-              url: '/errors/not-found',
-              icon: FileX,
-            },
-            {
-              title: 'Internal Server Error',
-              url: '/errors/internal-server-error',
-              icon: ServerOff,
-            },
-            {
-              title: 'Maintenance Error',
-              url: '/errors/maintenance-error',
-              icon: Construction,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: 'Other',
-      items: [
-        {
-          title: 'Settings',
-          icon: Settings,
-          items: [
-            {
-              title: 'Profile',
-              url: '/settings',
-              icon: UserCog,
-            },
-            {
-              title: 'Account',
-              url: '/settings/account',
-              icon: Wrench,
-            },
-            {
-              title: 'Appearance',
-              url: '/settings/appearance',
-              icon: Palette,
-            },
-            {
-              title: 'Notifications',
-              url: '/settings/notifications',
-              icon: Bell,
-            },
-            {
-              title: 'Display',
-              url: '/settings/display',
-              icon: Monitor,
+              title: 'Laporan',
+              url: '/kesehatan/laporan',
             },
           ],
         },
         {
-          title: 'Help Center',
-          url: '/help-center',
-          icon: HelpCircle,
+          title: 'Pendidikan',
+          url: '/pendidikan',
+          icon: GraduationCap,
+          items: [
+            {
+              title: 'Monitoring',
+              url: '/pendidikan/monitoring',
+            },
+            {
+              title: 'Laporan',
+              url: '/pendidikan/laporan',
+            },
+          ],
+        },
+        {
+          title: 'Ekonomi',
+          url: '/ekonomi',
+          icon: Coins,
+          items: [
+            {
+              title: 'Monitoring',
+              url: '/ekonomi/monitoring',
+            },
+            {
+              title: 'Laporan',
+              url: '/ekonomi/laporan',
+            },
+          ],
         },
       ],
     },

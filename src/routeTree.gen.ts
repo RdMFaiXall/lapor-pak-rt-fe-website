@@ -27,18 +27,36 @@ import { Route as ClerkauthRouteRouteImport } from './routes/clerk/(auth)/route'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
 import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authenticated/tasks/index'
+import { Route as AuthenticatedSosialIndexRouteImport } from './routes/_authenticated/sosial/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
+import { Route as AuthenticatedPendidikanIndexRouteImport } from './routes/_authenticated/pendidikan/index'
+import { Route as AuthenticatedLingkunganIndexRouteImport } from './routes/_authenticated/lingkungan/index'
+import { Route as AuthenticatedKesehatanIndexRouteImport } from './routes/_authenticated/kesehatan/index'
+import { Route as AuthenticatedKeamananIndexRouteImport } from './routes/_authenticated/keamanan/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
+import { Route as AuthenticatedEkonomiIndexRouteImport } from './routes/_authenticated/ekonomi/index'
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
 import { Route as ClerkAuthenticatedUserManagementRouteImport } from './routes/clerk/_authenticated/user-management'
 import { Route as ClerkauthSignUpRouteImport } from './routes/clerk/(auth)/sign-up'
 import { Route as ClerkauthSignInRouteImport } from './routes/clerk/(auth)/sign-in'
+import { Route as AuthenticatedSosialMonitoringRouteImport } from './routes/_authenticated/sosial/monitoring'
+import { Route as AuthenticatedSosialLaporanRouteImport } from './routes/_authenticated/sosial/laporan'
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
 import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
+import { Route as AuthenticatedPendidikanMonitoringRouteImport } from './routes/_authenticated/pendidikan/monitoring'
+import { Route as AuthenticatedPendidikanLaporanRouteImport } from './routes/_authenticated/pendidikan/laporan'
+import { Route as AuthenticatedLingkunganMonitoringRouteImport } from './routes/_authenticated/lingkungan/monitoring'
+import { Route as AuthenticatedLingkunganLaporanRouteImport } from './routes/_authenticated/lingkungan/laporan'
+import { Route as AuthenticatedKesehatanMonitoringRouteImport } from './routes/_authenticated/kesehatan/monitoring'
+import { Route as AuthenticatedKesehatanLaporanRouteImport } from './routes/_authenticated/kesehatan/laporan'
+import { Route as AuthenticatedKeamananMonitoringRouteImport } from './routes/_authenticated/keamanan/monitoring'
+import { Route as AuthenticatedKeamananLaporanRouteImport } from './routes/_authenticated/keamanan/laporan'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
+import { Route as AuthenticatedEkonomiMonitoringRouteImport } from './routes/_authenticated/ekonomi/monitoring'
+import { Route as AuthenticatedEkonomiLaporanRouteImport } from './routes/_authenticated/ekonomi/laporan'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -128,16 +146,52 @@ const AuthenticatedTasksIndexRoute = AuthenticatedTasksIndexRouteImport.update({
   path: '/tasks/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSosialIndexRoute =
+  AuthenticatedSosialIndexRouteImport.update({
+    id: '/sosial/',
+    path: '/sosial/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSettingsIndexRoute =
   AuthenticatedSettingsIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedPendidikanIndexRoute =
+  AuthenticatedPendidikanIndexRouteImport.update({
+    id: '/pendidikan/',
+    path: '/pendidikan/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLingkunganIndexRoute =
+  AuthenticatedLingkunganIndexRouteImport.update({
+    id: '/lingkungan/',
+    path: '/lingkungan/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedKesehatanIndexRoute =
+  AuthenticatedKesehatanIndexRouteImport.update({
+    id: '/kesehatan/',
+    path: '/kesehatan/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedKeamananIndexRoute =
+  AuthenticatedKeamananIndexRouteImport.update({
+    id: '/keamanan/',
+    path: '/keamanan/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedHelpCenterIndexRoute =
   AuthenticatedHelpCenterIndexRouteImport.update({
     id: '/help-center/',
     path: '/help-center/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEkonomiIndexRoute =
+  AuthenticatedEkonomiIndexRouteImport.update({
+    id: '/ekonomi/',
+    path: '/ekonomi/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedChatsIndexRoute = AuthenticatedChatsIndexRouteImport.update({
@@ -166,6 +220,18 @@ const ClerkauthSignInRoute = ClerkauthSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => ClerkauthRouteRoute,
 } as any)
+const AuthenticatedSosialMonitoringRoute =
+  AuthenticatedSosialMonitoringRouteImport.update({
+    id: '/sosial/monitoring',
+    path: '/sosial/monitoring',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSosialLaporanRoute =
+  AuthenticatedSosialLaporanRouteImport.update({
+    id: '/sosial/laporan',
+    path: '/sosial/laporan',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSettingsNotificationsRoute =
   AuthenticatedSettingsNotificationsRouteImport.update({
     id: '/notifications',
@@ -190,10 +256,70 @@ const AuthenticatedSettingsAccountRoute =
     path: '/account',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedPendidikanMonitoringRoute =
+  AuthenticatedPendidikanMonitoringRouteImport.update({
+    id: '/pendidikan/monitoring',
+    path: '/pendidikan/monitoring',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPendidikanLaporanRoute =
+  AuthenticatedPendidikanLaporanRouteImport.update({
+    id: '/pendidikan/laporan',
+    path: '/pendidikan/laporan',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLingkunganMonitoringRoute =
+  AuthenticatedLingkunganMonitoringRouteImport.update({
+    id: '/lingkungan/monitoring',
+    path: '/lingkungan/monitoring',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLingkunganLaporanRoute =
+  AuthenticatedLingkunganLaporanRouteImport.update({
+    id: '/lingkungan/laporan',
+    path: '/lingkungan/laporan',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedKesehatanMonitoringRoute =
+  AuthenticatedKesehatanMonitoringRouteImport.update({
+    id: '/kesehatan/monitoring',
+    path: '/kesehatan/monitoring',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedKesehatanLaporanRoute =
+  AuthenticatedKesehatanLaporanRouteImport.update({
+    id: '/kesehatan/laporan',
+    path: '/kesehatan/laporan',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedKeamananMonitoringRoute =
+  AuthenticatedKeamananMonitoringRouteImport.update({
+    id: '/keamanan/monitoring',
+    path: '/keamanan/monitoring',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedKeamananLaporanRoute =
+  AuthenticatedKeamananLaporanRouteImport.update({
+    id: '/keamanan/laporan',
+    path: '/keamanan/laporan',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedErrorsErrorRoute =
   AuthenticatedErrorsErrorRouteImport.update({
     id: '/errors/$error',
     path: '/errors/$error',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEkonomiMonitoringRoute =
+  AuthenticatedEkonomiMonitoringRouteImport.update({
+    id: '/ekonomi/monitoring',
+    path: '/ekonomi/monitoring',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEkonomiLaporanRoute =
+  AuthenticatedEkonomiLaporanRouteImport.update({
+    id: '/ekonomi/laporan',
+    path: '/ekonomi/laporan',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -211,18 +337,36 @@ export interface FileRoutesByFullPath {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/ekonomi/laporan': typeof AuthenticatedEkonomiLaporanRoute
+  '/ekonomi/monitoring': typeof AuthenticatedEkonomiMonitoringRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
+  '/keamanan/laporan': typeof AuthenticatedKeamananLaporanRoute
+  '/keamanan/monitoring': typeof AuthenticatedKeamananMonitoringRoute
+  '/kesehatan/laporan': typeof AuthenticatedKesehatanLaporanRoute
+  '/kesehatan/monitoring': typeof AuthenticatedKesehatanMonitoringRoute
+  '/lingkungan/laporan': typeof AuthenticatedLingkunganLaporanRoute
+  '/lingkungan/monitoring': typeof AuthenticatedLingkunganMonitoringRoute
+  '/pendidikan/laporan': typeof AuthenticatedPendidikanLaporanRoute
+  '/pendidikan/monitoring': typeof AuthenticatedPendidikanMonitoringRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
+  '/sosial/laporan': typeof AuthenticatedSosialLaporanRoute
+  '/sosial/monitoring': typeof AuthenticatedSosialMonitoringRoute
   '/clerk/sign-in': typeof ClerkauthSignInRoute
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
+  '/ekonomi': typeof AuthenticatedEkonomiIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/keamanan': typeof AuthenticatedKeamananIndexRoute
+  '/kesehatan': typeof AuthenticatedKesehatanIndexRoute
+  '/lingkungan': typeof AuthenticatedLingkunganIndexRoute
+  '/pendidikan': typeof AuthenticatedPendidikanIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
+  '/sosial': typeof AuthenticatedSosialIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
 }
@@ -239,18 +383,36 @@ export interface FileRoutesByTo {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/ekonomi/laporan': typeof AuthenticatedEkonomiLaporanRoute
+  '/ekonomi/monitoring': typeof AuthenticatedEkonomiMonitoringRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
+  '/keamanan/laporan': typeof AuthenticatedKeamananLaporanRoute
+  '/keamanan/monitoring': typeof AuthenticatedKeamananMonitoringRoute
+  '/kesehatan/laporan': typeof AuthenticatedKesehatanLaporanRoute
+  '/kesehatan/monitoring': typeof AuthenticatedKesehatanMonitoringRoute
+  '/lingkungan/laporan': typeof AuthenticatedLingkunganLaporanRoute
+  '/lingkungan/monitoring': typeof AuthenticatedLingkunganMonitoringRoute
+  '/pendidikan/laporan': typeof AuthenticatedPendidikanLaporanRoute
+  '/pendidikan/monitoring': typeof AuthenticatedPendidikanMonitoringRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
+  '/sosial/laporan': typeof AuthenticatedSosialLaporanRoute
+  '/sosial/monitoring': typeof AuthenticatedSosialMonitoringRoute
   '/clerk/sign-in': typeof ClerkauthSignInRoute
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
+  '/ekonomi': typeof AuthenticatedEkonomiIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/keamanan': typeof AuthenticatedKeamananIndexRoute
+  '/kesehatan': typeof AuthenticatedKesehatanIndexRoute
+  '/lingkungan': typeof AuthenticatedLingkunganIndexRoute
+  '/pendidikan': typeof AuthenticatedPendidikanIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
+  '/sosial': typeof AuthenticatedSosialIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
 }
@@ -272,18 +434,36 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/ekonomi/laporan': typeof AuthenticatedEkonomiLaporanRoute
+  '/_authenticated/ekonomi/monitoring': typeof AuthenticatedEkonomiMonitoringRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
+  '/_authenticated/keamanan/laporan': typeof AuthenticatedKeamananLaporanRoute
+  '/_authenticated/keamanan/monitoring': typeof AuthenticatedKeamananMonitoringRoute
+  '/_authenticated/kesehatan/laporan': typeof AuthenticatedKesehatanLaporanRoute
+  '/_authenticated/kesehatan/monitoring': typeof AuthenticatedKesehatanMonitoringRoute
+  '/_authenticated/lingkungan/laporan': typeof AuthenticatedLingkunganLaporanRoute
+  '/_authenticated/lingkungan/monitoring': typeof AuthenticatedLingkunganMonitoringRoute
+  '/_authenticated/pendidikan/laporan': typeof AuthenticatedPendidikanLaporanRoute
+  '/_authenticated/pendidikan/monitoring': typeof AuthenticatedPendidikanMonitoringRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
+  '/_authenticated/sosial/laporan': typeof AuthenticatedSosialLaporanRoute
+  '/_authenticated/sosial/monitoring': typeof AuthenticatedSosialMonitoringRoute
   '/clerk/(auth)/sign-in': typeof ClerkauthSignInRoute
   '/clerk/(auth)/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/_authenticated/user-management': typeof ClerkAuthenticatedUserManagementRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
+  '/_authenticated/ekonomi/': typeof AuthenticatedEkonomiIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
+  '/_authenticated/keamanan/': typeof AuthenticatedKeamananIndexRoute
+  '/_authenticated/kesehatan/': typeof AuthenticatedKesehatanIndexRoute
+  '/_authenticated/lingkungan/': typeof AuthenticatedLingkunganIndexRoute
+  '/_authenticated/pendidikan/': typeof AuthenticatedPendidikanIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
+  '/_authenticated/sosial/': typeof AuthenticatedSosialIndexRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
 }
@@ -303,18 +483,36 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/ekonomi/laporan'
+    | '/ekonomi/monitoring'
     | '/errors/$error'
+    | '/keamanan/laporan'
+    | '/keamanan/monitoring'
+    | '/kesehatan/laporan'
+    | '/kesehatan/monitoring'
+    | '/lingkungan/laporan'
+    | '/lingkungan/monitoring'
+    | '/pendidikan/laporan'
+    | '/pendidikan/monitoring'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/display'
     | '/settings/notifications'
+    | '/sosial/laporan'
+    | '/sosial/monitoring'
     | '/clerk/sign-in'
     | '/clerk/sign-up'
     | '/clerk/user-management'
     | '/apps'
     | '/chats'
+    | '/ekonomi'
     | '/help-center'
+    | '/keamanan'
+    | '/kesehatan'
+    | '/lingkungan'
+    | '/pendidikan'
     | '/settings/'
+    | '/sosial'
     | '/tasks'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
@@ -331,18 +529,36 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/ekonomi/laporan'
+    | '/ekonomi/monitoring'
     | '/errors/$error'
+    | '/keamanan/laporan'
+    | '/keamanan/monitoring'
+    | '/kesehatan/laporan'
+    | '/kesehatan/monitoring'
+    | '/lingkungan/laporan'
+    | '/lingkungan/monitoring'
+    | '/pendidikan/laporan'
+    | '/pendidikan/monitoring'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/display'
     | '/settings/notifications'
+    | '/sosial/laporan'
+    | '/sosial/monitoring'
     | '/clerk/sign-in'
     | '/clerk/sign-up'
     | '/clerk/user-management'
     | '/apps'
     | '/chats'
+    | '/ekonomi'
     | '/help-center'
+    | '/keamanan'
+    | '/kesehatan'
+    | '/lingkungan'
+    | '/pendidikan'
     | '/settings'
+    | '/sosial'
     | '/tasks'
     | '/users'
   id:
@@ -363,18 +579,36 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/_authenticated/'
+    | '/_authenticated/ekonomi/laporan'
+    | '/_authenticated/ekonomi/monitoring'
     | '/_authenticated/errors/$error'
+    | '/_authenticated/keamanan/laporan'
+    | '/_authenticated/keamanan/monitoring'
+    | '/_authenticated/kesehatan/laporan'
+    | '/_authenticated/kesehatan/monitoring'
+    | '/_authenticated/lingkungan/laporan'
+    | '/_authenticated/lingkungan/monitoring'
+    | '/_authenticated/pendidikan/laporan'
+    | '/_authenticated/pendidikan/monitoring'
     | '/_authenticated/settings/account'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/display'
     | '/_authenticated/settings/notifications'
+    | '/_authenticated/sosial/laporan'
+    | '/_authenticated/sosial/monitoring'
     | '/clerk/(auth)/sign-in'
     | '/clerk/(auth)/sign-up'
     | '/clerk/_authenticated/user-management'
     | '/_authenticated/apps/'
     | '/_authenticated/chats/'
+    | '/_authenticated/ekonomi/'
     | '/_authenticated/help-center/'
+    | '/_authenticated/keamanan/'
+    | '/_authenticated/kesehatan/'
+    | '/_authenticated/lingkungan/'
+    | '/_authenticated/pendidikan/'
     | '/_authenticated/settings/'
+    | '/_authenticated/sosial/'
     | '/_authenticated/tasks/'
     | '/_authenticated/users/'
   fileRoutesById: FileRoutesById
@@ -522,6 +756,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTasksIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/sosial/': {
+      id: '/_authenticated/sosial/'
+      path: '/sosial'
+      fullPath: '/sosial'
+      preLoaderRoute: typeof AuthenticatedSosialIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/settings/': {
       id: '/_authenticated/settings/'
       path: '/'
@@ -529,11 +770,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/pendidikan/': {
+      id: '/_authenticated/pendidikan/'
+      path: '/pendidikan'
+      fullPath: '/pendidikan'
+      preLoaderRoute: typeof AuthenticatedPendidikanIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lingkungan/': {
+      id: '/_authenticated/lingkungan/'
+      path: '/lingkungan'
+      fullPath: '/lingkungan'
+      preLoaderRoute: typeof AuthenticatedLingkunganIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/kesehatan/': {
+      id: '/_authenticated/kesehatan/'
+      path: '/kesehatan'
+      fullPath: '/kesehatan'
+      preLoaderRoute: typeof AuthenticatedKesehatanIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/keamanan/': {
+      id: '/_authenticated/keamanan/'
+      path: '/keamanan'
+      fullPath: '/keamanan'
+      preLoaderRoute: typeof AuthenticatedKeamananIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/help-center/': {
       id: '/_authenticated/help-center/'
       path: '/help-center'
       fullPath: '/help-center'
       preLoaderRoute: typeof AuthenticatedHelpCenterIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ekonomi/': {
+      id: '/_authenticated/ekonomi/'
+      path: '/ekonomi'
+      fullPath: '/ekonomi'
+      preLoaderRoute: typeof AuthenticatedEkonomiIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/chats/': {
@@ -571,6 +847,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClerkauthSignInRouteImport
       parentRoute: typeof ClerkauthRouteRoute
     }
+    '/_authenticated/sosial/monitoring': {
+      id: '/_authenticated/sosial/monitoring'
+      path: '/sosial/monitoring'
+      fullPath: '/sosial/monitoring'
+      preLoaderRoute: typeof AuthenticatedSosialMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/sosial/laporan': {
+      id: '/_authenticated/sosial/laporan'
+      path: '/sosial/laporan'
+      fullPath: '/sosial/laporan'
+      preLoaderRoute: typeof AuthenticatedSosialLaporanRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/settings/notifications': {
       id: '/_authenticated/settings/notifications'
       path: '/notifications'
@@ -599,11 +889,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsAccountRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/pendidikan/monitoring': {
+      id: '/_authenticated/pendidikan/monitoring'
+      path: '/pendidikan/monitoring'
+      fullPath: '/pendidikan/monitoring'
+      preLoaderRoute: typeof AuthenticatedPendidikanMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pendidikan/laporan': {
+      id: '/_authenticated/pendidikan/laporan'
+      path: '/pendidikan/laporan'
+      fullPath: '/pendidikan/laporan'
+      preLoaderRoute: typeof AuthenticatedPendidikanLaporanRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lingkungan/monitoring': {
+      id: '/_authenticated/lingkungan/monitoring'
+      path: '/lingkungan/monitoring'
+      fullPath: '/lingkungan/monitoring'
+      preLoaderRoute: typeof AuthenticatedLingkunganMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lingkungan/laporan': {
+      id: '/_authenticated/lingkungan/laporan'
+      path: '/lingkungan/laporan'
+      fullPath: '/lingkungan/laporan'
+      preLoaderRoute: typeof AuthenticatedLingkunganLaporanRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/kesehatan/monitoring': {
+      id: '/_authenticated/kesehatan/monitoring'
+      path: '/kesehatan/monitoring'
+      fullPath: '/kesehatan/monitoring'
+      preLoaderRoute: typeof AuthenticatedKesehatanMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/kesehatan/laporan': {
+      id: '/_authenticated/kesehatan/laporan'
+      path: '/kesehatan/laporan'
+      fullPath: '/kesehatan/laporan'
+      preLoaderRoute: typeof AuthenticatedKesehatanLaporanRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/keamanan/monitoring': {
+      id: '/_authenticated/keamanan/monitoring'
+      path: '/keamanan/monitoring'
+      fullPath: '/keamanan/monitoring'
+      preLoaderRoute: typeof AuthenticatedKeamananMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/keamanan/laporan': {
+      id: '/_authenticated/keamanan/laporan'
+      path: '/keamanan/laporan'
+      fullPath: '/keamanan/laporan'
+      preLoaderRoute: typeof AuthenticatedKeamananLaporanRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/errors/$error': {
       id: '/_authenticated/errors/$error'
       path: '/errors/$error'
       fullPath: '/errors/$error'
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ekonomi/monitoring': {
+      id: '/_authenticated/ekonomi/monitoring'
+      path: '/ekonomi/monitoring'
+      fullPath: '/ekonomi/monitoring'
+      preLoaderRoute: typeof AuthenticatedEkonomiMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ekonomi/laporan': {
+      id: '/_authenticated/ekonomi/laporan'
+      path: '/ekonomi/laporan'
+      fullPath: '/ekonomi/laporan'
+      preLoaderRoute: typeof AuthenticatedEkonomiLaporanRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -635,10 +995,28 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedEkonomiLaporanRoute: typeof AuthenticatedEkonomiLaporanRoute
+  AuthenticatedEkonomiMonitoringRoute: typeof AuthenticatedEkonomiMonitoringRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
+  AuthenticatedKeamananLaporanRoute: typeof AuthenticatedKeamananLaporanRoute
+  AuthenticatedKeamananMonitoringRoute: typeof AuthenticatedKeamananMonitoringRoute
+  AuthenticatedKesehatanLaporanRoute: typeof AuthenticatedKesehatanLaporanRoute
+  AuthenticatedKesehatanMonitoringRoute: typeof AuthenticatedKesehatanMonitoringRoute
+  AuthenticatedLingkunganLaporanRoute: typeof AuthenticatedLingkunganLaporanRoute
+  AuthenticatedLingkunganMonitoringRoute: typeof AuthenticatedLingkunganMonitoringRoute
+  AuthenticatedPendidikanLaporanRoute: typeof AuthenticatedPendidikanLaporanRoute
+  AuthenticatedPendidikanMonitoringRoute: typeof AuthenticatedPendidikanMonitoringRoute
+  AuthenticatedSosialLaporanRoute: typeof AuthenticatedSosialLaporanRoute
+  AuthenticatedSosialMonitoringRoute: typeof AuthenticatedSosialMonitoringRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
+  AuthenticatedEkonomiIndexRoute: typeof AuthenticatedEkonomiIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
+  AuthenticatedKeamananIndexRoute: typeof AuthenticatedKeamananIndexRoute
+  AuthenticatedKesehatanIndexRoute: typeof AuthenticatedKesehatanIndexRoute
+  AuthenticatedLingkunganIndexRoute: typeof AuthenticatedLingkunganIndexRoute
+  AuthenticatedPendidikanIndexRoute: typeof AuthenticatedPendidikanIndexRoute
+  AuthenticatedSosialIndexRoute: typeof AuthenticatedSosialIndexRoute
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
 }
@@ -646,10 +1024,30 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedEkonomiLaporanRoute: AuthenticatedEkonomiLaporanRoute,
+  AuthenticatedEkonomiMonitoringRoute: AuthenticatedEkonomiMonitoringRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
+  AuthenticatedKeamananLaporanRoute: AuthenticatedKeamananLaporanRoute,
+  AuthenticatedKeamananMonitoringRoute: AuthenticatedKeamananMonitoringRoute,
+  AuthenticatedKesehatanLaporanRoute: AuthenticatedKesehatanLaporanRoute,
+  AuthenticatedKesehatanMonitoringRoute: AuthenticatedKesehatanMonitoringRoute,
+  AuthenticatedLingkunganLaporanRoute: AuthenticatedLingkunganLaporanRoute,
+  AuthenticatedLingkunganMonitoringRoute:
+    AuthenticatedLingkunganMonitoringRoute,
+  AuthenticatedPendidikanLaporanRoute: AuthenticatedPendidikanLaporanRoute,
+  AuthenticatedPendidikanMonitoringRoute:
+    AuthenticatedPendidikanMonitoringRoute,
+  AuthenticatedSosialLaporanRoute: AuthenticatedSosialLaporanRoute,
+  AuthenticatedSosialMonitoringRoute: AuthenticatedSosialMonitoringRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
+  AuthenticatedEkonomiIndexRoute: AuthenticatedEkonomiIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
+  AuthenticatedKeamananIndexRoute: AuthenticatedKeamananIndexRoute,
+  AuthenticatedKesehatanIndexRoute: AuthenticatedKesehatanIndexRoute,
+  AuthenticatedLingkunganIndexRoute: AuthenticatedLingkunganIndexRoute,
+  AuthenticatedPendidikanIndexRoute: AuthenticatedPendidikanIndexRoute,
+  AuthenticatedSosialIndexRoute: AuthenticatedSosialIndexRoute,
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
 }

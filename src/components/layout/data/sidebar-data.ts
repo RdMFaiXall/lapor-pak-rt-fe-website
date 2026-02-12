@@ -1,20 +1,14 @@
 import {
   AudioWaveform,
-  CheckSquare,
   Coins,
   Command,
   GalleryVerticalEnd,
   GraduationCap,
-  Grid,
   HeartPulse,
-  HelpCircle,
   LayoutDashboard,
-  MessageSquare,
-  Settings,
   ShieldAlert,
   Siren,
   Trees,
-  UserCog,
   Users,
 } from 'lucide-react'
 import { type SidebarData } from '../types'

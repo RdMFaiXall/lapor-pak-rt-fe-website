@@ -1,18 +1,19 @@
-
-import { SosialCategoryChart, SosialPriorityChart } from './monitoring-charts'
-import { SosialMap } from './sosial-map'
 import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Main } from '@/components/layout/main'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import { SosialMap } from './sosial-map'
+import { SocialOverviewCards } from './KPICards'
+import { SosialDataTable } from './sosial-data-table'
+import { SocialAidChart, WargaSakitDistribution } from './dashboard-charts'
 
 export default function MonitoringDashboard() {
     return (
-        <div className='space-y-4'>
+        <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
             <Header>
                 <Search />
                 <div className='ms-auto flex items-center gap-4'>
@@ -23,52 +24,47 @@ export default function MonitoringDashboard() {
             </Header>
 
             <Main>
+                {/* Header Section */}
                 <div className='mb-8'>
-                    <h1 className='text-3xl font-bold tracking-tight text-foreground'>Kesejahteraan Sosial Warga</h1>
-                    <p className='text-lg text-muted-foreground mt-2'>
-                        Per {format(new Date(), 'dd MMMM yyyy', { locale: id })}, distribusi bantuan sosial telah mencapai <span className='font-semibold text-blue-600'>80% target</span>.
-                        Fokus utama saat ini adalah validasi data penerima bantuan pendidikan dan kesehatan lansia.
-                    </p>
-                </div>
-
-                <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8'>
-                    <div className='lg:col-span-2'>
-                        <div className='mb-4'>
-                            <h3 className='text-lg font-semibold text-foreground'>Peta Sebaran Penerima Bantuan</h3>
-                            <p className='text-sm text-muted-foreground'>
-                                Lokasi warga yang membutuhkan atau menerima bantuan sosial.
+                    <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
+                        <div>
+                            <h1 className='text-3xl font-bold tracking-tight text-gray-900 dark:text-white'>
+                                Dashboard
+                            </h1>
+                            <p className='text-gray-500 dark:text-gray-400 mt-1'>
+                                Sistem Informasi Sosial
                             </p>
                         </div>
-                        <div className='rounded-lg overflow-hidden'>
-                            <SosialMap />
+                        <div className='flex items-center gap-3 bg-white dark:bg-gray-800 rounded-lg px-4 py-2 shadow-sm border border-gray-200 dark:border-gray-700'>
+                            <div className='text-right'>
+                                <p className='text-xs text-gray-500 dark:text-gray-400'>Terakhir update</p>
+                                <p className='text-sm font-semibold text-gray-900 dark:text-white'>
+                                    {format(new Date(), 'dd MMM yyyy, HH:mm', { locale: id })}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div className='lg:col-span-1 space-y-8'>
-                        <div>
-                            <h3 className='text-lg font-semibold text-foreground mb-2'>Statistik Penyaluran</h3>
-                            <ul className='space-y-4'>
-                                <li className='flex justify-between items-center border-b pb-2'>
-                                    <span className='text-muted-foreground'>Paket Sembako</span>
-                                    <span className='text-xl font-bold'>150 Paket</span>
-                                </li>
-                                <li className='flex justify-between items-center border-b pb-2'>
-                                    <span className='text-muted-foreground'>Bantuan Kesehatan</span>
-                                    <span className='text-xl font-bold text-green-600'>45 Kasus</span>
-                                </li>
-                                <li className='flex justify-between items-center border-b pb-2'>
-                                    <span className='text-muted-foreground'>Dana Pendidikan</span>
-                                    <span className='text-xl font-bold'>Rp 25jt</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <SosialPriorityChart />
                     </div>
                 </div>
 
-                <div className='grid grid-cols-1 gap-8'>
-                    <SosialCategoryChart />
+                {/* Social Overview Cards */}
+                <SocialOverviewCards />
+
+                {/* Disease & Social Aid */}
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
+                    <WargaSakitDistribution />
+                    <SocialAidChart />
                 </div>
-            </Main >
+
+                {/* Map Section */}
+                <div className='mb-6'>
+                    <SosialMap />
+                </div>
+
+                {/* Data Table */}
+                <div className='mb-6'>
+                    <SosialDataTable />
+                </div>
+            </Main>
         </div>
     )
 }

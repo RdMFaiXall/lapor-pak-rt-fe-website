@@ -15,7 +15,7 @@ import {
 import { categories, mockLingkunganData } from '../data/data'
 
 const totalReports = mockLingkunganData.length
-const chartData = categories.map(cat => {
+const chartData = categories.map((cat: { label: string; value: string; color: string }) => {
     const count = mockLingkunganData.filter(item => item.category === cat.value).length
     const percentage = ((count / totalReports) * 100).toFixed(1)
     return {

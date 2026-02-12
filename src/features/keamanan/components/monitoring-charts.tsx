@@ -18,7 +18,7 @@ import { PieChart as PieChartIcon, BarChart3 } from 'lucide-react'
 const COLORS = ['#2563eb', '#db2777', '#7c3aed', '#059669', '#d97706', '#0891b2']
 
 const totalReports = mockKeamananData.length
-const chartData = categories.map((cat, index) => {
+const chartData = categories.map((cat: { label: string; value: string; color: string }, index) => {
     const count = mockKeamananData.filter(item => item.category === cat.value).length
     const percentage = ((count / totalReports) * 100).toFixed(1)
     return {

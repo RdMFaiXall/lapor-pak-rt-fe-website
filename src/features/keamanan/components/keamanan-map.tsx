@@ -38,28 +38,7 @@ const mockIncidents = [
     },
 ];
 
-const mockAssets = [
-    {
-        id: 'a1',
-        name: 'Patroli Motor 1',
-        type: 'land', // 'land', 'water', 'air'
-        status: 'available',
-        capacity: 2,
-        crew: 2,
-        officeId: 'Pos Utama',
-        position: [-6.205000, 106.815000],
-    },
-    {
-        id: 'a2',
-        name: 'Patroli Mobil 1',
-        type: 'land',
-        status: 'busy',
-        capacity: 4,
-        crew: 3,
-        officeId: 'Pos Utara',
-        position: [-6.195000, 106.825000],
-    },
-];
+
 
 const mockCategories = [
     { id: 'cat1', name: 'Gangguan Ketertiban', color: '#f59e0b' }, // amber
@@ -68,22 +47,18 @@ const mockCategories = [
 ];
 
 export function KeamananMap() {
-    const [viewMode, setViewMode] = useState<'incidents' | 'assets'>('incidents');
     const [selectedIncident, setSelectedIncident] = useState<any>(null);
-    const [selectedAsset, setSelectedAsset] = useState<any>(null);
     // Use the state to avoid lint errors
     console.log(selectedIncident);
-    console.log(selectedAsset);
+    // Use the state to avoid lint errors
+    console.log(selectedIncident);
 
     const handleIncidentSelect = (incident: any) => {
         setSelectedIncident(incident);
         console.log('Selected Incident:', incident);
     };
 
-    const handleAssetSelect = (asset: any) => {
-        setSelectedAsset(asset);
-        console.log('Selected Asset:', asset);
-    };
+
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -105,49 +80,20 @@ export function KeamananMap() {
         }
     };
 
-    const getAssetStatusBadge = (status: string) => {
-        switch (status) {
-            case 'available': return { label: 'Tersedia', color: 'bg-green-500' };
-            case 'busy': return { label: 'Sibuk', color: 'bg-red-500' };
-            case 'maintenance': return { label: 'Maintenance', color: 'bg-yellow-500' };
-            default: return { label: 'Unknown', color: 'bg-gray-400' };
-        }
-    };
+
 
 
     return (
         <div className="h-[600px] w-full rounded-md border overflow-hidden relative">
-            <div className="absolute top-4 right-4 z-1000 bg-white p-2 rounded-md shadow-md flex space-x-2">
-                <button
-                    onClick={() => setViewMode('incidents')}
-                    className={`px-3 py-1 text-sm rounded-md transition-colors ${viewMode === 'incidents'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
-                >
-                    Insiden
-                </button>
-                <button
-                    onClick={() => setViewMode('assets')}
-                    className={`px-3 py-1 text-sm rounded-md transition-colors ${viewMode === 'assets'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
-                >
-                    Aset
-                </button>
-            </div>
+
 
             <MapComponent
                 incidents={mockIncidents}
-                assets={mockAssets}
                 categories={mockCategories}
                 onIncidentSelect={handleIncidentSelect}
-                onAssetSelect={handleAssetSelect}
                 getStatusColor={getStatusColor}
                 getFileStatusBadge={getFileStatusBadge}
-                getAssetStatusBadge={getAssetStatusBadge}
-                viewMode={viewMode}
+                viewMode='incidents'
             />
         </div>
     );

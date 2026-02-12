@@ -79,13 +79,13 @@ function MapViewController({ items, viewMode }: { items: any[], viewMode: string
 
 interface MapComponentProps {
     incidents: any[];
-    assets: any[];
+    assets?: any[];
     categories: any[];
     onIncidentSelect: (incident: any) => void;
-    onAssetSelect: (asset: any) => void;
+    onAssetSelect?: (asset: any) => void;
     getStatusColor: (status: string) => string;
     getFileStatusBadge: (fileStatus: string) => { label: string; color: string };
-    getAssetStatusBadge: (status: string) => { label: string; color: string };
+    getAssetStatusBadge?: (status: string) => { label: string; color: string };
     viewMode: 'incidents' | 'assets';
     className?: string;
     children?: ReactNode;
@@ -113,7 +113,7 @@ export default function MapComponent({
     className = "h-full w-full",
     children
 }: MapComponentProps) {
-    const displayItems = viewMode === 'incidents' ? incidents : assets;
+    const displayItems = viewMode === 'incidents' ? incidents : (assets || []);
 
     return (
         <div className={`relative ${className}`}>
@@ -182,8 +182,8 @@ export default function MapComponent({
                     );
                 })}
 
-                {viewMode === 'assets' && assets.map((asset) => {
-                    const statusBadge = getAssetStatusBadge(asset.status);
+                {viewMode === 'assets' && assets && assets.map((asset) => {
+                    const statusBadge = getAssetStatusBadge ? getAssetStatusBadge(asset.status) : { label: '', color: '' };
 
                     return (
                         <Marker
@@ -192,7 +192,7 @@ export default function MapComponent({
                             icon={createAssetIcon(asset.type)}
                             eventHandlers={{
                                 click: () => {
-                                    onAssetSelect(asset);
+                                    if (onAssetSelect) onAssetSelect(asset);
                                 }
                             }}
                         >

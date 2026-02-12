@@ -15,7 +15,7 @@ export default function MonitoringView() {
     const totalReports = mockData.length
     const chartData = Object.values(
         mockData.reduce((acc, curr) => {
-            const isu = curr.status_pekerjaan
+            const isu = curr.kategori_isu_ekonomi
             if (!acc[isu]) {
                 acc[isu] = { name: isu, jumlah: 0 }
             }
@@ -44,7 +44,7 @@ export default function MonitoringView() {
                     <div className="grid grid-cols-2 gap-2">
                         <div className="flex flex-col">
                             <span className="text-[0.70rem] uppercase text-muted-foreground">
-                                Status
+                                Kategori Isu
                             </span>
                             <span className="font-bold text-muted-foreground mr-2">
                                 {label || payload[0].payload.name}
@@ -55,7 +55,7 @@ export default function MonitoringView() {
                                 Jumlah
                             </span>
                             <span className="font-bold">
-                                {payload[0].value} Warga
+                                {payload[0].value} Kasus
                             </span>
                         </div>
                     </div>
@@ -88,10 +88,10 @@ export default function MonitoringView() {
                         <CardHeader>
                             <div className="flex items-center space-x-2">
                                 <BarChart3 className="h-5 w-5 text-muted-foreground" />
-                                <CardTitle className="text-lg font-medium">Statistik Pekerjaan</CardTitle>
+                                <CardTitle className="text-lg font-medium">Statistik Isu Ekonomi</CardTitle>
                             </div>
                             <CardDescription>
-                                Distribusi status pekerjaan warga saat ini.
+                                Distribusi kategori kendala ekonomi warga.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className='pl-2 flex-1'>
@@ -137,10 +137,10 @@ export default function MonitoringView() {
                         <CardHeader>
                             <div className="flex items-center space-x-2">
                                 <PieChartIcon className="h-5 w-5 text-muted-foreground" />
-                                <CardTitle className="text-lg font-medium">Proporsi Pekerjaan</CardTitle>
+                                <CardTitle className="text-lg font-medium">Proporsi Isu</CardTitle>
                             </div>
                             <CardDescription>
-                                Persentase pembagian status pekerjaan.
+                                Persentase pembagian kategori isu ekonomi.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="flex-1">

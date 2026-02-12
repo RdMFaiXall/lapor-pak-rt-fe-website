@@ -65,37 +65,18 @@ export const columns: ColumnDef<HealthReport>[] = [
         ),
     },
     {
-        accessorKey: 'tanggal_laporan',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Tanggal' />
-        ),
-        cell: ({ row }) => {
-            const date = new Date(row.getValue('tanggal_laporan'))
-            const formattedDate = date.toLocaleDateString('id-ID', {
-                weekday: 'long',
-                day: '2-digit',
-                month: 'long',
-                year: 'numeric'
-            })
-            return (
-                <div className='flex space-x-2'>
-                    <span className='max-w-[500px] truncate font-medium'>
-                        {formattedDate}
-                    </span>
-                </div>
-            )
-        },
-    },
-    {
         accessorKey: 'nama_warga',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Nama Warga' />
+            <DataTableColumnHeader column={column} title='Warga' />
         ),
         cell: ({ row }) => {
             return (
-                <div className='flex space-x-2'>
-                    <span className='max-w-[500px] truncate font-medium'>
+                <div className='flex flex-col space-y-1'>
+                    <span className='font-medium'>
                         {row.getValue('nama_warga')}
+                    </span>
+                    <span className='text-xs text-muted-foreground'>
+                        NIK: {row.original.nik}
                     </span>
                 </div>
             )
@@ -107,107 +88,110 @@ export const columns: ColumnDef<HealthReport>[] = [
             <DataTableColumnHeader column={column} title='Masalah Utama' />
         ),
         cell: ({ row }) => {
+            const isu = row.getValue('isu_kesehatan') as string
+            let variant: 'default' | 'secondary' | 'outline' | 'destructive' = 'outline'
+
+            if (isu === 'Wabah DBD') variant = 'destructive'
+            else if (isu === 'Stunting / Gizi Buruk') variant = 'default'
+            else if (isu === 'Ibu Hamil Berisiko') variant = 'secondary'
+            else if (isu === 'Warga Belum BPJS') variant = 'outline'
+
             return (
-                <div className='flex w-[100px] items-center'>
-                    <span>{row.getValue('isu_kesehatan')}</span>
-                </div>
+                <Badge variant={variant} className='whitespace-nowrap'>
+                    {isu}
+                </Badge>
             )
         },
         filterFn: (row, id, value) => {
             return value.includes(row.getValue(id))
         },
     },
+    {
+        id: 'detail_utama',
+        header: 'Detail Utama',
+        cell: ({ row }) => {
+            const data = row.original
+            switch (data.isu_kesehatan) {
+                case 'Wabah DBD':
+                    return (
+                        <div className="text-sm">
+                            <div className="font-medium">{data.kondisi_dbd}</div>
+                            <div className="text-xs text-muted-foreground">
+                                {data.lingkungan_dbd?.slice(0, 1).join(', ')}...
+                            </div>
+                        </div>
+                    )
+                case 'Stunting / Gizi Buruk':
+                    return (
+                        <div className="text-sm">
+                            <div className="font-medium">BB: {data.berat_badan}kg, TB: {data.tinggi_badan}cm</div>
+                            <div className="text-xs text-muted-foreground">
+                                Umur: {data.umur_bulan} bln • PMT: {data.status_pmt ? '✅' : '❌'}
+                            </div>
+                        </div>
+                    )
+                case 'Ibu Hamil Berisiko':
+                    return (
+                        <div className="text-sm">
+                            <div className="font-medium">{data.usia_kandungan}</div>
+                            <div className="text-xs text-muted-foreground">
+                                {data.faktor_risiko?.length ? `${data.faktor_risiko.length} Faktor Risiko` : '-'}
+                            </div>
+                        </div>
+                    )
+                case 'Warga Belum BPJS':
+                    return (
+                        <div className="text-sm text-destructive font-medium">
+                            {data.alasan_bpjs}
+                        </div>
+                    )
+                default:
+                    return <span className='text-muted-foreground'>-</span>
+            }
+        }
+    },
+    {
+        accessorKey: 'tanggal_laporan',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='Tgl Lapor' />
+        ),
+        cell: ({ row }) => (
+            <span className='text-sm text-muted-foreground'>
+                {row.getValue('tanggal_laporan')}
+            </span>
+        ),
+    },
     // {
-    //     accessorKey: 'usia_penderita',
+    //     accessorKey: 'status_kesehatan',
     //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='Usia' />
-    //     ),
-    //     cell: ({ row }) => (
-    //         <div className='w-[80px]'>{row.getValue('usia_penderita')}</div>
-    //     ),
-    // },
-    // {
-    //     accessorKey: 'status_bpjs',
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='BPJS' />
+    //         <DataTableColumnHeader column={column} title='Status' />
     //     ),
     //     cell: ({ row }) => {
-    //         const status = row.getValue('status_bpjs') as string
+    //         const status = row.getValue('status_kesehatan') as string
+    //         let badgeClass = ''
+
+    //         switch (status) {
+    //             case 'Kritis':
+    //                 badgeClass = 'bg-red-600 hover:bg-red-700'
+    //                 break
+    //             case 'Dalam Pemantauan':
+    //                 badgeClass = 'bg-yellow-500 hover:bg-yellow-600'
+    //                 break
+    //             case 'Stabil':
+    //                 badgeClass = 'bg-green-600 hover:bg-green-700'
+    //                 break
+    //             default:
+    //                 badgeClass = 'bg-gray-500'
+    //         }
+
     //         return (
-    //             <Badge variant={status.includes('Tidak') ? 'destructive' : 'outline'} className='text-[10px]'>
-    //                 {status}
-    //             </Badge>
+    //             <Badge className={badgeClass}>{status}</Badge>
     //         )
     //     },
     //     filterFn: (row, id, value) => {
     //         return value.includes(row.getValue(id))
     //     },
     // },
-    // Hidden columns to prevent horizontal scroll (available in detail modal)
-    // {
-    //     accessorKey: 'detail_kondisi',
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='Detail & Risiko' />
-    //     ),
-    //     cell: ({ row }) => {
-    //         return (
-    //             <div className='flex space-x-2'>
-    //                 <span className='max-w-[300px] truncate' title={row.getValue('detail_kondisi')}>
-    //                     {row.getValue('detail_kondisi')}
-    //                 </span>
-    //             </div>
-    //         )
-    //     },
-    // },
-    // {
-    //     accessorKey: 'intervensi_rt',
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='Tindakan RT' />
-    //     ),
-    //     cell: ({ row }) => {
-    //         const interventions = row.getValue('intervensi_rt') as string[]
-    //         return (
-    //             <div className="flex flex-wrap gap-1">
-    //                 {interventions.map((action, idx) => (
-    //                     <Badge key={idx} variant="secondary" className="text-[10px]">
-    //                         {action}
-    //                     </Badge>
-    //                 ))}
-    //             </div>
-    //         )
-    //     },
-    // },
-    {
-        accessorKey: 'status_kesehatan',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Status' />
-        ),
-        cell: ({ row }) => {
-            const status = row.getValue('status_kesehatan') as string
-            let badgeClass = ''
-
-            switch (status) {
-                case 'Kritis':
-                    badgeClass = 'bg-red-600 hover:bg-red-700'
-                    break
-                case 'Dalam Pemantauan':
-                    badgeClass = 'bg-yellow-500 hover:bg-yellow-600'
-                    break
-                case 'Stabil':
-                    badgeClass = 'bg-green-600 hover:bg-green-700'
-                    break
-                default:
-                    badgeClass = 'bg-gray-500'
-            }
-
-            return (
-                <Badge className={badgeClass}>{status}</Badge>
-            )
-        },
-        filterFn: (row, id, value) => {
-            return value.includes(row.getValue(id))
-        },
-    },
     {
         id: 'actions',
         cell: ({ row }) => <ActionCell report={row.original} />,

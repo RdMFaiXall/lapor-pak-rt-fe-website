@@ -69,7 +69,7 @@ export default function LaporanView() {
                 <div className="space-y-4">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Rekapitulasi Ekonomi & UMKM</CardTitle>
+                            <CardTitle>Rekapitulasi Ekonomi Desa</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
@@ -79,23 +79,13 @@ export default function LaporanView() {
                                     searchPlaceholder='Cari nama warga...'
                                     filters={[
                                         {
-                                            columnId: 'status_pekerjaan',
-                                            title: 'Pekerjaan',
+                                            columnId: 'kategori_isu_ekonomi',
+                                            title: 'Kategori Isu',
                                             options: [
-                                                { label: 'Bekerja', value: 'Bekerja' },
-                                                { label: 'Tidak Bekerja', value: 'Tidak Bekerja' },
-                                                { label: 'Usaha Mandiri', value: 'Usaha Mandiri' },
-                                                { label: 'Pensiunan', value: 'Pensiunan' },
-                                            ]
-                                        },
-                                        {
-                                            columnId: 'status_bansos',
-                                            title: 'Bansos',
-                                            options: [
-                                                { label: 'Sudah Menerima', value: 'Sudah Menerima' },
-                                                { label: 'Sedang Mengajukan', value: 'Sedang Mengajukan' },
-                                                { label: 'Tidak Menerima', value: 'Tidak Menerima' },
-                                                { label: 'Ditolak', value: 'Ditolak' },
+                                                { label: 'Warga tidak punya pekerjaan', value: 'Warga tidak punya pekerjaan' },
+                                                { label: 'UMKM tidak berkembang', value: 'UMKM tidak berkembang' },
+                                                { label: 'Warga berhutang', value: 'Warga berhutang' },
+                                                { label: 'Calon penerima bansos', value: 'Calon penerima bansos' },
                                             ]
                                         }
                                     ]}

@@ -1,3 +1,4 @@
+
 const XLSX = require('xlsx');
 
 try {
@@ -7,10 +8,9 @@ try {
 
     if (sheet) {
         const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-        console.log("--- CANDIDATE 3 MAIN (Rows 42-46) ---");
-        const range3Main = data.slice(42, 46);
-        console.log(JSON.stringify(range3Main, null, 2));
+        data.slice(0, 200).forEach((row, index) => {
+            console.log(`Row ${index}:`, row[0]);
+        });
     }
 } catch (e) {
     console.error(e);

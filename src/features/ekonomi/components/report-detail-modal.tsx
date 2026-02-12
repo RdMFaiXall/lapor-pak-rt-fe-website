@@ -20,7 +20,7 @@ export function EconomyDetailModal({
         <ReportDetailModal
             open={open}
             onOpenChange={onOpenChange}
-            title='Detail Ekonomi & UMKM'
+            title='Detail Laporan Ekonomi'
             description='Informasi lengkap mengenai status ekonomi warga.'
         >
             <div className='flex flex-col gap-6'>
@@ -43,9 +43,9 @@ export function EconomyDetailModal({
                             </span>
                         </div>
                         <div className='grid grid-cols-3'>
-                            <span className='font-medium'>Tanggal Update</span>
+                            <span className='font-medium'>Tanggal Laporan</span>
                             <span className='col-span-2 text-muted-foreground'>
-                                : {report.tanggal_update}
+                                : {report.tanggal_laporan}
                             </span>
                         </div>
                     </div>
@@ -53,96 +53,114 @@ export function EconomyDetailModal({
 
                 <Separator />
 
-                {/* Status Pekerjaan & Ekonomi */}
-                <div>
-                    <h3 className='mb-2 text-sm font-medium text-muted-foreground'>
-                        Status Pekerjaan & Keuangan
-                    </h3>
-                    <div className='rounded-lg border p-3 bg-muted/40'>
-                        <div className='mb-3 flex items-center justify-between'>
-                            <span className='font-semibold'>{report.status_pekerjaan}</span>
-                            <Badge variant={
-                                report.penghasilan_bulanan === '< 1 Juta' ? 'destructive' :
-                                    report.penghasilan_bulanan === '1-3 Juta' ? 'outline' : 'default'
-                            }>
-                                {report.penghasilan_bulanan}
-                            </Badge>
-                        </div>
-
-                        <div className='space-y-2 text-sm'>
-                            <div className='grid grid-cols-3'>
-                                <span className='font-medium'>Jenis Pekerjaan</span>
-                                <span className='col-span-2'>: {report.jenis_pekerjaan}</span>
-                            </div>
-                            <div className='grid grid-cols-3'>
-                                <span className='font-medium'>Pengeluaran</span>
-                                <span className='col-span-2'>: {report.pengeluaran_bulanan}</span>
-                            </div>
-                            <div className='grid grid-cols-3'>
-                                <span className='font-medium'>Tempat Tinggal</span>
-                                <span className='col-span-2'>: {report.status_tempat_tinggal}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <Separator />
-
-                {/* Aset & Bansos */}
-                <div>
-                    <h3 className='mb-2 text-sm font-medium text-muted-foreground'>
-                        Aset & Bantuan Sosial
-                    </h3>
-                    <div className='grid gap-4 sm:grid-cols-2'>
-                        <div>
-                            <p className='text-xs font-medium text-muted-foreground mb-1'>Aset Kendaraan:</p>
-                            <div className='flex flex-wrap gap-1'>
-                                {report.aset_kendaraan.map((aset, i) => (
-                                    <Badge key={i} variant='secondary' className='text-[10px]'>{aset}</Badge>
-                                ))}
-                            </div>
-                        </div>
-                        <div>
-                            <p className='text-xs font-medium text-muted-foreground mb-1'>Tabungan (Emas/Bank):</p>
-                            <span className='text-sm font-medium'>{report.tabungan_aset}</span>
-                        </div>
-                    </div>
-
-                    <div className='mt-4 p-3 border rounded-md'>
-                        <div className='flex items-center justify-between'>
-                            <span className='text-sm font-medium'>Status Bansos</span>
-                            <Badge className={
-                                report.status_bansos === 'Sudah Menerima' ? 'bg-green-600' :
-                                    report.status_bansos === 'Sedang Mengajukan' ? 'bg-yellow-500' :
-                                        'bg-gray-500'
-                            }>
-                                {report.status_bansos}
-                            </Badge>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Detail Usaha (Optional) */}
-                {report.status_pekerjaan === 'Usaha Mandiri' && report.detail_usaha && (
+                {/* Dynamic Content Based on Category */}
+                {report.kategori_isu_ekonomi === 'Warga tidak punya pekerjaan' && (
                     <>
                         <Separator />
                         <div>
-                            <h3 className='mb-2 text-sm font-medium text-muted-foreground'>
-                                Detail Usaha (UMKM)
-                            </h3>
-                            <div className='rounded-lg border p-3 bg-blue-50 dark:bg-blue-950/20'>
-                                <div className='grid gap-2 text-sm'>
-                                    <div className='grid grid-cols-3'>
-                                        <span className='font-medium'>Nama Usaha</span>
-                                        <span className='col-span-2'>: {report.detail_usaha.nama_usaha}</span>
+                            <h3 className='mb-2 text-sm font-medium text-muted-foreground'>Detail Pengangguran</h3>
+                            <div className='grid grid-cols-2 gap-4'>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Lama Menganggur</span>
+                                    <span className='font-medium text-sm'>{report.lama_menganggur}</span>
+                                </div>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Minat Pelatihan</span>
+                                    <div className='flex flex-wrap gap-1 mt-1'>
+                                        {report.minat_pelatihan?.map((item, i) => (
+                                            <Badge key={i} variant='secondary' className='text-[10px]'>{item}</Badge>
+                                        ))}
                                     </div>
-                                    <div className='grid grid-cols-3'>
-                                        <span className='font-medium'>Jenis</span>
-                                        <span className='col-span-2'>: {report.detail_usaha.jenis_usaha}</span>
+                                </div>
+                                <div className='col-span-2'>
+                                    <span className='block text-xs text-muted-foreground'>Keahlian / Skill</span>
+                                    <div className='flex flex-wrap gap-1 mt-1'>
+                                        {report.skill_terakhir?.map((item, i) => (
+                                            <Badge key={i} variant='outline' className='text-[10px]'>{item}</Badge>
+                                        ))}
                                     </div>
-                                    <div className='grid grid-cols-3'>
-                                        <span className='font-medium'>Omzet/Bulan</span>
-                                        <span className='col-span-2'>: {report.detail_usaha.omzet_bulanan}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+
+                {report.kategori_isu_ekonomi === 'UMKM tidak berkembang' && (
+                    <>
+                        <Separator />
+                        <div>
+                            <h3 className='mb-2 text-sm font-medium text-muted-foreground'>Detail Usaha</h3>
+                            <div className='grid grid-cols-2 gap-4'>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Nama Usaha</span>
+                                    <span className='font-medium text-sm'>{report.nama_jenis_usaha}</span>
+                                </div>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Rata-rata Omzet</span>
+                                    <span className='font-medium text-sm'>{report.omzet_rata_rata}</span>
+                                </div>
+                                <div className='col-span-2'>
+                                    <span className='block text-xs text-muted-foreground'>Kendala Utama</span>
+                                    <div className='flex flex-wrap gap-1 mt-1'>
+                                        {report.kendala_umkm?.map((item, i) => (
+                                            <Badge key={i} variant='destructive' className='text-[10px]'>{item}</Badge>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+
+                {report.kategori_isu_ekonomi === 'Warga berhutang' && (
+                    <>
+                        <Separator />
+                        <div>
+                            <h3 className='mb-2 text-sm font-medium text-muted-foreground'>Detail Hutang</h3>
+                            <div className='grid grid-cols-2 gap-4'>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Sumber Hutang</span>
+                                    <span className='font-medium text-sm'>{report.sumber_hutang}</span>
+                                </div>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Estimasi Total</span>
+                                    <span className='font-medium text-sm text-red-600'>{report.estimasi_total_hutang}</span>
+                                </div>
+                                <div className='col-span-2'>
+                                    <span className='block text-xs text-muted-foreground'>Butuh Mediasi RT?</span>
+                                    <Badge variant={report.butuh_mediasi ? 'default' : 'secondary'} className='mt-1'>
+                                        {report.butuh_mediasi ? 'Ya, Butuh Bantuan' : 'Tidak / Belum Perlu'}
+                                    </Badge>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+
+                {report.kategori_isu_ekonomi === 'Calon penerima bansos' && (
+                    <>
+                        <Separator />
+                        <div>
+                            <h3 className='mb-2 text-sm font-medium text-muted-foreground'>Kelayakan Bansos</h3>
+                            <div className='grid grid-cols-2 gap-4'>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Status Hunian</span>
+                                    <span className='font-medium text-sm'>{report.status_hunian}</span>
+                                </div>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Jumlah Tanggungan</span>
+                                    <span className='font-medium text-sm'>{report.jumlah_tanggungan} Jiwa</span>
+                                </div>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Penghasilan KK</span>
+                                    <span className='font-medium text-sm'>{report.penghasilan_kk}</span>
+                                </div>
+                                <div>
+                                    <span className='block text-xs text-muted-foreground'>Riwayat Bantuan</span>
+                                    <div className='flex flex-wrap gap-1 mt-1'>
+                                        {report.riwayat_bantuan?.map((item, i) => (
+                                            <Badge key={i} variant='secondary' className='text-[10px]'>{item}</Badge>
+                                        ))}
                                     </div>
                                 </div>
                             </div>

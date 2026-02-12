@@ -106,7 +106,30 @@ export function DisasterDetailModal({
                         </div>
                     </>
                 )}
+
+                {/* Bukti Kejadian */}
+                {report.foto_kejadian && report.foto_kejadian.length > 0 && (
+                    <>
+                        <Separator />
+                        <div>
+                            <h3 className='mb-2 text-sm font-medium text-muted-foreground'>
+                                Bukti Kejadian
+                            </h3>
+                            <div className='grid grid-cols-2 gap-2'>
+                                {report.foto_kejadian.map((url, i) => (
+                                    <div key={i} className='overflow-hidden rounded-md border'>
+                                        <img
+                                            src={url}
+                                            alt={`Bukti ${i + 1}`}
+                                            className='h-32 w-full object-cover transition-all hover:scale-105'
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
-        </ReportDetailModal>
+        </ReportDetailModal >
     )
 }

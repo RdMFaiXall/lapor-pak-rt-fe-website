@@ -120,6 +120,28 @@ export function ReportDetailSheet({
                         </div>
                     )}
                 </div>
+                {/* Dokumentasi */}
+                {report.foto_dokumentasi && report.foto_dokumentasi.length > 0 && (
+                    <>
+                        <Separator />
+                        <div>
+                            <h3 className='mb-2 text-sm font-medium text-muted-foreground'>
+                                Dokumentasi
+                            </h3>
+                            <div className='grid grid-cols-2 gap-2'>
+                                {report.foto_dokumentasi.map((url, i) => (
+                                    <div key={i} className='overflow-hidden rounded-md border'>
+                                        <img
+                                            src={url}
+                                            alt={`Dokumentasi ${i + 1}`}
+                                            className='h-32 w-full object-cover transition-all hover:scale-105'
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
         </ReportDetailModal>
     )

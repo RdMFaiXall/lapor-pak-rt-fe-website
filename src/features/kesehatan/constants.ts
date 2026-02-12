@@ -18,6 +18,7 @@ export type HealthReport = {
     // [CSV Row 10] Tindakan: status_kesehatan
     status_kesehatan: 'Kritis' | 'Dalam Pemantauan' | 'Stabil'
     tanggal_laporan: string
+    foto_dokumentasi?: string[]
 }
 
 // --- Dummy Data untuk Visualisasi ---
@@ -36,6 +37,10 @@ export const mockData: HealthReport[] = [
         bantuan_diperlukan: ['Fogging', 'Bantuan Pengobatan'],
         status_kesehatan: 'Dalam Pemantauan', // [CSV Row 10]
         tanggal_laporan: '2024-02-10',
+        foto_dokumentasi: [
+            'https://images.unsplash.com/photo-1542884748-2b87b3664b40?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG9zcGl0YWwlMjBiZWR8ZW58MHx8MHx8fDA%3D',
+            'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aG9zcGl0YWx8ZW58MHx8MHx8fDA%3D'
+        ]
     },
     {
         id: '2',
@@ -66,6 +71,9 @@ export const mockData: HealthReport[] = [
         bantuan_diperlukan: ['PMT (Pemberian Makanan Tambahan)', 'Vitamin'],
         status_kesehatan: 'Stabil',
         tanggal_laporan: '2024-02-01',
+        foto_dokumentasi: [
+            'https://images.unsplash.com/photo-1517263904808-5dc91e3e704e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFpbiUyMG51dHJpdGlvbnxlbnwwfHwwfHx8MA%3D%3D'
+        ]
     },
     {
         id: '4',
@@ -171,5 +179,8 @@ export const mockData: HealthReport[] = [
         bantuan_diperlukan: ['Telur & Susu', 'Edukasi Orang Tua'],
         status_kesehatan: 'Dalam Pemantauan',
         tanggal_laporan: '2024-02-22',
+        foto_dokumentasi: [
+            'https://images.unsplash.com/photo-1542884748-2b87b3664b40?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG9zcGl0YWwlMjBiZWR8ZW58MHx8MHx8fDA%3D'
+        ]
     }
 ]

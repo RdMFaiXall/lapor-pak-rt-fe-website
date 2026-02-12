@@ -25,7 +25,7 @@ export type DisasterReport = {
     // [CSV Source 110] Status Penanganan
     status_penanganan: 'Darurat' | 'Butuh Bantuan' | 'Dalam Penanganan' | 'Selesai'
 
-    foto_kejadian?: string
+    foto_kejadian?: string[]
     tanggal_laporan: string
     keterangan_tambahan: string
 }
@@ -49,7 +49,11 @@ export const mockData: DisasterReport[] = [
         kebutuhan_mendesak: ['Perahu Karet', 'Makanan Siap Saji'],
         status_penanganan: 'Darurat',
         tanggal_laporan: '2024-02-23',
-        keterangan_tambahan: 'Air setinggi 1 meter. Warga butuh evakuasi.'
+        keterangan_tambahan: 'Air setinggi 1 meter. Warga butuh evakuasi.',
+        foto_kejadian: [
+            'https://images.unsplash.com/photo-1547683905-f6f3c9902e00?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zmxvb2R8ZW58MHx8MHx8fDA%3D',
+            'https://images.unsplash.com/photo-1456108197022-d04b77f9cb89?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZsb29kfGVufDB8fDB8fHww'
+        ]
     },
     {
         id: '2',
@@ -87,7 +91,10 @@ export const mockData: DisasterReport[] = [
         kebutuhan_mendesak: ['Pemadam Kebakaran', 'Ambulans', 'Bantuan Logistik'],
         status_penanganan: 'Dalam Penanganan',
         tanggal_laporan: '2024-02-18',
-        keterangan_tambahan: 'Diduga korsleting listrik.'
+        keterangan_tambahan: 'Diduga korsleting listrik.',
+        foto_kejadian: [
+            'https://images.unsplash.com/photo-1596700813733-1ec94814d420?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aG91c2UlMjBmaXJlfGVufDB8fDB8fHww'
+        ]
     },
     {
         id: '4',
@@ -163,7 +170,10 @@ export const mockData: DisasterReport[] = [
         kebutuhan_mendesak: ['Tukang Bangunan'],
         status_penanganan: 'Butuh Bantuan',
         tanggal_laporan: '2024-02-25',
-        keterangan_tambahan: 'Plafon balai warga jebol karena lapuk.'
+        keterangan_tambahan: 'Plafon balai warga jebol karena lapuk.',
+        foto_kejadian: [
+            'https://images.unsplash.com/photo-1595156360341-2a2b0c4a4574?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJyb2tlbiUyMHJvb2Z8ZW58MHx8MHx8fDA%3D'
+        ]
     },
     {
         id: '8',

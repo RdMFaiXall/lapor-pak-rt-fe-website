@@ -1,6 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router'
-import Kesehatan from '@/features/kesehatan'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_authenticated/kesehatan/')({
-    component: Kesehatan,
+    loader: () => redirect({ to: '/kesehatan/monitoring' }),
 })

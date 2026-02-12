@@ -1,9 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { LaporanView } from '@/features/ekonomi'
 
 export const Route = createFileRoute('/_authenticated/ekonomi/laporan')({
-    component: RouteComponent,
+    component: LaporanView,
 })
-
-function RouteComponent() {
-    return <div>Hello "/_authenticated/ekonomi/laporan"!</div>
-}

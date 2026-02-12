@@ -9,7 +9,15 @@ import { id } from 'date-fns/locale'
 import { SosialMap } from './sosial-map'
 import { SocialOverviewCards } from './KPICards'
 import { SosialDataTable } from './sosial-data-table'
-import { SocialAidChart, WargaSakitDistribution } from './dashboard-charts'
+import {
+    SocialAidChart,
+    EconomicConditionChart,
+    WargaSakitByDiseaseChart,
+    WargaMeninggalByCauseChart,
+    LansiaTerlantarByConditionChart,
+    AnakPutusSekolahByLevelChart,
+    AnakPutusSekolahByCauseChart
+} from './dashboard-charts'
 
 export default function MonitoringDashboard() {
     return (
@@ -24,7 +32,7 @@ export default function MonitoringDashboard() {
             </Header>
 
             <Main>
-                {/* Header Section */}
+                {/* Dashboard Header */}
                 <div className='mb-8'>
                     <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
                         <div>
@@ -32,7 +40,7 @@ export default function MonitoringDashboard() {
                                 Dashboard
                             </h1>
                             <p className='text-gray-500 dark:text-gray-400 mt-1'>
-                                Sistem Informasi Sosial
+                                Sistem Informasi Sosial RT
                             </p>
                         </div>
                         <div className='flex items-center gap-3 bg-white dark:bg-gray-800 rounded-lg px-4 py-2 shadow-sm border border-gray-200 dark:border-gray-700'>
@@ -46,16 +54,33 @@ export default function MonitoringDashboard() {
                     </div>
                 </div>
 
-                {/* Social Overview Cards */}
+                {/* Overview Cards - Total Laporan & Total Warga Miskin Ekstrem */}
                 <SocialOverviewCards />
 
-                {/* Disease & Social Aid */}
+                {/* Row 1: Economic Condition & Social Aid */}
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
-                    <WargaSakitDistribution />
+                    <EconomicConditionChart />
                     <SocialAidChart />
                 </div>
 
-                {/* Map Section */}
+                {/* Row 2: Warga Sakit & Warga Meninggal */}
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
+                    <WargaSakitByDiseaseChart />
+                    <WargaMeninggalByCauseChart />
+                </div>
+
+                {/* Row 3: Lansia Terlantar & Anak Putus Sekolah by Level */}
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
+                    <LansiaTerlantarByConditionChart />
+                    <AnakPutusSekolahByLevelChart />
+                </div>
+
+                {/* Row 4: Anak Putus Sekolah by Cause (Full Width) */}
+                <div className='mb-6'>
+                    <AnakPutusSekolahByCauseChart />
+                </div>
+
+                {/* Map */}
                 <div className='mb-6'>
                     <SosialMap />
                 </div>

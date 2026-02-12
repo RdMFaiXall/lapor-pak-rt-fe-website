@@ -36,6 +36,7 @@ import { Route as AuthenticatedKeamananIndexRouteImport } from './routes/_authen
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
 import { Route as AuthenticatedEkonomiIndexRouteImport } from './routes/_authenticated/ekonomi/index'
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
+import { Route as AuthenticatedBencanaIndexRouteImport } from './routes/_authenticated/bencana/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
 import { Route as ClerkAuthenticatedUserManagementRouteImport } from './routes/clerk/_authenticated/user-management'
 import { Route as ClerkauthSignUpRouteImport } from './routes/clerk/(auth)/sign-up'
@@ -57,6 +58,8 @@ import { Route as AuthenticatedKeamananLaporanRouteImport } from './routes/_auth
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
 import { Route as AuthenticatedEkonomiMonitoringRouteImport } from './routes/_authenticated/ekonomi/monitoring'
 import { Route as AuthenticatedEkonomiLaporanRouteImport } from './routes/_authenticated/ekonomi/laporan'
+import { Route as AuthenticatedBencanaMonitoringRouteImport } from './routes/_authenticated/bencana/monitoring'
+import { Route as AuthenticatedBencanaLaporanRouteImport } from './routes/_authenticated/bencana/laporan'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -199,6 +202,12 @@ const AuthenticatedChatsIndexRoute = AuthenticatedChatsIndexRouteImport.update({
   path: '/chats/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedBencanaIndexRoute =
+  AuthenticatedBencanaIndexRouteImport.update({
+    id: '/bencana/',
+    path: '/bencana/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAppsIndexRoute = AuthenticatedAppsIndexRouteImport.update({
   id: '/apps/',
   path: '/apps/',
@@ -322,6 +331,18 @@ const AuthenticatedEkonomiLaporanRoute =
     path: '/ekonomi/laporan',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedBencanaMonitoringRoute =
+  AuthenticatedBencanaMonitoringRouteImport.update({
+    id: '/bencana/monitoring',
+    path: '/bencana/monitoring',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedBencanaLaporanRoute =
+  AuthenticatedBencanaLaporanRouteImport.update({
+    id: '/bencana/laporan',
+    path: '/bencana/laporan',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -337,6 +358,8 @@ export interface FileRoutesByFullPath {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/bencana/laporan': typeof AuthenticatedBencanaLaporanRoute
+  '/bencana/monitoring': typeof AuthenticatedBencanaMonitoringRoute
   '/ekonomi/laporan': typeof AuthenticatedEkonomiLaporanRoute
   '/ekonomi/monitoring': typeof AuthenticatedEkonomiMonitoringRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
@@ -358,6 +381,7 @@ export interface FileRoutesByFullPath {
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
+  '/bencana': typeof AuthenticatedBencanaIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
   '/ekonomi': typeof AuthenticatedEkonomiIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
@@ -383,6 +407,8 @@ export interface FileRoutesByTo {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/bencana/laporan': typeof AuthenticatedBencanaLaporanRoute
+  '/bencana/monitoring': typeof AuthenticatedBencanaMonitoringRoute
   '/ekonomi/laporan': typeof AuthenticatedEkonomiLaporanRoute
   '/ekonomi/monitoring': typeof AuthenticatedEkonomiMonitoringRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
@@ -404,6 +430,7 @@ export interface FileRoutesByTo {
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
+  '/bencana': typeof AuthenticatedBencanaIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
   '/ekonomi': typeof AuthenticatedEkonomiIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
@@ -434,6 +461,8 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/bencana/laporan': typeof AuthenticatedBencanaLaporanRoute
+  '/_authenticated/bencana/monitoring': typeof AuthenticatedBencanaMonitoringRoute
   '/_authenticated/ekonomi/laporan': typeof AuthenticatedEkonomiLaporanRoute
   '/_authenticated/ekonomi/monitoring': typeof AuthenticatedEkonomiMonitoringRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
@@ -455,6 +484,7 @@ export interface FileRoutesById {
   '/clerk/(auth)/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/_authenticated/user-management': typeof ClerkAuthenticatedUserManagementRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
+  '/_authenticated/bencana/': typeof AuthenticatedBencanaIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
   '/_authenticated/ekonomi/': typeof AuthenticatedEkonomiIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
@@ -483,6 +513,8 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/bencana/laporan'
+    | '/bencana/monitoring'
     | '/ekonomi/laporan'
     | '/ekonomi/monitoring'
     | '/errors/$error'
@@ -504,6 +536,7 @@ export interface FileRouteTypes {
     | '/clerk/sign-up'
     | '/clerk/user-management'
     | '/apps'
+    | '/bencana'
     | '/chats'
     | '/ekonomi'
     | '/help-center'
@@ -529,6 +562,8 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/bencana/laporan'
+    | '/bencana/monitoring'
     | '/ekonomi/laporan'
     | '/ekonomi/monitoring'
     | '/errors/$error'
@@ -550,6 +585,7 @@ export interface FileRouteTypes {
     | '/clerk/sign-up'
     | '/clerk/user-management'
     | '/apps'
+    | '/bencana'
     | '/chats'
     | '/ekonomi'
     | '/help-center'
@@ -579,6 +615,8 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/_authenticated/'
+    | '/_authenticated/bencana/laporan'
+    | '/_authenticated/bencana/monitoring'
     | '/_authenticated/ekonomi/laporan'
     | '/_authenticated/ekonomi/monitoring'
     | '/_authenticated/errors/$error'
@@ -600,6 +638,7 @@ export interface FileRouteTypes {
     | '/clerk/(auth)/sign-up'
     | '/clerk/_authenticated/user-management'
     | '/_authenticated/apps/'
+    | '/_authenticated/bencana/'
     | '/_authenticated/chats/'
     | '/_authenticated/ekonomi/'
     | '/_authenticated/help-center/'
@@ -819,6 +858,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedChatsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/bencana/': {
+      id: '/_authenticated/bencana/'
+      path: '/bencana'
+      fullPath: '/bencana'
+      preLoaderRoute: typeof AuthenticatedBencanaIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/apps/': {
       id: '/_authenticated/apps/'
       path: '/apps'
@@ -966,6 +1012,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEkonomiLaporanRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/bencana/monitoring': {
+      id: '/_authenticated/bencana/monitoring'
+      path: '/bencana/monitoring'
+      fullPath: '/bencana/monitoring'
+      preLoaderRoute: typeof AuthenticatedBencanaMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/bencana/laporan': {
+      id: '/_authenticated/bencana/laporan'
+      path: '/bencana/laporan'
+      fullPath: '/bencana/laporan'
+      preLoaderRoute: typeof AuthenticatedBencanaLaporanRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -995,6 +1055,8 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedBencanaLaporanRoute: typeof AuthenticatedBencanaLaporanRoute
+  AuthenticatedBencanaMonitoringRoute: typeof AuthenticatedBencanaMonitoringRoute
   AuthenticatedEkonomiLaporanRoute: typeof AuthenticatedEkonomiLaporanRoute
   AuthenticatedEkonomiMonitoringRoute: typeof AuthenticatedEkonomiMonitoringRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
@@ -1009,6 +1071,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSosialLaporanRoute: typeof AuthenticatedSosialLaporanRoute
   AuthenticatedSosialMonitoringRoute: typeof AuthenticatedSosialMonitoringRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
+  AuthenticatedBencanaIndexRoute: typeof AuthenticatedBencanaIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
   AuthenticatedEkonomiIndexRoute: typeof AuthenticatedEkonomiIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
@@ -1024,6 +1087,8 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedBencanaLaporanRoute: AuthenticatedBencanaLaporanRoute,
+  AuthenticatedBencanaMonitoringRoute: AuthenticatedBencanaMonitoringRoute,
   AuthenticatedEkonomiLaporanRoute: AuthenticatedEkonomiLaporanRoute,
   AuthenticatedEkonomiMonitoringRoute: AuthenticatedEkonomiMonitoringRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
@@ -1040,6 +1105,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSosialLaporanRoute: AuthenticatedSosialLaporanRoute,
   AuthenticatedSosialMonitoringRoute: AuthenticatedSosialMonitoringRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
+  AuthenticatedBencanaIndexRoute: AuthenticatedBencanaIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
   AuthenticatedEkonomiIndexRoute: AuthenticatedEkonomiIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,

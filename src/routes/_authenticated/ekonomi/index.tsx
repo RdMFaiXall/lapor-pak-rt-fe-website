@@ -1,6 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-import Ekonomi from '@/features/ekonomi'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_authenticated/ekonomi/')({
-    component: Ekonomi,
+    beforeLoad: () => {
+        throw redirect({
+            to: '/ekonomi/monitoring',
+        })
+    },
 })

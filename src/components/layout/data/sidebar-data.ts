@@ -9,6 +9,7 @@ import {
   Command,
   GalleryVerticalEnd,
   AudioWaveform,
+  Siren,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -131,6 +132,21 @@ export const sidebarData: SidebarData = {
             {
               title: 'Laporan',
               url: '/ekonomi/laporan',
+            },
+          ],
+        },
+        {
+          title: 'Bencana',
+          url: '/bencana',
+          icon: Siren,
+          items: [
+            {
+              title: 'Monitoring',
+              url: '/bencana/monitoring',
+            },
+            {
+              title: 'Laporan',
+              url: '/bencana/laporan',
             },
           ],
         },

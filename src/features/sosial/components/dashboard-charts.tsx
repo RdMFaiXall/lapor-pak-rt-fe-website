@@ -10,9 +10,6 @@ import {
     YAxis,
     PieChart,
     Pie,
-    Legend,
-    RadialBarChart,
-    RadialBar,
 } from 'recharts'
 import {
     wargaMiskinData,
@@ -210,7 +207,7 @@ export function WargaSakitByDiseaseChart() {
                                 paddingAngle={2}
                                 dataKey="value"
                             >
-                                {chartData.map((entry, index) => (
+                                {chartData.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
@@ -531,7 +528,7 @@ export function AnakPutusSekolahByCauseChart() {
                             cursor={{ fill: 'transparent' }}
                         />
                         <Bar dataKey="value" radius={[8, 8, 0, 0]} maxBarSize={80}>
-                            {chartData.map((entry, index) => (
+                            {chartData.map((_, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                             <LabelList

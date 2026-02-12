@@ -2,7 +2,6 @@
 import {
     Bar,
     BarChart,
-    CartesianGrid,
     Cell,
     LabelList,
     Legend,
@@ -16,10 +15,8 @@ import {
 import { categories, mockKeamananData } from '../data/data'
 import { PieChart as PieChartIcon, BarChart3 } from 'lucide-react'
 
-// Professional Palette
 const COLORS = ['#2563eb', '#db2777', '#7c3aed', '#059669', '#d97706', '#0891b2']
 
-// Calculate statistics from actual mock data
 const totalReports = mockKeamananData.length
 const chartData = categories.map((cat, index) => {
     const count = mockKeamananData.filter(item => item.category === cat.value).length
@@ -27,16 +24,15 @@ const chartData = categories.map((cat, index) => {
     return {
         name: cat.label,
         value: count,
-        color: COLORS[index % COLORS.length], // Use new palette
+        color: COLORS[index % COLORS.length],
         percentage,
-        label: `${count}` // Simplified label
+        label: `${count} (${percentage}%)`
     }
 }).filter(item => item.value > 0).sort((a, b) => b.value - a.value)
 
-// Dynamic height for Bar Chart
 const barChartHeight = Math.max(chartData.length * 60, 300)
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
         return (
             <div className="rounded-lg border bg-background p-2 shadow-sm">
@@ -83,7 +79,6 @@ export function KasusCategoryChart() {
                         layout="vertical"
                         margin={{ left: 0, right: 20, top: 10, bottom: 10 }}
                     >
-                        {/* No Grid */}
                         <XAxis type="number" hide />
                         <YAxis
                             dataKey="name"
@@ -101,8 +96,8 @@ export function KasusCategoryChart() {
                             ))}
                             <LabelList
                                 dataKey="label"
-                                position="right"
-                                style={{ fill: '#374151', fontSize: 13 }}
+                                position="insideRight"
+                                style={{ fill: '#fff', fontSize: 13, fontWeight: 'bold' }}
                                 offset={10}
                             />
                         </Bar>
@@ -152,7 +147,10 @@ export function PriorityChart() {
                             iconType="circle"
                             formatter={(value) => <span className="text-xs text-muted-foreground ml-1">{value}</span>}
                         />
-
+                        <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
+                            <tspan x="50%" dy="-5em" fontSize="12" fill="#6b7280">Total Laporan</tspan>
+                            <tspan x="50%" dy="1.6em" fontSize="24" fontWeight="bold" fill="#111827">{totalReports}</tspan>
+                        </text>
                     </PieChart>
                 </ResponsiveContainer>
             </div>

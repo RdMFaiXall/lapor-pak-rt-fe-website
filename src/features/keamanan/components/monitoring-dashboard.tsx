@@ -22,7 +22,7 @@ export default function MonitoringDashboard() {
                 </div>
             </Header>
 
-            <Main fixed>
+            <Main>
                 <div className='mb-8'>
                     <h1 className='text-3xl font-bold tracking-tight text-foreground'>Laporan Situasi Keamanan</h1>
                     <p className='text-lg text-muted-foreground mt-2'>
@@ -39,7 +39,7 @@ export default function MonitoringDashboard() {
                                 Konsentrasi kejadian terpusat di area pemukiman padat.
                             </p>
                         </div>
-                        <div className='rounded-lg overflow-hidden border'>
+                        <div className='rounded-lg overflow-hidden'>
                             <KeamananMap />
                         </div>
                     </div>

@@ -4,7 +4,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 import { DataTableColumnHeader } from '@/components/data-table/column-header'
 import { Lingkungan } from '../data/schema'
-import { statuses, priorities, categories } from '../data/data'
+import { priorities, categories } from '../data/data'
 import { format } from 'date-fns'
 
 export const lingkunganColumns: ColumnDef<Lingkungan>[] = [
@@ -61,42 +61,35 @@ export const lingkunganColumns: ColumnDef<Lingkungan>[] = [
             )
         },
     },
-    {
-        accessorKey: 'location',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Lokasi' />
-        ),
-        cell: ({ row }) => <div>{row.getValue('location')}</div>,
-    },
-    {
-        accessorKey: 'status',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Status' />
-        ),
-        cell: ({ row }) => {
-            const status = statuses.find(
-                (status) => status.value === row.getValue('status')
-            )
+    // {
+    //     accessorKey: 'status',
+    //     header: ({ column }) => (
+    //         <DataTableColumnHeader column={column} title='Status' />
+    //     ),
+    //     cell: ({ row }) => {
+    //         const status = statuses.find(
+    //             (status) => status.value === row.getValue('status')
+    //         )
 
-            if (!status) {
-                return null
-            }
+    //         if (!status) {
+    //             return null
+    //         }
 
-            const Icon = status.icon
+    //         const Icon = status.icon
 
-            return (
-                <div className='flex w-[100px] items-center'>
-                    {Icon && (
-                        <Icon className='mr-2 h-4 w-4 text-muted-foreground' />
-                    )}
-                    <span>{status.label}</span>
-                </div>
-            )
-        },
-        filterFn: (row, id, value) => {
-            return value.includes(row.getValue(id))
-        },
-    },
+    //         return (
+    //             <div className='flex w-[100px] items-center'>
+    //                 {Icon && (
+    //                     <Icon className='mr-2 h-4 w-4 text-muted-foreground' />
+    //                 )}
+    //                 <span>{status.label}</span>
+    //             </div>
+    //         )
+    //     },
+    //     filterFn: (row, id, value) => {
+    //         return value.includes(row.getValue(id))
+    //     },
+    // },
     {
         accessorKey: 'priority',
         header: ({ column }) => (

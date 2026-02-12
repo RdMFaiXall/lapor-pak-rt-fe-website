@@ -2,7 +2,6 @@
 import {
     Bar,
     BarChart,
-    CartesianGrid,
     Cell,
     LabelList,
     Legend,
@@ -15,7 +14,6 @@ import {
 } from 'recharts'
 import { categories, mockLingkunganData } from '../data/data'
 
-// Calculate statistics from actual mock data
 const totalReports = mockLingkunganData.length
 const chartData = categories.map(cat => {
     const count = mockLingkunganData.filter(item => item.category === cat.value).length
@@ -29,10 +27,9 @@ const chartData = categories.map(cat => {
     }
 }).filter(item => item.value > 0).sort((a, b) => b.value - a.value)
 
-// Dynamic height for Bar Chart
 const barChartHeight = Math.max(chartData.length * 60, 300)
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
         return (
             <div className="rounded-lg border bg-background p-2 shadow-sm">
@@ -76,26 +73,26 @@ export function LingkunganCategoryChart() {
                         layout="vertical"
                         margin={{ left: 0, right: 60, top: 10, bottom: 10 }}
                     >
-                        <CartesianGrid horizontal={true} vertical={false} stroke="#e5e7eb" />
                         <XAxis type="number" hide />
                         <YAxis
                             dataKey="name"
                             type="category"
-                            width={150}
+                            width={140}
                             tick={{ fontSize: 13, fill: '#6b7280' }}
                             axisLine={false}
                             tickLine={false}
                             interval={0}
                         />
                         <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
-                        <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={24}>
+                        <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={50}>
                             {chartData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                             ))}
                             <LabelList
                                 dataKey="label"
-                                position="right"
-                                style={{ fill: '#374151', fontSize: 12, fontWeight: '600' }}
+                                position="insideRight"
+                                style={{ fill: '#fff', fontSize: 13, fontWeight: 'bold' }}
+                                offset={10}
                             />
                         </Bar>
                     </BarChart>

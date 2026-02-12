@@ -80,23 +80,21 @@ export function LaporanView() {
                                     filters={[
                                         {
                                             columnId: 'isu_kesehatan',
-                                            title: 'Isu Kesehatan',
+                                            title: 'Masalah Kesehatan',
                                             options: [
-                                                { label: 'Demam Berdarah', value: 'Demam Berdarah' },
-                                                { label: 'Gizi Buruk', value: 'Gizi Buruk' },
-                                                { label: 'Ibu Hamil Risiko Tinggi', value: 'Ibu Hamil Risiko Tinggi' },
-                                                { label: 'Lansia Butuh Perawatan', value: 'Lansia Butuh Perawatan' },
-                                                { label: 'Sanitasi Buruk', value: 'Sanitasi Buruk' },
-                                                { label: 'Lainnya', value: 'Lainnya' },
+                                                { label: 'Wabah DBD', value: 'Wabah DBD' },
+                                                { label: 'Stunting / Gizi Buruk', value: 'Stunting / Gizi Buruk' },
+                                                { label: 'Ibu Hamil Berisiko', value: 'Ibu Hamil Berisiko' },
+                                                { label: 'Warga Belum BPJS', value: 'Warga Belum BPJS' },
                                             ]
                                         },
                                         {
-                                            columnId: 'status_penanganan',
+                                            columnId: 'status_kesehatan',
                                             title: 'Status',
                                             options: [
-                                                { label: 'Menunggu Konfirmasi', value: 'Menunggu Konfirmasi' },
-                                                { label: 'Sedang Ditangani', value: 'Sedang Ditangani' },
-                                                { label: 'Selesai', value: 'Selesai' },
+                                                { label: 'Kritis', value: 'Kritis' },
+                                                { label: 'Dalam Pemantauan', value: 'Dalam Pemantauan' },
+                                                { label: 'Stabil', value: 'Stabil' },
                                             ]
                                         }
                                     ]}

@@ -1,15 +1,21 @@
 import {
-  LayoutDashboard,
-  ShieldAlert,
-  Trees,
-  Users,
-  HeartPulse,
-  GraduationCap,
+  AudioWaveform,
+  CheckSquare,
   Coins,
   Command,
   GalleryVerticalEnd,
-  AudioWaveform,
+  GraduationCap,
+  Grid,
+  HeartPulse,
+  HelpCircle,
+  LayoutDashboard,
+  MessageSquare,
+  Settings,
+  ShieldAlert,
   Siren,
+  Trees,
+  UserCog,
+  Users,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -38,7 +44,7 @@ export const sidebarData: SidebarData = {
   ],
   navGroups: [
     {
-      title: 'Overview',
+      title: 'General',
       items: [
         {
           title: 'Dashboard',
@@ -48,7 +54,7 @@ export const sidebarData: SidebarData = {
       ],
     },
     {
-      title: 'Keamanan & Darurat',
+      title: 'Keamanan & Lingkungan',
       items: [
         {
           title: 'Keamanan',
@@ -60,11 +66,6 @@ export const sidebarData: SidebarData = {
           url: '/bencana/monitoring',
           icon: Siren,
         },
-      ],
-    },
-    {
-      title: 'Lingkungan',
-      items: [
         {
           title: 'Lingkungan',
           url: '/lingkungan/monitoring',
@@ -73,7 +74,7 @@ export const sidebarData: SidebarData = {
       ],
     },
     {
-      title: 'Sosial & Warga',
+      title: 'Kesejahteraan Rakyat',
       items: [
         {
           title: 'Sosial',
@@ -90,11 +91,6 @@ export const sidebarData: SidebarData = {
           url: '/pendidikan/monitoring',
           icon: GraduationCap,
         },
-      ],
-    },
-    {
-      title: 'Ekonomi',
-      items: [
         {
           title: 'Ekonomi',
           url: '/ekonomi/monitoring',
@@ -102,6 +98,45 @@ export const sidebarData: SidebarData = {
         },
       ],
     },
-  ]
-
+    // {
+    //   title: 'Apps & Tools',
+    //   items: [
+    //     {
+    //       title: 'Tasks',
+    //       url: '/tasks',
+    //       icon: CheckSquare,
+    //     },
+    //     {
+    //       title: 'Chats',
+    //       url: '/chats',
+    //       icon: MessageSquare,
+    //     },
+    //     {
+    //       title: 'Users',
+    //       url: '/users',
+    //       icon: UserCog,
+    //     },
+    //     {
+    //       title: 'Apps',
+    //       url: '/apps',
+    //       icon: Grid,
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: 'Lainnya',
+    //   items: [
+    //     {
+    //       title: 'Settings',
+    //       url: '/settings',
+    //       icon: Settings,
+    //     },
+    //     {
+    //       title: 'Help Center',
+    //       url: '/help-center',
+    //       icon: HelpCircle,
+    //     },
+    //   ],
+    // },
+  ],
 }

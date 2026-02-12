@@ -1,35 +1,35 @@
 
-import { KeamananTable } from './keamanan-table'
-import { keamananColumns } from './keamanan-columns'
-import { mockKeamananData } from '../data/data'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { lingkunganColumns } from './laporan-columns'
+import { LaporanTable } from './laporan-table'
+import { mockLingkunganData } from '../data/data'
+import { ConfigDrawer } from '@/components/config-drawer'
 
-export default function KeamananList() {
-    const data = mockKeamananData
-
+export default function LaporanList() {
     return (
         <>
             <Header>
-                <div className='ms-auto flex items-center space-x-4'>
-                    <Search />
+                <Search />
+                <div className='ml-auto flex items-center space-x-4'>
                     <ThemeSwitch />
+                    <ConfigDrawer />
                     <ProfileDropdown />
                 </div>
             </Header>
             <Main>
                 <div className='mb-6'>
-                    <h1 className='text-3xl font-bold tracking-tight text-foreground'>Daftar Laporan Keamanan</h1>
+                    <h1 className='text-3xl font-bold tracking-tight text-foreground'>Laporan Lingkungan</h1>
                     <p className='text-lg text-muted-foreground mt-2'>
-                        Berikut adalah detail lengkap dari semua insiden keamanan yang dilaporkan.
-                        Gunakan fitur filter untuk menelusuri berdasarkan status penanganan atau kategori insiden.
+                        Daftar lengkap laporan terkait isu lingkungan seperti sampah, banjir, dan polusi.
+                        Silakan filter data untuk menemukan laporan spesifik.
                     </p>
                 </div>
                 <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-                    <KeamananTable data={data} columns={keamananColumns} />
+                    <LaporanTable data={mockLingkunganData} columns={lingkunganColumns} />
                 </div>
             </Main>
         </>

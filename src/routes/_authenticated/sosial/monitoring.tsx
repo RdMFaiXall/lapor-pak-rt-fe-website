@@ -1,9 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { MonitoringDashboard } from '@/features/sosial'
 
 export const Route = createFileRoute('/_authenticated/sosial/monitoring')({
-    component: RouteComponent,
+    component: MonitoringDashboard,
 })
-
-function RouteComponent() {
-    return <div>Hello "/_authenticated/sosial/monitoring"!</div>
-}

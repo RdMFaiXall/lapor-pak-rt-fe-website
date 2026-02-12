@@ -13,12 +13,12 @@ import {
     XAxis,
     YAxis
 } from 'recharts'
-import { categories, mockKeamananData } from '../data/data'
+import { categories, mockSosialData } from '../data/data'
 
 // Calculate statistics from actual mock data
-const totalReports = mockKeamananData.length
+const totalReports = mockSosialData.length
 const chartData = categories.map(cat => {
-    const count = mockKeamananData.filter(item => item.category === cat.value).length
+    const count = mockSosialData.filter(item => item.category === cat.value).length
     const percentage = ((count / totalReports) * 100).toFixed(1)
     return {
         name: cat.label,
@@ -60,13 +60,13 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     return null
 }
 
-export function KasusCategoryChart() {
+export function SosialCategoryChart() {
     return (
         <div className='col-span-1 lg:col-span-4'>
             <div className='mb-4'>
-                <h3 className='text-lg font-semibold text-foreground'>Statistik Kategori Keamanan</h3>
+                <h3 className='text-lg font-semibold text-foreground'>Statistik Kesejahteraan Sosial</h3>
                 <p className='text-sm text-muted-foreground'>
-                    Mayoritas laporan saat ini berkaitan dengan {chartData[0]?.name}.
+                    Fokus bantuan saat ini tertuju pada program {chartData[0]?.name}.
                 </p>
             </div>
             <div className='pl-2' style={{ height: `${barChartHeight}px`, width: '100%' }}>
@@ -105,13 +105,13 @@ export function KasusCategoryChart() {
     )
 }
 
-export function PriorityChart() {
+export function SosialPriorityChart() {
     return (
         <div className='col-span-1 lg:col-span-3'>
             <div className='mb-4'>
-                <h3 className='text-lg font-semibold text-foreground'>Proporsi Kategori</h3>
+                <h3 className='text-lg font-semibold text-foreground'>Proporsi Bantuan</h3>
                 <p className='text-sm text-muted-foreground'>
-                    Distribusi jenis laporan keamanan yang masuk.
+                    Distribusi jenis bantuan sosial yang disalurkan.
                 </p>
             </div>
             <div className='h-[400px] w-full flex items-center justify-center relative'>
@@ -140,7 +140,7 @@ export function PriorityChart() {
                             formatter={(value) => <span className="text-xs text-muted-foreground ml-1">{value}</span>}
                         />
                         <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
-                            <tspan x="50%" dy="-12" fontSize="12" fill="#6b7280">Total Kasus</tspan>
+                            <tspan x="50%" dy="-12" fontSize="12" fill="#6b7280">Total Bantuan</tspan>
                             <tspan x="50%" dy="24" fontSize="24" fontWeight="bold" fill="#111827">{totalReports}</tspan>
                         </text>
                     </PieChart>

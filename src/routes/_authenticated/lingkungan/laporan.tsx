@@ -1,9 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { LaporanList } from '@/features/lingkungan'
 
-export const Route = createFileRoute('/_authenticated/lingkungan/laporan')({
-    component: RouteComponent,
+export const Route = createFileRoute(
+    '/_authenticated/lingkungan/laporan',
+)({
+    component: LaporanList,
 })
-
-function RouteComponent() {
-    return <div>Hello "/_authenticated/lingkungan/laporan"!</div>
-}

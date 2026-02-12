@@ -58,7 +58,10 @@ export const columns: ColumnDef<EducationReport>[] = [
             <DataTableColumnHeader column={column} title='Pelapor' />
         ),
         cell: ({ row }) => (
-            <div className='w-[80px]'>{row.getValue('pelapor')}</div>
+            <div className='flex flex-col'>
+                <span className='font-medium'>{row.original.pelapor}</span>
+                <span className='text-xs text-muted-foreground'>RT {row.original.rt}</span>
+            </div>
         ),
     },
     {
@@ -67,10 +70,17 @@ export const columns: ColumnDef<EducationReport>[] = [
             <DataTableColumnHeader column={column} title='Tanggal' />
         ),
         cell: ({ row }) => {
+            const date = new Date(row.getValue('tanggal_laporan'))
+            const formattedDate = date.toLocaleDateString('id-ID', {
+                weekday: 'long',
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            })
             return (
                 <div className='flex space-x-2'>
                     <span className='max-w-[500px] truncate font-medium'>
-                        {row.getValue('tanggal_laporan')}
+                        {formattedDate}
                     </span>
                 </div>
             )

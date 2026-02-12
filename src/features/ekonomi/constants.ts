@@ -94,7 +94,7 @@ export const mockData: EconomyReport[] = [
     {
         id: '4',
         nama_warga: 'Taufik Hidayat',
-        pelapor: 'Kader',
+        pelapor: 'Pak RT',
         rt: '04',
         status_pekerjaan: 'Tidak Bekerja',
         jenis_pekerjaan: '-',
@@ -124,7 +124,7 @@ export const mockData: EconomyReport[] = [
     {
         id: '6',
         nama_warga: 'Budi Santoso',
-        pelapor: 'Warga',
+        pelapor: 'Bu RT',
         rt: '01',
         status_pekerjaan: 'Bekerja',
         jenis_pekerjaan: 'Ojek Online',
@@ -174,7 +174,7 @@ export const mockData: EconomyReport[] = [
     {
         id: '9',
         nama_warga: 'Euis Darliah',
-        pelapor: 'Kader',
+        pelapor: 'Bu RT',
         rt: '04',
         status_pekerjaan: 'Tidak Bekerja',
         jenis_pekerjaan: '-',

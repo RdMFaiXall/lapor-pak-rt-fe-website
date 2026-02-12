@@ -34,7 +34,7 @@ export type DisasterReport = {
 export const mockData: DisasterReport[] = [
     {
         id: '1',
-        pelapor: 'Pak RT 01',
+        pelapor: 'Pak RT',
         rt: '01',
         jenis_bencana: 'Banjir',
         lokasi: 'RT 01 / RW 05 (Dekat Sungai)',
@@ -53,7 +53,7 @@ export const mockData: DisasterReport[] = [
     },
     {
         id: '2',
-        pelapor: 'Bu RT 02',
+        pelapor: 'Bu RT',
         rt: '02',
         jenis_bencana: 'Pohon Tumbang',
         lokasi: 'Jalan Utama Desa (Depan Balai)',
@@ -72,7 +72,7 @@ export const mockData: DisasterReport[] = [
     },
     {
         id: '3',
-        pelapor: 'Warga (Pak Tejo)',
+        pelapor: 'Pak RT',
         rt: '03',
         jenis_bencana: 'Kebakaran',
         lokasi: 'RT 03 (Rumah Bu Sumi)',
@@ -91,7 +91,7 @@ export const mockData: DisasterReport[] = [
     },
     {
         id: '4',
-        pelapor: 'Karang Taruna',
+        pelapor: 'Pak RT',
         rt: '04',
         jenis_bencana: 'Angin Puting Beliung',
         lokasi: 'RT 04 / RW 01',
@@ -110,7 +110,7 @@ export const mockData: DisasterReport[] = [
     },
     {
         id: '5',
-        pelapor: 'Pak RT 05',
+        pelapor: 'Pak RT',
         rt: '05',
         jenis_bencana: 'Banjir',
         lokasi: 'RT 05 (Dekat Sawah)',
@@ -129,7 +129,7 @@ export const mockData: DisasterReport[] = [
     },
     {
         id: '6',
-        pelapor: 'Warga (Pak Amir)',
+        pelapor: 'Bu RT',
         rt: '02',
         jenis_bencana: 'Pohon Tumbang',
         lokasi: 'Jalan Desa RT 02',
@@ -148,7 +148,7 @@ export const mockData: DisasterReport[] = [
     },
     {
         id: '7',
-        pelapor: 'Ibu PKK',
+        pelapor: 'Pak RT',
         rt: '01',
         jenis_bencana: 'Lainnya',
         lokasi: 'Balai Warga',
@@ -167,7 +167,7 @@ export const mockData: DisasterReport[] = [
     },
     {
         id: '8',
-        pelapor: 'Hansip',
+        pelapor: 'Bu RT',
         rt: '03',
         jenis_bencana: 'Tanah Longsor',
         lokasi: 'Tebing Sungai RT 03',
@@ -186,7 +186,7 @@ export const mockData: DisasterReport[] = [
     },
     {
         id: '9',
-        pelapor: 'Pak RT 04',
+        pelapor: 'Pak RT',
         rt: '04',
         jenis_bencana: 'Angin Puting Beliung',
         lokasi: 'Lapangan Desa',
@@ -205,7 +205,7 @@ export const mockData: DisasterReport[] = [
     },
     {
         id: '10',
-        pelapor: 'Karang Taruna',
+        pelapor: 'Bu RT',
         rt: '05',
         jenis_bencana: 'Kebakaran',
         lokasi: 'Lahan Kosong RT 05',

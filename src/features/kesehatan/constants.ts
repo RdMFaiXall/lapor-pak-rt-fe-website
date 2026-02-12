@@ -4,6 +4,7 @@ export type HealthReport = {
     id: string
     nama_warga: string // Diambil dari id_warga (tahap 1 identitas)
     pelapor: string
+    rt: string // RT asal pelapor
     // [CSV Row 1] Subjek: isu_kesehatan
     isu_kesehatan: 'Wabah DBD' | 'Stunting' | 'Gizi Buruk' | 'Ibu Hamil Berisiko' | 'Warga Belum BPJS'
     // [CSV Row 2-8] Detail (Dynamic fields based on Issue)
@@ -25,6 +26,7 @@ export const mockData: HealthReport[] = [
         id: '1',
         nama_warga: 'Budi Santoso',
         pelapor: 'Pak RT',
+        rt: '01',
         isu_kesehatan: 'Wabah DBD',
         detail_penyakit: 'Demam Berdarah Dengue (DBD)',
         usia_penderita: '34 Tahun',
@@ -39,6 +41,7 @@ export const mockData: HealthReport[] = [
         id: '2',
         nama_warga: 'Siti Aminah',
         pelapor: 'Bu RT',
+        rt: '02',
         isu_kesehatan: 'Ibu Hamil Berisiko',
         detail_penyakit: 'Hipertensi Kehamilan (Preeklampsia)',
         usia_penderita: '28 Tahun',
@@ -52,7 +55,8 @@ export const mockData: HealthReport[] = [
     {
         id: '3',
         nama_warga: 'Dikta (Balita)',
-        pelapor: 'Kader Posyandu',
+        pelapor: 'Pak RT',
+        rt: '03',
         isu_kesehatan: 'Stunting',
         detail_penyakit: 'Gagal Tumbuh',
         usia_penderita: '36 Bulan',
@@ -67,6 +71,7 @@ export const mockData: HealthReport[] = [
         id: '4',
         nama_warga: 'Joko',
         pelapor: 'Pak RT',
+        rt: '04',
         isu_kesehatan: 'Warga Belum BPJS',
         detail_penyakit: '-',
         usia_penderita: '45 Tahun',
@@ -81,6 +86,7 @@ export const mockData: HealthReport[] = [
         id: '5',
         nama_warga: 'Rina (Balita)',
         pelapor: 'Bu RT',
+        rt: '05',
         isu_kesehatan: 'Gizi Buruk',
         detail_penyakit: 'Marasmus',
         usia_penderita: '40 Bulan',
@@ -95,6 +101,7 @@ export const mockData: HealthReport[] = [
         id: '6',
         nama_warga: 'Slamet',
         pelapor: 'Pak RT',
+        rt: '01',
         isu_kesehatan: 'Wabah DBD',
         detail_penyakit: 'Demam Dengue',
         usia_penderita: '12 Tahun',
@@ -108,7 +115,8 @@ export const mockData: HealthReport[] = [
     {
         id: '7',
         nama_warga: 'Bu Tejo',
-        pelapor: 'Kader PKK',
+        pelapor: 'Bu RT',
+        rt: '02',
         isu_kesehatan: 'Ibu Hamil Berisiko',
         detail_penyakit: 'Kehamilan Risiko Tinggi (Usia)',
         usia_penderita: '42 Tahun',
@@ -123,6 +131,7 @@ export const mockData: HealthReport[] = [
         id: '8',
         nama_warga: 'Wawan',
         pelapor: 'Pak RT',
+        rt: '03',
         isu_kesehatan: 'Warga Belum BPJS',
         detail_penyakit: '-',
         usia_penderita: '25 Tahun',
@@ -136,7 +145,8 @@ export const mockData: HealthReport[] = [
     {
         id: '9',
         nama_warga: 'Mbah Surip',
-        pelapor: 'Warga Tetangga',
+        pelapor: 'Pak RT',
+        rt: '04',
         isu_kesehatan: 'Warga Belum BPJS',
         detail_penyakit: 'Komplikasi Jantung',
         usia_penderita: '78 Tahun',
@@ -150,7 +160,8 @@ export const mockData: HealthReport[] = [
     {
         id: '10',
         nama_warga: 'Nayla (Balita)',
-        pelapor: 'Kader Posyandu',
+        pelapor: 'Bu RT',
+        rt: '05',
         isu_kesehatan: 'Stunting',
         detail_penyakit: 'Perawakan Pendek',
         usia_penderita: '30 Bulan',

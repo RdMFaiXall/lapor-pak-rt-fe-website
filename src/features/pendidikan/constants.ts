@@ -4,6 +4,7 @@ export type EducationReport = {
     id: string
     nama_warga: string
     pelapor: string
+    rt: string // RT asal pelapor
     // [CSV Source 28] Subjek: isu_pendidikan
     isu_pendidikan: 'Anak Tidak Sekolah' | 'Putus Sekolah' | 'Remaja Menganggur' | 'Mapping Potensi'
 
@@ -28,6 +29,7 @@ export const mockData: EducationReport[] = [
         id: '1',
         nama_warga: 'Ahmad Dani',
         pelapor: 'Pak RT',
+        rt: '01',
         isu_pendidikan: 'Putus Sekolah',
         jenjang_terakhir: 'SMP',
         nama_sekolah: 'SMP N 1 Desa',
@@ -41,6 +43,7 @@ export const mockData: EducationReport[] = [
         id: '2',
         nama_warga: 'Rina Wati',
         pelapor: 'Bu RT',
+        rt: '02',
         isu_pendidikan: 'Remaja Menganggur',
         jenjang_terakhir: 'SMK',
         nama_sekolah: 'SMK Tata Busana',
@@ -53,7 +56,8 @@ export const mockData: EducationReport[] = [
     {
         id: '3',
         nama_warga: 'Doni Saputra',
-        pelapor: 'Karang Taruna',
+        pelapor: 'Pak RT',
+        rt: '03',
         isu_pendidikan: 'Mapping Potensi',
         jenjang_terakhir: 'SMA',
         nama_sekolah: 'SMA N 1 Kota',
@@ -68,6 +72,7 @@ export const mockData: EducationReport[] = [
         id: '4',
         nama_warga: 'Siti Nurhaliza',
         pelapor: 'Pak RT',
+        rt: '04',
         isu_pendidikan: 'Anak Tidak Sekolah',
         jenjang_terakhir: 'SD',
         nama_sekolah: '-',
@@ -80,7 +85,8 @@ export const mockData: EducationReport[] = [
     {
         id: '5',
         nama_warga: 'Budi (Remaja)',
-        pelapor: 'Warga',
+        pelapor: 'Bu RT',
+        rt: '05',
         isu_pendidikan: 'Remaja Menganggur',
         jenjang_terakhir: 'SMK',
         nama_sekolah: 'SMK TKJ',
@@ -94,6 +100,7 @@ export const mockData: EducationReport[] = [
         id: '6',
         nama_warga: 'Dewi Sartika',
         pelapor: 'Bu RT',
+        rt: '01',
         isu_pendidikan: 'Putus Sekolah',
         jenjang_terakhir: 'SMA',
         nama_sekolah: 'SMA Swasta',
@@ -106,7 +113,8 @@ export const mockData: EducationReport[] = [
     {
         id: '7',
         nama_warga: 'Eko Prasetyo',
-        pelapor: 'Karang Taruna',
+        pelapor: 'Pak RT',
+        rt: '02',
         isu_pendidikan: 'Mapping Potensi',
         jenjang_terakhir: 'Sarjana',
         nama_sekolah: 'Universitas Terbuka',
@@ -121,6 +129,7 @@ export const mockData: EducationReport[] = [
         id: '8',
         nama_warga: 'Fajar',
         pelapor: 'Pak RT',
+        rt: '03',
         isu_pendidikan: 'Anak Tidak Sekolah',
         jenjang_terakhir: '-',
         nama_sekolah: '-',
@@ -133,7 +142,8 @@ export const mockData: EducationReport[] = [
     {
         id: '9',
         nama_warga: 'Gita Gutawa',
-        pelapor: 'Karang Taruna',
+        pelapor: 'Bu RT',
+        rt: '04',
         isu_pendidikan: 'Mapping Potensi',
         jenjang_terakhir: 'SMP',
         nama_sekolah: 'SMP N 2',
@@ -148,6 +158,7 @@ export const mockData: EducationReport[] = [
         id: '10',
         nama_warga: 'Hendra',
         pelapor: 'Pak RT',
+        rt: '05',
         isu_pendidikan: 'Remaja Menganggur',
         jenjang_terakhir: 'SD',
         nama_sekolah: 'SD Inpres',

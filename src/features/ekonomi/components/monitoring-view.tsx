@@ -1,13 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { mockData } from '../constants'
-import { Bar, BarChart, CartesianGrid, Cell, LabelList, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, Cell, LabelList, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { PieChart as PieChartIcon, BarChart3 } from 'lucide-react'
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d']
+const COLORS = ['#2563eb', '#db2777', '#7c3aed', '#059669', '#d97706', '#0891b2']
 
 export default function MonitoringView() {
     // Data untuk Grafik
@@ -21,17 +22,20 @@ export default function MonitoringView() {
             acc[isu].jumlah += 1
             return acc
         }, {} as Record<string, { name: string; jumlah: number }>)
-    ).map(item => {
-        const percentage = ((item.jumlah / totalReports) * 100).toFixed(1)
-        return {
-            ...item,
-            percentage,
-            label: `${item.jumlah} (${percentage}%)`
-        }
-    })
+    )
+        .sort((a, b) => b.jumlah - a.jumlah)
+        .map((item, index) => {
+            const percentage = ((item.jumlah / totalReports) * 100).toFixed(1)
+            return {
+                ...item,
+                percentage,
+                fill: COLORS[index % COLORS.length],
+                label: `${item.jumlah}` // Simplified label for inside bar
+            }
+        })
 
-    // Dynamic height for Bar Chart: at least 300px, or 60px per item
-    const barChartHeight = Math.max(chartData.length * 60, 300)
+    // Dynamic height for Bar Chart: at least 200px, or 60px per item
+    const barChartHeight = Math.max(chartData.length * 60, 200)
 
     const CustomTooltip = ({ active, payload, label }: any) => {
         if (active && payload && payload.length) {
@@ -73,13 +77,22 @@ export default function MonitoringView() {
             <Main>
                 <div className='mb-6 flex items-center justify-between space-y-2'>
                     <h1 className='text-2xl font-bold tracking-tight'>Monitoring Ekonomi</h1>
+                    <p className='text-muted-foreground'>
+                        Analisis data pekerjaan dan kondisi ekonomi warga.
+                    </p>
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3">
                     {/* Area Grafik Bar - Takes 2/3 width on large screens */}
                     <Card className="lg:col-span-2 shadow-md flex flex-col">
                         <CardHeader>
-                            <CardTitle className="text-lg font-medium">Statistik Pekerjaan</CardTitle>
+                            <div className="flex items-center space-x-2">
+                                <BarChart3 className="h-5 w-5 text-muted-foreground" />
+                                <CardTitle className="text-lg font-medium">Statistik Pekerjaan</CardTitle>
+                            </div>
+                            <CardDescription>
+                                Distribusi status pekerjaan warga saat ini.
+                            </CardDescription>
                         </CardHeader>
                         <CardContent className='pl-2 flex-1'>
                             {/* Dynamic height container for scrolling or fitting */}
@@ -88,28 +101,29 @@ export default function MonitoringView() {
                                     <BarChart
                                         data={chartData}
                                         layout="vertical"
-                                        margin={{ left: 0, right: 60, top: 10, bottom: 10 }}
+                                        margin={{ left: 0, right: 20, top: 10, bottom: 10 }}
                                     >
-                                        <CartesianGrid horizontal={true} vertical={false} stroke="#e5e7eb" />
+
                                         <XAxis type="number" hide />
                                         <YAxis
                                             dataKey="name"
                                             type="category"
-                                            width={110}
+                                            width={140}
                                             tick={{ fontSize: 13, fill: '#6b7280' }}
                                             axisLine={false}
                                             tickLine={false}
                                             interval={0}
                                         />
                                         <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
-                                        <Bar dataKey="jumlah" radius={[0, 4, 4, 0]} barSize={24}>
-                                            {chartData.map((_entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        <Bar dataKey="jumlah" radius={[0, 4, 4, 0]} barSize={50}>
+                                            {chartData.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={entry.fill} />
                                             ))}
                                             <LabelList
                                                 dataKey="label"
-                                                position="right"
-                                                style={{ fill: '#374151', fontSize: 12, fontWeight: '600' }}
+                                                position="insideRight"
+                                                style={{ fill: '#fff', fontSize: 13, fontWeight: 'bold' }}
+                                                offset={10}
                                             />
                                         </Bar>
                                     </BarChart>
@@ -121,7 +135,13 @@ export default function MonitoringView() {
                     {/* Area Grafik Pie - Takes 1/3 width on large screens */}
                     <Card className="lg:col-span-1 shadow-md flex flex-col">
                         <CardHeader>
-                            <CardTitle className="text-lg font-medium">Proporsi Pekerjaan</CardTitle>
+                            <div className="flex items-center space-x-2">
+                                <PieChartIcon className="h-5 w-5 text-muted-foreground" />
+                                <CardTitle className="text-lg font-medium">Proporsi Pekerjaan</CardTitle>
+                            </div>
+                            <CardDescription>
+                                Persentase pembagian status pekerjaan.
+                            </CardDescription>
                         </CardHeader>
                         <CardContent className="flex-1">
                             <div className='h-[400px] w-full flex items-center justify-center relative'>
@@ -132,27 +152,29 @@ export default function MonitoringView() {
                                             cx="50%"
                                             cy="50%"
                                             innerRadius={80}
-                                            outerRadius={110}
+                                            outerRadius={120}
                                             paddingAngle={2}
                                             dataKey="jumlah"
                                             nameKey="name"
                                             isAnimationActive={true}
                                         >
-                                            {chartData.map((_entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            {chartData.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={entry.fill} />
                                             ))}
                                         </Pie>
                                         <Tooltip content={<CustomTooltip />} />
                                         <Legend
+                                            layout="vertical"
                                             verticalAlign="bottom"
-                                            height={36}
+                                            align="center"
+                                            height={100}
                                             iconType="circle"
                                             formatter={(value) => <span className="text-xs text-muted-foreground ml-1">{value}</span>}
                                         />
                                         {/* Center Text for Donut Chart */}
                                         <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
-                                            <tspan x="50%" dy="-12" fontSize="12" fill="#6b7280">Total Data</tspan>
-                                            <tspan x="50%" dy="24" fontSize="24" fontWeight="bold" fill="#111827">{totalReports}</tspan>
+                                            <tspan x="50%" dy="-5em" fontSize="12" fill="#6b7280">Total Laporan</tspan>
+                                            <tspan x="50%" dy="1.6em" fontSize="24" fontWeight="bold" fill="#111827">{totalReports}</tspan>
                                         </text>
                                     </PieChart>
                                 </ResponsiveContainer>

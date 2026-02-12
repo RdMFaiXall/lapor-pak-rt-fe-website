@@ -14,18 +14,22 @@ import {
     YAxis
 } from 'recharts'
 import { categories, mockKeamananData } from '../data/data'
+import { PieChart as PieChartIcon, BarChart3 } from 'lucide-react'
+
+// Professional Palette
+const COLORS = ['#2563eb', '#db2777', '#7c3aed', '#059669', '#d97706', '#0891b2']
 
 // Calculate statistics from actual mock data
 const totalReports = mockKeamananData.length
-const chartData = categories.map(cat => {
+const chartData = categories.map((cat, index) => {
     const count = mockKeamananData.filter(item => item.category === cat.value).length
     const percentage = ((count / totalReports) * 100).toFixed(1)
     return {
         name: cat.label,
         value: count,
-        color: cat.color,
+        color: COLORS[index % COLORS.length], // Use new palette
         percentage,
-        label: `${count} (${percentage}%)`
+        label: `${count}` // Simplified label
     }
 }).filter(item => item.value > 0).sort((a, b) => b.value - a.value)
 
@@ -64,8 +68,11 @@ export function KasusCategoryChart() {
     return (
         <div className='col-span-1 lg:col-span-4'>
             <div className='mb-4'>
-                <h3 className='text-lg font-semibold text-foreground'>Statistik Kategori Keamanan</h3>
-                <p className='text-sm text-muted-foreground'>
+                <div className="flex items-center space-x-2">
+                    <BarChart3 className="h-5 w-5 text-muted-foreground" />
+                    <h3 className='text-lg font-semibold text-foreground'>Statistik Kategori Keamanan</h3>
+                </div>
+                <p className='text-sm text-muted-foreground mt-1'>
                     Mayoritas laporan saat ini berkaitan dengan {chartData[0]?.name}.
                 </p>
             </div>
@@ -74,28 +81,29 @@ export function KasusCategoryChart() {
                     <BarChart
                         data={chartData}
                         layout="vertical"
-                        margin={{ left: 0, right: 60, top: 10, bottom: 10 }}
+                        margin={{ left: 0, right: 20, top: 10, bottom: 10 }}
                     >
-                        <CartesianGrid horizontal={true} vertical={false} stroke="#e5e7eb" />
+                        {/* No Grid */}
                         <XAxis type="number" hide />
                         <YAxis
                             dataKey="name"
                             type="category"
-                            width={150}
+                            width={140}
                             tick={{ fontSize: 13, fill: '#6b7280' }}
                             axisLine={false}
                             tickLine={false}
                             interval={0}
                         />
                         <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
-                        <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={24}>
+                        <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={50}>
                             {chartData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                             ))}
                             <LabelList
                                 dataKey="label"
-                                position="right"
-                                style={{ fill: '#374151', fontSize: 12, fontWeight: '600' }}
+                                position="insideRight"
+                                style={{ fill: '#fff', fontSize: 13, fontWeight: 'bold' }}
+                                offset={10}
                             />
                         </Bar>
                     </BarChart>
@@ -109,8 +117,11 @@ export function PriorityChart() {
     return (
         <div className='col-span-1 lg:col-span-3'>
             <div className='mb-4'>
-                <h3 className='text-lg font-semibold text-foreground'>Proporsi Kategori</h3>
-                <p className='text-sm text-muted-foreground'>
+                <div className="flex items-center space-x-2">
+                    <PieChartIcon className="h-5 w-5 text-muted-foreground" />
+                    <h3 className='text-lg font-semibold text-foreground'>Proporsi Kategori</h3>
+                </div>
+                <p className='text-sm text-muted-foreground mt-1'>
                     Distribusi jenis laporan keamanan yang masuk.
                 </p>
             </div>
@@ -122,7 +133,7 @@ export function PriorityChart() {
                             cx="50%"
                             cy="50%"
                             innerRadius={80}
-                            outerRadius={110}
+                            outerRadius={120}
                             paddingAngle={2}
                             dataKey="value"
                             nameKey="name"
@@ -134,14 +145,16 @@ export function PriorityChart() {
                         </Pie>
                         <Tooltip content={<CustomTooltip />} />
                         <Legend
+                            layout="vertical"
                             verticalAlign="bottom"
-                            height={36}
+                            align="center"
+                            height={100}
                             iconType="circle"
                             formatter={(value) => <span className="text-xs text-muted-foreground ml-1">{value}</span>}
                         />
                         <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
-                            <tspan x="50%" dy="-12" fontSize="12" fill="#6b7280">Total Kasus</tspan>
-                            <tspan x="50%" dy="24" fontSize="24" fontWeight="bold" fill="#111827">{totalReports}</tspan>
+                            <tspan x="50%" dy="-1.2em" fontSize="12" fill="#6b7280">Total Kasus</tspan>
+                            <tspan x="50%" dy="1.6em" fontSize="24" fontWeight="bold" fill="#111827">{totalReports}</tspan>
                         </text>
                     </PieChart>
                 </ResponsiveContainer>

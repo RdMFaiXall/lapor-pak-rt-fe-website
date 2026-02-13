@@ -175,9 +175,6 @@ export function SosialDataTable() {
                             <th className='px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider'>
                                 Alamat
                             </th>
-                            <th className='px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider'>
-                                Status
-                            </th>
                         </tr>
                     </thead>
                     <tbody className='divide-y divide-gray-100 dark:divide-gray-700'>
@@ -223,11 +220,6 @@ export function SosialDataTable() {
                                     </td>
                                     <td className='px-6 py-4 text-sm text-gray-600 dark:text-gray-400'>
                                         {item.location}
-                                    </td>
-                                    <td className='px-6 py-4 whitespace-nowrap'>
-                                        <span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'>
-                                            {item.status}
-                                        </span>
                                     </td>
                                 </tr>
                             ))

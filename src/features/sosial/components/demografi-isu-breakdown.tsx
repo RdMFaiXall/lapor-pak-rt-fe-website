@@ -1,4 +1,11 @@
-import { AlertTriangle } from 'lucide-react'
+import {
+    AlertTriangle,
+    Activity,
+    Users,
+    HeartPulse,
+    Wallet,
+    GraduationCap,
+} from 'lucide-react'
 import {
     wargaSakitData,
     wargaMeninggalData,
@@ -25,6 +32,8 @@ import {
     JenjangPendidikanChart,
     PenyebabPutusSekolahChart,
 } from './anak-putus-sekolah-charts'
+import { Card } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -39,82 +48,87 @@ const countBy = <T,>(arr: T[], key: keyof T): { name: string; value: number }[] 
         .sort((a, b) => b.value - a.value)
 }
 
+// ─── Shared Components ────────────────────────────────────────────────────────
+
+interface SectionContainerProps {
+    title: string
+    description?: string
+    icon: any
+    color: string
+    children: React.ReactNode
+    className?: string
+}
+
+function SectionContainer({
+    title,
+    description,
+    icon: Icon,
+    color,
+    children,
+    className,
+}: SectionContainerProps) {
+    const colorClasses: Record<string, string> = {
+        amber: 'border-amber-100 dark:border-amber-900/30 bg-amber-50/10',
+        rose: 'border-rose-100 dark:border-rose-900/30 bg-rose-50/10',
+        slate: 'border-slate-300 dark:border-slate-800 bg-slate-50/10',
+        violet: 'border-violet-100 dark:border-violet-900/30 bg-violet-50/10',
+        blue: 'border-blue-100 dark:border-blue-900/30 bg-blue-50/10',
+    }
+
+    const iconColorClasses: Record<string, string> = {
+        amber: 'text-amber-500 bg-amber-100 dark:bg-amber-950/40',
+        rose: 'text-rose-500 bg-rose-100 dark:bg-rose-950/40',
+        slate: 'text-slate-500 bg-slate-100 dark:bg-slate-800',
+        violet: 'text-violet-500 bg-violet-100 dark:bg-violet-950/40',
+        blue: 'text-blue-500 bg-blue-100 dark:bg-blue-950/40',
+    }
+
+    return (
+        <Card className={cn('border-none shadow-none bg-transparent overflow-hidden', className)}>
+            <div className={cn('border rounded-2xl p-6 transition-all duration-300 hover:shadow-md h-full', colorClasses[color] || 'border-gray-100 bg-white dark:bg-gray-900')}>
+                <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-4">
+                        <div className={cn('p-3 rounded-xl', iconColorClasses[color])}>
+                            <Icon className="w-6 h-6" />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                                {title}
+                            </h3>
+                            {description && (
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    {description}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div className="space-y-6">
+                    {children}
+                </div>
+            </div>
+        </Card>
+    )
+}
+
 // ─── Section: Warga Sakit ──────────────────────────────────────────────────────
 
 function WargaSakitSection() {
     const byDisease = countBy(wargaSakitData, 'jenisPenyakit')
 
     return (
-        <>
-            {/* <div className="flex flex-wrap gap-3 mb-6">
-                    <StatPill label="Total Kasus" value={total} color="#ef4444" />
-                    <StatPill label="Penyakit Menular" value={menular} color="#f97316" />
-                    <StatPill label="Tidak Menular" value={tidakMenular} color="#f59e0b" />
-                    <StatPill label="Jenis Penyakit" value={byDisease.length} color="#6b7280" />
-                </div> */}
-
-            <div>
+        <SectionContainer
+            title='Warga Sakit'
+            description='Monitoring kondisi kesehatan warga berdasarkan prevalensi penyakit.'
+            icon={Activity}
+            color='rose'
+        >
+            <div className='space-y-8'>
                 <WargaSakitJenisPenyakitByAgeChart />
-            </div>
-            <div>
                 <WargaSakitByDiseaseChart />
-            </div>
-            <div>
                 <JenisPenyakit data={byDisease} />
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* By Disease */}
-                {/* <div className='lg:col-span-2'>
-                    <JenisPenyakit data={byDisease} />
-                </div>
-                <div className="flex flex-col gap-8">
-                    <WargaSakitJenisPenyakitByAgeChart />
-                </div> */}
-                {/* <div className="lg:col-span-2">
-                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Berdasarkan Jenis Penyakit</p>
-                        <HorizontalBar data={byDisease} colors={PALETTE.sakit} label="kasus" />
-                    </div> */}
-
-                {/* Menular ratio + kelompok umur */}
-                {/* <div className="space-y-5">
-                        <div>
-                            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Menular vs Tidak Menular</p>
-                            <MiniDonut
-                                data={[{ name: 'Menular', value: menular }, { name: 'Tidak Menular', value: tidakMenular }]}
-                                colors={['#ef4444', '#f59e0b']}
-                            />
-                        </div>
-                        <div>
-                            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Kelompok Umur</p>
-                            <MiniDonut data={ageGroups} colors={PALETTE.sakit} />
-                        </div>
-                    </div> */}
-            </div>
-
-
-            {/* Warga list */}
-            {/* <div className="mt-6">
-                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Daftar Warga</p>
-                <div className="space-y-2">
-                    {wargaSakitData.map((w) => (
-                        <div key={w.id} className="flex items-center justify-between p-3 rounded-lg bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900/40 flex items-center justify-center">
-                                    <User className="w-4 h-4 text-rose-600 dark:text-rose-400" />
-                                </div>
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">{w.nama}</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">{w.jenisPenyakit} · {w.umur} th · {w.alamat}</p>
-                                </div>
-                            </div>
-                            <span className={`text-xs px-2 py-1 rounded-full font-medium ${w.kategori === 'Menular' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' : 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400'}`}>
-                                {w.kategori}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-            </div> */}
-        </>
+        </SectionContainer>
     )
 }
 
@@ -122,51 +136,55 @@ function WargaSakitSection() {
 
 function WargaMeninggalSection() {
     return (
-        <div className="space-y-6">
-            <div>
-                <PenyebabMeninggalByAgeChart />
+        <SectionContainer
+            title='Warga Meninggal'
+            description='Analisis data kematian berdasarkan penyebab dan kelompok usia.'
+            icon={HeartPulse}
+            color='slate'
+        >
+            <div className="space-y-6">
+                <div>
+                    <PenyebabMeninggalByAgeChart />
+                </div>
+                <div>
+                    <WargaMeninggalPerUsiaChart />
+                </div>
+                <div>
+                    <PenyebabMeninggalChart />
+                </div>
             </div>
-            <div>
-                <WargaMeninggalPerUsiaChart />
-            </div>
-            <div>
-                <PenyebabMeninggalChart />
-            </div>
-            {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <WargaMeninggalPerUsiaChart />
-                <PenyebabMeninggalChart />
-            </div> */}
-        </div>
+        </SectionContainer>
     )
 }
 
 // ─── Section: Warga Miskin Ekstrem ─────────────────────────────────────────────
 
 function WargaMiskinSection() {
-    const penerima = wargaMiskinData.filter(w => w.statusBantuan === 'Penerima').length
-    const byBantuan = countBy(wargaMiskinData.filter(w => w.jenisBantuan !== '-'), 'jenisBantuan')
+    const penerima = wargaMiskinData.filter((w) => w.statusBantuan === 'Penerima').length
+    const byBantuan = countBy(
+        wargaMiskinData.filter((w) => w.jenisBantuan !== '-'),
+        'jenisBantuan'
+    )
 
     return (
-        <>
-            {/* <div className="flex flex-wrap gap-3 mb-6">
-                <StatPill label="Total Warga" value={total} color="#f59e0b" />
-                <StatPill label="Penerima Bantuan" value={penerima} color="#10b981" />
-                <StatPill label="Belum Menerima" value={belum} color="#ef4444" />
-                <StatPill label="Rata-rata Tanggungan" value={`${avgTanggungan} org`} color="#d97706" />
-            </div> */}
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
+        <SectionContainer
+            title='Miskin Ekstrem'
+            description='Data kesejahteraan warga dan distribusi bantuan sosial.'
+            icon={Wallet}
+            color='amber'
+        >
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                <div className='lg:col-span-2'>
                     <EconomicConditionChart />
                 </div>
-                <div className="flex flex-col gap-8">
+                <div className='flex flex-col gap-8'>
                     <PenerimaBantuan count={penerima} />
                 </div>
             </div>
             <div>
                 <JenisBantuan data={byBantuan} />
             </div>
-        </>
+        </SectionContainer>
     )
 }
 
@@ -174,14 +192,21 @@ function WargaMiskinSection() {
 
 function LansiaTerlantarSection() {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-                <KondisiTempatTinggalChart />
+        <SectionContainer
+            title='Lansia Terlantar'
+            description='Monitoring kondisi kesehatan dan hunian para lansia.'
+            icon={Users}
+            color='violet'
+        >
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                    <KondisiTempatTinggalChart />
+                </div>
+                <div>
+                    <KondisiKesehatanChart />
+                </div>
             </div>
-            <div>
-                <KondisiKesehatanChart />
-            </div>
-        </div>
+        </SectionContainer>
     )
 }
 
@@ -189,80 +214,219 @@ function LansiaTerlantarSection() {
 
 function AnakPutusSekolahSection() {
     return (
-        <div className="space-y-6">
-            <PenyebabPerJenjangChart />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <JenjangPendidikanChart />
-                <PenyebabPutusSekolahChart />
+        <SectionContainer
+            title='Anak Putus Sekolah'
+            description='Distribusi hambatan pendidikan per jenjang sekolah.'
+            icon={GraduationCap}
+            color='blue'
+        >
+            <div className="space-y-6">
+                <PenyebabPerJenjangChart />
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <JenjangPendidikanChart />
+                    <PenyebabPutusSekolahChart />
+                </div>
+            </div>
+        </SectionContainer>
+    )
+}
+
+
+const issues = (grandTotal: number) => [
+    {
+        label: 'Miskin Ekstrem',
+        count: wargaMiskinData.length,
+        color: '#f59e0b',
+        bg: 'bg-amber-50 dark:bg-amber-950/20',
+        border: 'border-amber-200 dark:border-amber-800/40',
+        text: 'text-amber-600 dark:text-amber-400',
+        icon: Wallet,
+        pct: Math.round((wargaMiskinData.length / grandTotal) * 100),
+    },
+    {
+        label: 'Warga Sakit',
+        count: wargaSakitData.length,
+        color: '#ef4444',
+        bg: 'bg-rose-50 dark:bg-rose-950/20',
+        border: 'border-rose-200 dark:border-rose-800/40',
+        text: 'text-rose-600 dark:text-rose-400',
+        icon: Activity,
+        pct: Math.round((wargaSakitData.length / grandTotal) * 100),
+    },
+    {
+        label: 'Warga Meninggal',
+        count: wargaMeninggalData.length,
+        color: '#6b7280',
+        bg: 'bg-slate-50 dark:bg-slate-900/30',
+        border: 'border-slate-200 dark:border-slate-700/40',
+        text: 'text-slate-500 dark:text-slate-400',
+        icon: HeartPulse,
+        pct: Math.round((wargaMeninggalData.length / grandTotal) * 100),
+    },
+    {
+        label: 'Lansia Terlantar',
+        count: lansiaTerlantarData.length,
+        color: '#8b5cf6',
+        bg: 'bg-violet-50 dark:bg-violet-950/20',
+        border: 'border-violet-200 dark:border-violet-800/40',
+        text: 'text-violet-600 dark:text-violet-400',
+        icon: Users,
+        pct: Math.round((lansiaTerlantarData.length / grandTotal) * 100),
+    },
+    {
+        label: 'Putus Sekolah',
+        count: anakPutusSekolahData.length,
+        color: '#3b82f6',
+        bg: 'bg-blue-50 dark:bg-blue-950/20',
+        border: 'border-blue-200 dark:border-blue-800/40',
+        text: 'text-blue-600 dark:text-blue-400',
+        icon: GraduationCap,
+        pct: Math.round((anakPutusSekolahData.length / grandTotal) * 100),
+    },
+]
+
+// ─── Stat Card ────────────────────────────────────────────────────────────────
+
+interface StatCardProps {
+    label: string
+    count: number
+    pct: number
+    color: string
+    bg: string
+    border: string
+    text: string
+    icon: React.ElementType
+    grandTotal: number
+}
+
+function StatCard({ label, count, pct, color, bg, border, text, icon: Icon }: StatCardProps) {
+    const barWidth = Math.max(4, pct)
+    return (
+        <div className={`rounded-2xl border-2 ${bg} ${border} p-5 flex flex-col gap-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5`}>
+            <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-3 min-w-0">
+                    <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ background: color + '1a' }}
+                    >
+                        <Icon className="w-5 h-5" style={{ color }} />
+                    </div>
+                    <span className="text-sm font-semibold text-gray-600 dark:text-gray-400 leading-tight">
+                        {label}
+                    </span>
+                </div>
+                <span className={`text-3xl font-black leading-none flex-shrink-0 ${text}`}>
+                    {count}
+                </span>
+            </div>
+
+            <div>
+                <div className="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                    <div
+                        className="h-full rounded-full transition-all duration-700"
+                        style={{ width: `${barWidth}%`, background: color }}
+                    />
+                </div>
+                <div className="flex justify-between items-center mt-1.5">
+                    <span className="text-xs text-gray-400 dark:text-gray-500">dari total kasus</span>
+                    <span className="text-sm font-bold" style={{ color }}>{pct}%</span>
+                </div>
             </div>
         </div>
     )
 }
 
-// ─── Summary Header ────────────────────────────────────────────────────────────
+// ─── Main Component ───────────────────────────────────────────────────────────
 
-function DemografiSummary() {
-    const totalSakit = wargaSakitData.length
-    const totalMeninggal = wargaMeninggalData.length
-    const totalMiskin = wargaMiskinData.length
-    const totalLansia = lansiaTerlantarData.length
-    const totalSekolah = anakPutusSekolahData.length
-    const grandTotal = totalSakit + totalMeninggal + totalMiskin + totalLansia + totalSekolah
+export function DemografiSummary() {
+    const grandTotal =
+        wargaSakitData.length +
+        wargaMeninggalData.length +
+        wargaMiskinData.length +
+        lansiaTerlantarData.length +
+        anakPutusSekolahData.length
 
-    const issues = [
-        { label: 'Miskin Ekstrem', count: totalMiskin, color: '#f59e0b', pct: Math.round((totalMiskin / grandTotal) * 100) },
-        { label: 'Warga Sakit', count: totalSakit, color: '#ef4444', pct: Math.round((totalSakit / grandTotal) * 100) },
-        { label: 'Warga Meninggal', count: totalMeninggal, color: '#6b7280', pct: Math.round((totalMeninggal / grandTotal) * 100) },
-        { label: 'Lansia Terlantar', count: totalLansia, color: '#8b5cf6', pct: Math.round((totalLansia / grandTotal) * 100) },
-        { label: 'Putus Sekolah', count: totalSekolah, color: '#3b82f6', pct: Math.round((totalSekolah / grandTotal) * 100) },
-    ]
-
-    const belumBantuan = wargaMiskinData.filter(w => w.statusBantuan !== 'Penerima').length
+    const allIssues = issues(grandTotal)
+    const belumBantuan = wargaMiskinData.filter((w) => w.statusBantuan !== 'Penerima').length
 
     return (
-        <div className="rounded-2xl border bg-white dark:bg-gray-900 shadow-sm p-6">
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
-                <div className='flex justify-between gap-2'>
-                    <h2 className="text-xl text-gray-500 dark:text-gray-400">Total Kasus</h2>
-                    <p className="text-xl font-bold text-gray-900 dark:text-white">{grandTotal}</p>
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                    {belumBantuan > 0 && (
-                        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-amber-700 dark:text-amber-400 text-xs font-medium">
-                            <AlertTriangle className="w-4 h-4" />
-                            {belumBantuan} warga miskin belum terima bantuan
-                        </div>
-                    )}
-                    {/* {menular > 0 && (
-                        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800/40 text-red-700 dark:text-red-400 text-xs font-medium">
-                            <Clock className="w-4 h-4" />
-                            {menular} kasus penyakit menular aktif
-                        </div>
-                    )} */}
-                </div>
-            </div>
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
-            <div className="flex rounded-full overflow-hidden h-4 gap-0.5 mb-4">
-                {issues.map((isu, i) => (
-                    <div
-                        key={i}
-                        className="h-full transition-all"
-                        style={{ width: `${isu.pct}%`, backgroundColor: isu.color }}
-                        title={`${isu.label}: ${isu.count} (${isu.pct}%)`}
-                    />
-                ))}
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                {issues.map((isu, i) => (
-                    <div key={i} className="flex items-center gap-2.5 p-3 rounded-xl" style={{ backgroundColor: `${isu.color}10`, border: `1px solid ${isu.color}25` }}>
-                        <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: isu.color }} />
-                        <div className="min-w-0">
-                            <p className="text-lg text-slate-700 dark:text-slate-300 truncate">{isu.label}</p>
-                            <p className="text-lg font-bold" style={{ color: isu.color }}>{isu.count} <span className="text-xs font-normal text-gray-900 dark:text-white">({isu.pct}%)</span></p>
-                        </div>
+            {/* ── Header ── */}
+            <div className="px-6 pt-6 pb-5 border-b border-gray-100 dark:border-gray-800">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    {/* Title + grand total */}
+                    <div className="flex items-baseline gap-3">
+                        <h2 className="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                            Total Semua Kasus
+                        </h2>
+                        <span className="text-4xl font-black text-gray-900 dark:text-white leading-none">
+                            {grandTotal}
+                        </span>
                     </div>
-                ))}
+
+                    {/* Alert chips */}
+                    <div className="flex flex-wrap gap-2">
+                        {belumBantuan > 0 && (
+                            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 text-amber-700 dark:text-amber-400 text-sm font-semibold">
+                                <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+                                <span>{belumBantuan} warga miskin belum terima bantuan</span>
+                            </div>
+                        )}
+                        {/* {menularCount > 0 && (
+                            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 text-rose-700 dark:text-rose-400 text-sm font-semibold">
+                                <Activity className="w-4 h-4 flex-shrink-0" />
+                                <span>{menularCount} kasus penyakit menular aktif</span>
+                            </div>
+                        )} */}
+                    </div>
+                </div>
+            </div>
+
+            {/* ── Proportional bar ── */}
+            <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+                <div className="flex items-center gap-1 mb-3">
+                    <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+                        Proporsi per Kategori
+                    </span>
+                </div>
+                {/* Segmented bar */}
+                <div className="flex h-5 rounded-xl overflow-hidden gap-0.5">
+                    {allIssues.map((isu, i) => (
+                        <div
+                            key={i}
+                            className="h-full first:rounded-l-xl last:rounded-r-xl transition-all duration-500 relative group cursor-default"
+                            style={{ width: `${Math.max(2, isu.pct)}%`, backgroundColor: isu.color }}
+                            title={`${isu.label}: ${isu.count} kasus (${isu.pct}%)`}
+                        />
+                    ))}
+                </div>
+                {/* Legend */}
+                <div className="flex flex-wrap gap-x-5 gap-y-2 mt-3">
+                    {allIssues.map((isu, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                            <div
+                                className="w-2.5 h-2.5 rounded-sm flex-shrink-0"
+                                style={{ backgroundColor: isu.color }}
+                            />
+                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                                {isu.label}
+                            </span>
+                            <span className="text-sm font-bold" style={{ color: isu.color }}>
+                                {isu.pct}%
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* ── Stat cards grid ── */}
+            <div className="p-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                    {allIssues.map((isu, i) => (
+                        <StatCard key={i} {...isu} grandTotal={grandTotal} />
+                    ))}
+                </div>
             </div>
         </div>
     )
@@ -270,13 +434,16 @@ function DemografiSummary() {
 
 export function DemografiIsuBreakdown() {
     return (
-        <div className="space-y-4">
+        <div className="space-y-12 pb-20">
             <DemografiSummary />
-            <WargaMiskinSection />
-            <WargaSakitSection />
-            <WargaMeninggalSection />
-            <LansiaTerlantarSection />
-            <AnakPutusSekolahSection />
+
+            <div className="space-y-16">
+                <WargaMiskinSection />
+                <WargaSakitSection />
+                <WargaMeninggalSection />
+                <LansiaTerlantarSection />
+                <AnakPutusSekolahSection />
+            </div>
         </div>
     )
 }

@@ -51,15 +51,15 @@ const StackedTooltip = ({ active, payload, label }: any) => {
 // ─── Color palettes ────────────────────────────────────────────────────────────
 
 const JENJANG_COLORS: Record<string, string> = {
-    SD: '#2563eb',
-    SMP: '#3b82f6',
-    SMA: '#60a5fa',
-    SMK: '#93c5fd',
-    MTS: '#bfdbfe',
+    SD: '#10b981',
+    SMP: '#2563eb',
+    SMA: '#f59e0b',
+    SMK: '#ef4444',
+    MTS: '#8b5cf6',
 }
 const DEFAULT_COLOR = '#a5b4fc'
 
-const PENYEBAB_COLORS = ['#ef4444', '#f59e0b', '#8b5cf6', '#3b82f6', '#10b981', '#06b6d4']
+const PENYEBAB_COLORS = ['#2563eb', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe', '#06b6d4']
 
 // ─── Chart 1: Penyebab per Jenjang Pendidikan Terakhir (stacked) ──────────────
 

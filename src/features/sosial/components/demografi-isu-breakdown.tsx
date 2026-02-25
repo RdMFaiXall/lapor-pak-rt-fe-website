@@ -57,6 +57,7 @@ interface SectionContainerProps {
     color: string
     children: React.ReactNode
     className?: string
+    count?: number
 }
 
 function SectionContainer({
@@ -66,6 +67,7 @@ function SectionContainer({
     color,
     children,
     className,
+    count,
 }: SectionContainerProps) {
     const colorClasses: Record<string, string> = {
         amber: 'border-amber-100 dark:border-amber-900/30 bg-amber-50/10',
@@ -86,7 +88,7 @@ function SectionContainer({
     return (
         <Card className={cn('border-none shadow-none bg-transparent overflow-hidden', className)}>
             <div className={cn('border rounded-2xl p-6 transition-all duration-300 hover:shadow-md h-full', colorClasses[color] || 'border-gray-100 bg-white dark:bg-gray-900')}>
-                <div className="flex items-center justify-between mb-8">
+                <div className='flex items-start justify-between mb-8'>
                     <div className="flex items-center gap-4">
                         <div className={cn('p-3 rounded-xl', iconColorClasses[color])}>
                             <Icon className="w-6 h-6" />
@@ -102,6 +104,14 @@ function SectionContainer({
                             )}
                         </div>
                     </div>
+                    {count !== undefined && (
+                        <div className="flex flex-col items-end">
+                            <span className={cn('px-3 py-1.5 rounded-xl text-2xl font-black leading-none flex items-baseline gap-1', iconColorClasses[color])}>
+                                {count}
+                                <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
+                            </span>
+                        </div>
+                    )}
                 </div>
                 <div className="space-y-6">
                     {children}
@@ -122,6 +132,7 @@ function WargaSakitSection() {
             description='Monitoring kondisi kesehatan warga berdasarkan prevalensi penyakit.'
             icon={Activity}
             color='rose'
+            count={wargaSakitData.length}
         >
             <div className='space-y-8'>
                 <WargaSakitJenisPenyakitByAgeChart />
@@ -138,9 +149,10 @@ function WargaMeninggalSection() {
     return (
         <SectionContainer
             title='Warga Meninggal'
-            description='Analisis data kematian berdasarkan penyebab dan kelompok usia.'
+            description='Analisis data kematian berdasarkan penyebab and kelompok usia.'
             icon={HeartPulse}
             color='slate'
+            count={wargaMeninggalData.length}
         >
             <div className="space-y-6">
                 <div>
@@ -172,13 +184,14 @@ function WargaMiskinSection() {
             description='Data kesejahteraan warga dan distribusi bantuan sosial.'
             icon={Wallet}
             color='amber'
+            count={wargaMiskinData.length}
         >
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
                 <div className='lg:col-span-2'>
                     <EconomicConditionChart />
                 </div>
                 <div className='flex flex-col gap-8'>
-                    <PenerimaBantuan count={penerima} />
+                    <PenerimaBantuan count={penerima} totalPenduduk={wargaMiskinData.length} />
                 </div>
             </div>
             <div>
@@ -197,6 +210,7 @@ function LansiaTerlantarSection() {
             description='Monitoring kondisi kesehatan dan hunian para lansia.'
             icon={Users}
             color='violet'
+            count={lansiaTerlantarData.length}
         >
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
@@ -219,6 +233,7 @@ function AnakPutusSekolahSection() {
             description='Distribusi hambatan pendidikan per jenjang sekolah.'
             icon={GraduationCap}
             color='blue'
+            count={anakPutusSekolahData.length}
         >
             <div className="space-y-6">
                 <PenyebabPerJenjangChart />

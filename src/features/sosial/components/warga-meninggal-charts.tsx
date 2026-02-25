@@ -11,7 +11,7 @@ import {
     YAxis,
 } from 'recharts'
 import CustomTooltip from '@/components/ui/custom-tooltip'
-import { wargaMeninggalData } from '../data/dashboard-data'
+import { wargaMeninggalData } from '../data/data'
 
 // ─── Shared tooltip for stacked bars ──────────────────────────────────────────
 

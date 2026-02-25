@@ -11,7 +11,7 @@ import {
     YAxis,
 } from 'recharts'
 import CustomTooltip from '@/components/ui/custom-tooltip'
-import { lansiaTerlantarData } from '../data/dashboard-data'
+import { lansiaTerlantarData } from '../data/data'
 
 const LANSIA_COLORS = ['#7c3aed', '#a855f7', '#c084fc', '#e879f9', '#f0abfc']
 

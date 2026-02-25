@@ -6,7 +6,7 @@ import {
     wargaMeninggalData,
     wargaMiskinData,
     wargaSakitData
-} from '../data/dashboard-data';
+} from '../data/data';
 
 const mapData = [
     ...wargaSakitData.map(d => ({

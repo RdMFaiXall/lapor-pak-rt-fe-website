@@ -8,7 +8,7 @@ import {
     wargaMiskinData,
     wargaSakitData,
     categories
-} from '../data/dashboard-data'
+} from '../data/data'
 import { useState } from 'react'
 import { MapPin, Users, Calendar } from 'lucide-react'
 

@@ -8,7 +8,7 @@ import {
     lansiaTerlantarData,
     anakPutusSekolahData,
     categories
-} from '../data/dashboard-data'
+} from '../data/data'
 import { Input } from '@/components/ui/input'
 import { Search, Filter, Download } from 'lucide-react'
 

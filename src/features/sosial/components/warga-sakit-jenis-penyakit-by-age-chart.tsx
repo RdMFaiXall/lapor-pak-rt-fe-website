@@ -35,7 +35,7 @@ const StackedTooltip = ({ active, payload, label }: any) => {
         </div>
     )
 }
-import { wargaSakitData } from '../data/dashboard-data'
+import { wargaSakitData } from '../data/data'
 
 const AGE_GROUPS = [
     { key: 'Anak', label: 'Anak (0-14)', color: '#06b6d4' },

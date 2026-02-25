@@ -13,7 +13,7 @@ import {
     wargaMeninggalData,
     wargaMiskinData,
     wargaSakitData
-} from '../data/dashboard-data'
+} from '../data/data'
 import { format, parseISO } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { Badge } from '@/components/ui/badge'

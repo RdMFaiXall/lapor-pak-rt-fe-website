@@ -11,7 +11,7 @@ import {
     YAxis,
 } from 'recharts'
 import CustomTooltip from '@/components/ui/custom-tooltip'
-import { anakPutusSekolahData } from '../data/dashboard-data'
+import { anakPutusSekolahData } from '../data/data'
 
 // ─── Shared stacked tooltip ────────────────────────────────────────────────────
 

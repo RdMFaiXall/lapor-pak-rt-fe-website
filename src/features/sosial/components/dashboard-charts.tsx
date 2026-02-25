@@ -15,7 +15,7 @@ import {
     wargaMeninggalData,
     lansiaTerlantarData,
     anakPutusSekolahData,
-} from '../data/dashboard-data'
+} from '../data/data'
 import CustomTooltip from '@/components/ui/custom-tooltip'
 import { Card, CardContent } from '@/components/ui/card'
 

@@ -483,7 +483,7 @@ export function AnakPutusSekolahByCauseChart() {
                 {total} kasus berdasarkan penyebab
             </p>
 
-            <div className='h-[320px]'>
+            <div className='h-[400px]'>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                         data={chartData}
@@ -492,10 +492,11 @@ export function AnakPutusSekolahByCauseChart() {
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                         <XAxis
                             dataKey="name"
-                            tick={{ fontSize: 12, fill: '#6b7280' }}
-                            angle={-45}
+                            tick={{ fontSize: 11, fill: '#6b7280' }}
+                            angle={-30}
                             textAnchor="end"
-                            height={80}
+                            height={70}
+                            interval={0}
                         />
                         <YAxis tick={{ fontSize: 12, fill: '#6b7280' }} />
                         <Tooltip

@@ -116,7 +116,7 @@ export function PenyebabPerJenjangChart() {
                         Penyebab per Jenjang Pendidikan Terakhir
                     </h3>
                     <div className="flex flex-col lg:flex-row gap-8 items-start">
-                        <div className="flex-1 h-[240px] w-full">
+                        <div className="flex-1 h-[400px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
                                     data={chartData}
@@ -135,10 +135,11 @@ export function PenyebabPerJenjangChart() {
                                     <YAxis
                                         dataKey="name"
                                         type="category"
-                                        width={130}
-                                        tick={{ fontSize: 12, fontWeight: 600, fill: '#64748b' }}
+                                        width={140}
+                                        tick={{ fontSize: 11, fontWeight: 600, fill: '#64748b' }}
                                         axisLine={false}
                                         tickLine={false}
+                                        interval={0}
                                     />
                                     <Tooltip cursor={{ fill: 'transparent' }} content={<StackedTooltip />} />
                                     {allJenjang.map((jenjang, index) => (
@@ -279,7 +280,7 @@ export function PenyebabPutusSekolahChart() {
     return (
         <Card className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full">
             <h3 className="text-md font-semibold text-slate-400 mb-6">Penyebab Anak Putus Sekolah</h3>
-            <div className="h-[280px] w-full py-4">
+            <div className="h-[400px] w-full py-4">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                         data={chartData}
@@ -290,8 +291,12 @@ export function PenyebabPutusSekolahChart() {
                             dataKey="name"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: '#64748b', fontSize: 12, fontWeight: 500 }}
-                            dy={10}
+                            tick={{ fill: '#64748b', fontSize: 11, fontWeight: 500 }}
+                            dy={15}
+                            interval={0}
+                            angle={-30}
+                            textAnchor="end"
+                            height={70}
                         />
                         <YAxis
                             axisLine={false}

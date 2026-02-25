@@ -20,7 +20,7 @@ const JenisPenyakit = ({ data }: JenisPenyakitProps) => {
         <Card className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full'>
             <h3 className="text-md font-semibold text-slate-400 mb-6">Jenis Penyakit</h3>
 
-            <div className="h-[300px] w-full py-4">
+            <div className="h-[400px] w-full py-4">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                         data={chartData}
@@ -36,8 +36,12 @@ const JenisPenyakit = ({ data }: JenisPenyakitProps) => {
                             dataKey="name"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: '#64748b', fontSize: 13, fontWeight: 500 }}
-                            dy={10}
+                            tick={{ fill: '#64748b', fontSize: 11, fontWeight: 500 }}
+                            dy={15}
+                            interval={0}
+                            angle={-30}
+                            textAnchor="end"
+                            height={60}
                         />
                         <YAxis
                             axisLine={false}

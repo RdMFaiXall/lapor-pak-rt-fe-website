@@ -85,7 +85,7 @@ export default function WargaSakitJenisPenyakitByAgeChart() {
                 <div className='bg-white dark:bg-gray-800 rounded-xl p-4 h-full'>
                     <h3 className="text-md font-semibold text-slate-400 mb-6">Jenis Penyakit per Kelompok Usia</h3>
                     <div className='flex flex-col lg:flex-row gap-8 items-start'>
-                        <div className='flex-1 h-[280px] w-full'>
+                        <div className='flex-1 h-[400px] w-full'>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
                                     data={chartData}
@@ -104,10 +104,11 @@ export default function WargaSakitJenisPenyakitByAgeChart() {
                                     <YAxis
                                         dataKey="name"
                                         type="category"
-                                        width={120}
-                                        tick={{ fontSize: 12, fontWeight: 600, fill: '#64748b' }}
+                                        width={140}
+                                        tick={{ fontSize: 11, fontWeight: 600, fill: '#64748b' }}
                                         axisLine={false}
                                         tickLine={false}
+                                        interval={0}
                                     />
                                     <Tooltip
                                         cursor={{ fill: 'transparent' }}

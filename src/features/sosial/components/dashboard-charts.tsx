@@ -18,92 +18,82 @@ import {
     lansiaTerlantarData,
     anakPutusSekolahData,
 } from '../data/dashboard-data'
+import CustomTooltip from '@/components/ui/custom-tooltip'
+import { Card, CardContent } from '@/components/ui/card'
 
-const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-        return (
-            <div className="rounded-lg border bg-background p-2 shadow-sm">
-                <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col">
-                        <span className="text-[0.70rem] uppercase text-muted-foreground">
-                            Kategori
-                        </span>
-                        <span className="font-bold text-muted-foreground mr-2">
-                            {label || payload[0].payload.name}
-                        </span>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-[0.70rem] uppercase text-muted-foreground">
-                            Jumlah
-                        </span>
-                        <span className="font-bold">
-                            {payload[0].value} Kasus
-                        </span>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-    return null
-}
-
-// Total Kondisi Ekonomi Warga Miskin Ekstrem - Horizontal Bar
 export function EconomicConditionChart() {
     const economicCount = wargaMiskinData.reduce((acc, curr) => {
         acc[curr.kondisiEkonomi] = (acc[curr.kondisiEkonomi] || 0) + 1
         return acc
     }, {} as Record<string, number>)
 
-    const chartData = Object.entries(economicCount)
-        .map(([name, value]) => ({
-            name,
-            jumlah: value,
-            label: value
-        }))
-        .sort((a, b) => b.jumlah - a.jumlah)
+    const total = wargaMiskinData.length
 
-    const COLORS = ['#ef4444', '#f97316', '#f59e0b', '#84cc16', '#10b981', '#06b6d4']
+    const COLORS = ['#10b981', '#14b8a6', '#06b6d4', '#0ea5e9', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7']
+
+    const chartData = Object.entries(economicCount).map(([name, value]) => ({
+        name,
+        value,
+        percentage: total > 0 ? ((value / total) * 100).toFixed(2) : '0'
+    }))
 
     return (
-        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
-            <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
-                Total Kondisi Ekonomi Warga Miskin Ekstrem
-            </h3>
-            <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>
-                Berdasarkan kondisi pekerjaan dan ekonomi
-            </p>
-
-            <div className='h-[300px]'>
-                <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                        data={chartData}
-                        layout="vertical"
-                        margin={{ left: 0, right: 20, top: 10, bottom: 10 }}
-                    >
-                        <XAxis type="number" hide />
-                        <YAxis
-                            dataKey="name"
-                            type="category"
-                            width={140}
-                            tick={{ fontSize: 13, fill: '#6b7280' }}
-                            axisLine={false}
-                            tickLine={false}
-                            interval={0}
-                        />
-                        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
-                        <Bar dataKey="jumlah" radius={[0, 4, 4, 0]} barSize={50}>
-                            {chartData.map((_, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                            <LabelList
-                                dataKey="label"
-                                position="insideRight"
-                                style={{ fill: '#fff', fontSize: 13, fontWeight: 'bold' }}
-                                offset={10}
+        <div className='bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700'>
+            <h3 className="text-md font-semibold text-slate-400 mb-6">Kondisi Ekonomi</h3>
+            <div className='flex flex-col lg:flex-row gap-8 items-start'>
+                <div className='flex-1 h-[280px] w-full'>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                            data={chartData}
+                            layout="vertical"
+                            margin={{ left: 0, right: 30, top: 0, bottom: 20 }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
+                            <XAxis
+                                type="number"
+                                axisLine={false}
+                                tickLine={false}
+                                tick={{ fontSize: 12, fill: '#94a3b8' }}
+                                tickFormatter={(val) => val.toString().replace(/,/g, '')}
                             />
-                        </Bar>
-                    </BarChart>
-                </ResponsiveContainer>
+                            <YAxis
+                                dataKey="name"
+                                type="category"
+                                width={120}
+                                tick={{ fontSize: 12, fontWeight: 600, fill: '#64748b' }}
+                                axisLine={false}
+                                tickLine={false}
+                            />
+                            <Tooltip
+                                cursor={{ fill: 'transparent' }}
+                                content={<CustomTooltip />}
+                            />
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
+                                {chartData.map((_, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                                <LabelList
+                                    dataKey="value"
+                                    position="insideRight"
+                                    style={{ fill: '#fff', fontSize: 12, fontWeight: 'bold' }}
+                                    offset={15}
+                                />
+                            </Bar>
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+
+                <div className='w-full lg:w-64 space-y-4'>
+                    {chartData.map((item, index) => (
+                        <div key={index} className='flex items-start gap-3'>
+                            <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+                            <div>
+                                <p className='text-xs text-gray-400 font-medium'>{item.name}</p>
+                                <p className='text-sm font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )
@@ -170,95 +160,95 @@ export function SocialAidChart() {
     )
 }
 
-// Total Warga Sakit - Donut Chart
 export function WargaSakitByDiseaseChart() {
-    const diseaseCount = wargaSakitData.reduce((acc, curr) => {
-        acc[curr.jenisPenyakit] = (acc[curr.jenisPenyakit] || 0) + 1
+    const ageGroups = wargaSakitData.reduce((acc, curr) => {
+        let group = ''
+        if (curr.umur < 15) group = 'Anak'
+        else if (curr.umur <= 35) group = 'Produktif Muda'
+        else if (curr.umur <= 59) group = 'Produktif Dewasa'
+        else group = 'Lansia'
+
+        acc[group] = (acc[group] || 0) + 1
         return acc
     }, {} as Record<string, number>)
 
-    const chartData = Object.entries(diseaseCount)
-        .map(([name, value]) => ({ name, value }))
-        .sort((a, b) => b.value - a.value)
+    const total = wargaSakitData.length
 
-    const COLORS = ['#ef4444', '#f97316', '#f59e0b', '#84cc16', '#10b981', '#06b6d4', '#3b82f6', '#8b5cf6', '#a855f7', '#ec4899', '#f43f5e', '#d946ef']
+    const COLORS = ['#06b6d4', '#10b981', '#f59e0b', '#ef4444']
 
-    const total = chartData.reduce((sum, item) => sum + item.value, 0)
+    const chartData = [
+        { name: 'Anak (0-14)', value: ageGroups['Anak'] || 0 },
+        { name: 'Produktif Muda (15-35)', value: ageGroups['Produktif Muda'] || 0 },
+        { name: 'Produktif Dewasa (36-59)', value: ageGroups['Produktif Dewasa'] || 0 },
+        { name: 'Lansia (60+)', value: ageGroups['Lansia'] || 0 }
+    ].map(item => ({
+        ...item,
+        percentage: total > 0 ? ((item.value / total) * 100).toFixed(1) : '0'
+    }))
 
     return (
-        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
-            <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
-                Total Warga Sakit
-            </h3>
-            <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>
-                {total} kasus berdasarkan jenis penyakit
-            </p>
-
-            <div className='flex flex-col lg:flex-row items-center gap-6'>
-                <div className='relative h-[280px] w-full lg:w-1/2'>
-                    <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                            <Pie
-                                data={chartData}
-                                cx="50%"
-                                cy="50%"
-                                innerRadius={60}
-                                outerRadius={100}
-                                paddingAngle={2}
-                                dataKey="value"
-                            >
-                                {chartData.map((_, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                            <Tooltip
-                                content={({ active, payload }) => {
-                                    if (active && payload && payload.length) {
-                                        const percentage = ((payload[0].value as number / total) * 100).toFixed(1)
-                                        return (
-                                            <div className="rounded-lg border bg-background p-3 shadow-md">
-                                                <p className="font-semibold text-sm">{payload[0].name}</p>
-                                                <p className="text-xs mt-1">
-                                                    <span className="font-bold">{payload[0].value}</span> kasus ({percentage}%)
-                                                </p>
-                                            </div>
-                                        )
-                                    }
-                                    return null
-                                }}
-                            />
-                        </PieChart>
-                    </ResponsiveContainer>
-                </div>
-
-                <div className='flex-1 space-y-2 w-full'>
-                    {chartData.map((item, index) => {
-                        const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : '0'
-                        return (
-                            <div key={index} className='flex items-center justify-between py-1.5'>
-                                <div className='flex items-center gap-2'>
-                                    <div
-                                        className='w-3 h-3 rounded-full'
-                                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
+        <Card>
+            <CardContent>
+                <div className='bg-white dark:bg-gray-800 rounded-xl p-4 h-full'>
+                    <h3 className="text-md font-semibold text-slate-400 mb-6">Kelompok Usia Warga Sakit</h3>
+                    <div className='flex flex-col lg:flex-row gap-8 items-start'>
+                        <div className='flex-1 h-[280px] w-full'>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart
+                                    data={chartData}
+                                    layout="vertical"
+                                    margin={{ left: 0, right: 40, top: 0, bottom: 20 }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
+                                    <XAxis
+                                        type="number"
+                                        axisLine={false}
+                                        tickLine={false}
+                                        tick={{ fontSize: 12, fill: '#94a3b8' }}
+                                        tickFormatter={(val) => val.toString().replace(/,/g, '')}
                                     />
-                                    <span className='text-xs font-medium text-gray-700 dark:text-gray-300'>
-                                        {item.name}
-                                    </span>
+                                    <YAxis
+                                        dataKey="name"
+                                        type="category"
+                                        width={120}
+                                        tick={{ fontSize: 12, fontWeight: 600, fill: '#64748b' }}
+                                        axisLine={false}
+                                        tickLine={false}
+                                    />
+                                    <Tooltip
+                                        cursor={{ fill: 'transparent' }}
+                                        content={<CustomTooltip />}
+                                    />
+                                    <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
+                                        {chartData.map((_, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                        <LabelList
+                                            dataKey="value"
+                                            position="insideRight"
+                                            style={{ fill: '#fff', fontSize: 12, fontWeight: 'bold' }}
+                                            offset={15}
+                                        />
+                                    </Bar>
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+
+                        <div className='w-full lg:w-48 space-y-4'>
+                            {chartData.map((item, index) => (
+                                <div key={index} className='flex items-start gap-3'>
+                                    <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+                                    <div>
+                                        <p className='text-xs text-gray-400 font-medium'>{item.name}</p>
+                                        <p className='text-sm font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
+                                    </div>
                                 </div>
-                                <div className='flex items-center gap-2'>
-                                    <span className='text-xs font-bold text-gray-900 dark:text-white'>
-                                        {item.value}
-                                    </span>
-                                    <span className='text-xs text-gray-500 dark:text-gray-400 min-w-[45px] text-right'>
-                                        {percentage}%
-                                    </span>
-                                </div>
-                            </div>
-                        )
-                    })}
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     )
 }
 

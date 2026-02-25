@@ -10,6 +10,8 @@ export const wargaSakitData = [
     { id: 8, nama: 'Nurul Hidayah', jenisPenyakit: 'Stroke', kategori: 'Tidak Menular', alamat: 'RT 003 RW 02', umur: 65, tanggalLaporan: '2026-02-03', lat: -6.2115, lng: 106.8485, keterangan: 'Pasca stroke ringan' },
     { id: 9, nama: 'Bambang Susilo', jenisPenyakit: 'Gagal Ginjal', kategori: 'Tidak Menular', alamat: 'RT 002 RW 03', umur: 55, tanggalLaporan: '2026-02-05', lat: -6.2105, lng: 106.8472, keterangan: 'Cuci darah rutin' },
     { id: 10, nama: 'Rina Marlina', jenisPenyakit: 'Tipes', kategori: 'Menular', alamat: 'RT 001 RW 03', umur: 32, tanggalLaporan: '2026-02-08', lat: -6.2090, lng: 106.8462, keterangan: 'Pemulihan' },
+    { id: 11, nama: 'Budi Santoso', jenisPenyakit: 'DBD', kategori: 'Menular', alamat: 'RT 001 RW 02', umur: 9, tanggalLaporan: '2026-01-15', lat: -6.2088, lng: 106.8456, keterangan: 'Dalam perawatan RS' },
+    { id: 12, nama: 'Siti Aminah', jenisPenyakit: 'Diabetes', kategori: 'Tidak Menular', alamat: 'RT 001 RW 03', umur: 11, tanggalLaporan: '2026-01-18', lat: -6.2095, lng: 106.8465, keterangan: 'Kontrol rutin' },
 ];
 
 // Data untuk Warga Meninggal
@@ -25,18 +27,18 @@ export const wargaMeninggalData = [
 
 // Data untuk Warga Miskin Ekstrem
 export const wargaMiskinData = [
-    { id: 1, nama: 'Slamet Riyadi', kondisiEkonomi: 'Tidak memiliki pekerjaan', jenisBantuan: 'BLT', statusBantuan: 'Penerima', alamat: 'RT 001 RW 02', jumlahTanggungan: 4, lat: -6.2086, lng: 106.8454, pendapatan: 0 },
-    { id: 2, nama: 'Warni', kondisiEkonomi: 'Pekerja harian', jenisBantuan: 'PKH', statusBantuan: 'Penerima', alamat: 'RT 002 RW 01', jumlahTanggungan: 3, lat: -6.2102, lng: 106.8473, pendapatan: 800000 },
-    { id: 3, nama: 'Sugeng Priyono', kondisiEkonomi: 'Lansia tanpa penghasilan', jenisBantuan: 'BPNT / Sembako', statusBantuan: 'Penerima', alamat: 'RT 001 RW 03', jumlahTanggungan: 2, lat: -6.2094, lng: 106.8464, pendapatan: 0 },
-    { id: 4, nama: 'Rubiyah', kondisiEkonomi: 'Disabilitas', jenisBantuan: 'KIS / BPJS PBI', statusBantuan: 'Penerima', alamat: 'RT 003 RW 01', jumlahTanggungan: 1, lat: -6.2113, lng: 106.8483, pendapatan: 0 },
-    { id: 5, nama: 'Tuti Handayani', kondisiEkonomi: 'Kepala keluarga tunggal', jenisBantuan: 'BLT', statusBantuan: 'Penerima', alamat: 'RT 002 RW 02', jumlahTanggungan: 2, lat: -6.2097, lng: 106.8467, pendapatan: 1200000 },
-    { id: 6, nama: 'Parman', kondisiEkonomi: 'Pekerja harian', jenisBantuan: 'Bedah rumah', statusBantuan: 'Penerima', alamat: 'RT 001 RW 01', jumlahTanggungan: 5, lat: -6.2088, lng: 106.8456, pendapatan: 900000 },
-    { id: 7, nama: 'Sumini', kondisiEkonomi: 'Tidak memiliki pekerjaan', jenisBantuan: 'Bantuan pendidikan', statusBantuan: 'Penerima', alamat: 'RT 003 RW 02', jumlahTanggungan: 3, lat: -6.2117, lng: 106.8487, pendapatan: 0 },
-    { id: 8, nama: 'Kasturi', kondisiEkonomi: 'Lansia tanpa penghasilan', jenisBantuan: 'PKH', statusBantuan: 'Penerima', alamat: 'RT 002 RW 03', jumlahTanggungan: 1, lat: -6.2106, lng: 106.8474, pendapatan: 0 },
-    { id: 9, nama: 'Suparman', kondisiEkonomi: 'Pekerja harian', jenisBantuan: 'Bantuan UMKM', statusBantuan: 'Penerima', alamat: 'RT 001 RW 02', jumlahTanggungan: 4, lat: -6.2091, lng: 106.8461, pendapatan: 1000000 },
-    { id: 10, nama: 'Aisyah', kondisiEkonomi: 'Kepala keluarga tunggal', jenisBantuan: 'BPNT / Sembako', statusBantuan: 'Penerima', alamat: 'RT 003 RW 01', jumlahTanggungan: 2, lat: -6.2114, lng: 106.8484, pendapatan: 1100000 },
-    { id: 11, nama: 'Warto', kondisiEkonomi: 'Disabilitas', jenisBantuan: 'KIS / BPJS PBI', statusBantuan: 'Penerima', alamat: 'RT 002 RW 01', jumlahTanggungan: 3, lat: -6.2103, lng: 106.8475, pendapatan: 0 },
-    { id: 12, nama: 'Yasin Mahmud', kondisiEkonomi: 'Tidak memiliki pekerjaan', jenisBantuan: 'BLT', statusBantuan: 'Penerima', alamat: 'RT 001 RW 03', jumlahTanggungan: 4, lat: -6.2096, lng: 106.8466, pendapatan: 0 },
+    { id: 1, nama: 'Slamet Riyadi', kondisiEkonomi: 'Pengangguran', jenisBantuan: 'BLT', statusBantuan: 'Penerima', alamat: 'RT 001 RW 02', jumlahTanggungan: 4, lat: -6.2086, lng: 106.8454, pendapatan: 0, umur: 42 },
+    { id: 2, nama: 'Warni', kondisiEkonomi: 'Pekerja harian', jenisBantuan: 'PKH', statusBantuan: 'Penerima', alamat: 'RT 002 RW 01', jumlahTanggungan: 3, lat: -6.2102, lng: 106.8473, pendapatan: 800000, umur: 38 },
+    { id: 3, nama: 'Sugeng Priyono', kondisiEkonomi: 'Lansia tanpa penghasilan', jenisBantuan: 'BPNT / Sembako', statusBantuan: 'Penerima', alamat: 'RT 001 RW 03', jumlahTanggungan: 2, lat: -6.2094, lng: 106.8464, pendapatan: 0, umur: 72 },
+    { id: 4, nama: 'Rubiyah', kondisiEkonomi: 'Disabilitas', jenisBantuan: 'KIS / BPJS PBI', statusBantuan: 'Penerima', alamat: 'RT 003 RW 01', jumlahTanggungan: 1, lat: -6.2113, lng: 106.8483, pendapatan: 0, umur: 45 },
+    { id: 5, nama: 'Tuti Handayani', kondisiEkonomi: 'Kepala keluarga tunggal', jenisBantuan: 'BLT', statusBantuan: 'Penerima', alamat: 'RT 002 RW 02', jumlahTanggungan: 2, lat: -6.2097, lng: 106.8467, pendapatan: 1200000, umur: 33 },
+    { id: 6, nama: 'Parman', kondisiEkonomi: 'Pekerja harian', jenisBantuan: 'Bedah rumah', statusBantuan: 'Penerima', alamat: 'RT 001 RW 01', jumlahTanggungan: 5, lat: -6.2088, lng: 106.8456, pendapatan: 900000, umur: 50 },
+    { id: 7, nama: 'Sumini', kondisiEkonomi: 'Pengangguran', jenisBantuan: 'Bantuan pendidikan', statusBantuan: 'Penerima', alamat: 'RT 003 RW 02', jumlahTanggungan: 3, lat: -6.2117, lng: 106.8487, pendapatan: 0, umur: 41 },
+    { id: 8, nama: 'Kasturi', kondisiEkonomi: 'Lansia tanpa penghasilan', jenisBantuan: 'PKH', statusBantuan: 'Penerima', alamat: 'RT 002 RW 03', jumlahTanggungan: 1, lat: -6.2106, lng: 106.8474, pendapatan: 0, umur: 68 },
+    { id: 9, nama: 'Suparman', kondisiEkonomi: 'Pekerja harian', jenisBantuan: 'Bantuan UMKM', statusBantuan: 'Penerima', alamat: 'RT 001 RW 02', jumlahTanggungan: 4, lat: -6.2091, lng: 106.8461, pendapatan: 1000000, umur: 44 },
+    { id: 10, nama: 'Aisyah', kondisiEkonomi: 'Kepala keluarga tunggal', jenisBantuan: 'BPNT / Sembako', statusBantuan: 'Penerima', alamat: 'RT 003 RW 01', jumlahTanggungan: 2, lat: -6.2114, lng: 106.8484, pendapatan: 1100000, umur: 29 },
+    { id: 11, nama: 'Warto', kondisiEkonomi: 'Disabilitas', jenisBantuan: 'KIS / BPJS PBI', statusBantuan: 'Penerima', alamat: 'RT 002 RW 01', jumlahTanggungan: 3, lat: -6.2103, lng: 106.8475, pendapatan: 0, umur: 55 },
+    { id: 12, nama: 'Yasin Mahmud', kondisiEkonomi: 'Pengangguran', jenisBantuan: 'BLT', statusBantuan: 'Penerima', alamat: 'RT 001 RW 03', jumlahTanggungan: 4, lat: -6.2096, lng: 106.8466, pendapatan: 0, umur: 47 },
 ];
 
 // Data untuk Lansia Terlantar

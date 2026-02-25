@@ -1,31 +1,4 @@
-import { useState } from 'react'
-import {
-    BarChart,
-    Bar,
-    PieChart,
-    Pie,
-    Cell,
-    ResponsiveContainer,
-    XAxis,
-    YAxis,
-    Tooltip,
-    LabelList,
-} from 'recharts'
-import {
-    Activity,
-    HeartPulse,
-    Wallet,
-    Users,
-    GraduationCap,
-    ChevronDown,
-    ChevronUp,
-    MapPin,
-    User,
-    AlertTriangle,
-    CheckCircle2,
-    XCircle,
-    Clock,
-} from 'lucide-react'
+import { AlertTriangle } from 'lucide-react'
 import {
     wargaSakitData,
     wargaMeninggalData,
@@ -33,9 +6,7 @@ import {
     lansiaTerlantarData,
     anakPutusSekolahData,
 } from '../data/data'
-import { Card, CardContent } from '@/components/ui/card'
 import { EconomicConditionChart, WargaSakitByDiseaseChart } from './dashboard-charts'
-import TwoLevelPieChart from '@/components/ui/two-level-pie-chart'
 import PenerimaBantuan from './penerima-bantuan'
 import JenisBantuan from './jenis-bantuan'
 import JenisPenyakit from './jenis-penyakit'
@@ -68,106 +39,9 @@ const countBy = <T,>(arr: T[], key: keyof T): { name: string; value: number }[] 
         .sort((a, b) => b.value - a.value)
 }
 
-const getAgeGroup = (umur: number) => {
-    if (umur < 18) return 'Anak-anak (<18)'
-    if (umur < 40) return 'Dewasa Muda (18–39)'
-    if (umur < 60) return 'Dewasa (40–59)'
-    return 'Lansia (60+)'
-}
-
-const PALETTE = {
-    sakit: ['#ef4444', '#f97316', '#f59e0b', '#84cc16', '#10b981', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899', '#f43f5e'],
-    meninggal: ['#6b7280', '#9ca3af', '#374151', '#4b5563', '#1f2937'],
-    miskin: ['#f59e0b', '#d97706', '#b45309', '#f97316', '#ea580c', '#dc2626'],
-    lansia: ['#7c3aed', '#a855f7', '#c084fc', '#e879f9'],
-    sekolah: ['#2563eb', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe'],
-}
-
-// ─── Sub-components ────────────────────────────────────────────────────────────
-
-function StatPill({ label, value, color }: { label: string; value: number | string; color: string }) {
-    return (
-        <div className="flex flex-col items-center px-4 py-2 rounded-lg" style={{ backgroundColor: `${color}15`, border: `1px solid ${color}30` }}>
-            <span className="text-xl font-bold" style={{ color }}>{value}</span>
-            <span className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 text-center leading-tight">{label}</span>
-        </div>
-    )
-}
-
-function MiniDonut({ data, colors }: { data: { name: string; value: number }[]; colors: string[] }) {
-    const total = data.reduce((s, d) => s + d.value, 0)
-    return (
-        <div className="flex items-center gap-4">
-            <div className="relative" style={{ width: 80, height: 80, flexShrink: 0 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                        <Pie data={data} innerRadius={26} outerRadius={38} paddingAngle={2} dataKey="value" stroke="none">
-                            {data.map((_, i) => <Cell key={i} fill={colors[i % colors.length]} />)}
-                        </Pie>
-                    </PieChart>
-                </ResponsiveContainer>
-            </div>
-            <div className="flex-1 space-y-1 min-w-0">
-                {data.map((item, i) => (
-                    <div key={i} className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-1.5 min-w-0">
-                            <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: colors[i % colors.length] }} />
-                            <span className="text-xs text-gray-600 dark:text-gray-400 truncate">{item.name}</span>
-                        </div>
-                        <span className="text-xs font-semibold text-gray-800 dark:text-gray-200 flex-shrink-0">
-                            {total > 0 ? ((item.value / total) * 100).toFixed(0) : 0}%
-                        </span>
-                    </div>
-                ))}
-            </div>
-        </div>
-    )
-}
-
-function HorizontalBar({ data, colors, label }: { data: { name: string; value: number }[]; colors: string[]; label: string }) {
-    return (
-        <div className="h-48">
-            <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data} layout="vertical" margin={{ left: 0, right: 36, top: 4, bottom: 4 }}>
-                    <XAxis type="number" hide />
-                    <YAxis dataKey="name" type="category" width={120} tick={{ fontSize: 11, fill: '#6b7280' }} axisLine={false} tickLine={false} interval={0} />
-                    <Tooltip
-                        content={({ active, payload }) =>
-                            active && payload?.length ? (
-                                <div className="rounded-lg border bg-background px-3 py-2 shadow-md text-xs">
-                                    <p className="font-semibold">{payload[0].payload.name}</p>
-                                    <p className="text-muted-foreground">{payload[0].value} {label}</p>
-                                </div>
-                            ) : null
-                        }
-                        cursor={{ fill: 'transparent' }}
-                    />
-                    <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={18}>
-                        {data.map((_, i) => <Cell key={i} fill={colors[i % colors.length]} />)}
-                        <LabelList dataKey="value" position="right" style={{ fill: '#6b7280', fontSize: 11, fontWeight: 600 }} />
-                    </Bar>
-                </BarChart>
-            </ResponsiveContainer>
-        </div>
-    )
-}
-
-// ─── Issue Section Wrapper ─────────────────────────────────────────────────────
-
-interface IssueSectionProps {
-    id: string
-    icon: React.ReactNode
-    title: string
-    subtitle: string
-    accentColor: string
-    defaultOpen?: boolean
-    children: React.ReactNode
-}
-
 // ─── Section: Warga Sakit ──────────────────────────────────────────────────────
 
 function WargaSakitSection() {
-    const total = wargaSakitData.length
     const byDisease = countBy(wargaSakitData, 'jenisPenyakit')
 
     return (
@@ -344,7 +218,6 @@ function DemografiSummary() {
     ]
 
     const belumBantuan = wargaMiskinData.filter(w => w.statusBantuan !== 'Penerima').length
-    const menular = wargaSakitData.filter(w => w.kategori === 'Menular').length
 
     return (
         <div className="rounded-2xl border bg-white dark:bg-gray-900 shadow-sm p-6">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
 // ─── DATA ─────────────────────────────────────────────────────────────────────
@@ -69,15 +69,15 @@ const anakPutusSekolahData = [
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 
-const countBy = (arr, key) => {
-    const map = {};
+const countBy = <T,>(arr: T[], key: keyof T): { name: string; value: number }[] => {
+    const map: Record<string, number> = {};
     arr.forEach(item => { const k = String(item[key]); map[k] = (map[k] || 0) + 1; });
     return Object.entries(map).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
 };
 
 // ─── MICRO COMPONENTS ─────────────────────────────────────────────────────────
 
-const SparkBar = ({ value, max, color, height = 4 }) => (
+const SparkBar = ({ value, max, color, height = 4 }: { value: number; max: number; color: string; height?: number }) => (
     <div className="w-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden" style={{ height }}>
         <div
             className="h-full rounded-full transition-all duration-500"
@@ -86,7 +86,7 @@ const SparkBar = ({ value, max, color, height = 4 }) => (
     </div>
 );
 
-const Ring = ({ value, total, color, size = 52, stroke = 7 }) => {
+const Ring = ({ value, total, color, size = 52, stroke = 7 }: { value: number; total: number; color: string; size?: number; stroke?: number }) => {
     const r = (size - stroke) / 2;
     const circ = 2 * Math.PI * r;
     const pct = total > 0 ? value / total : 0;
@@ -104,7 +104,7 @@ const Ring = ({ value, total, color, size = 52, stroke = 7 }) => {
     );
 };
 
-const Tag = ({ children, color }) => (
+const Tag = ({ children, color }: { children: React.ReactNode; color: string }) => (
     <span
         className="inline-block rounded px-1.5 py-0.5 text-xs font-bold"
         style={{
@@ -117,15 +117,6 @@ const Tag = ({ children, color }) => (
     >
         {children}
     </span>
-);
-
-const SourceTag = ({ date }) => (
-    <div className="flex items-center gap-1.5 mt-1">
-        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
-        <span className="text-gray-400 dark:text-gray-500 font-mono" style={{ fontSize: 9, letterSpacing: "0.03em" }}>
-            Verified Field Report · {date}
-        </span>
-    </div>
 );
 
 // ─── BENTO CARD WRAPPER ───────────────────────────────────────────────────────
@@ -156,16 +147,16 @@ const BentoCard = ({ id, color, colSpan, onClick, children }: { id: string; colo
 
 // ─── DETAIL SIDE PANEL ────────────────────────────────────────────────────────
 
-const DetailPanel = ({ card, onClose }) => {
+const DetailPanel = ({ card, onClose }: { card: string | null; onClose: () => void }) => {
     if (!card) return null;
 
-    const config = {
+    const config = ({
         sakit: { label: "🏥 Warga Sakit", color: "#ef4444" },
         meninggal: { label: "⚰️ Warga Meninggal", color: "#6b7280" },
         miskin: { label: "💰 Miskin Ekstrem", color: "#f59e0b" },
         lansia: { label: "👴 Lansia Terlantar", color: "#8b5cf6" },
         sekolah: { label: "🎓 Putus Sekolah", color: "#3b82f6" },
-    }[card];
+    } as Record<string, { label: string; color: string }>)[card];
 
     const renderContent = () => {
         if (card === "sakit") {
@@ -291,7 +282,7 @@ const DetailPanel = ({ card, onClose }) => {
                         return (
                             <div key={i} className="flex items-start justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                                 <div className="flex items-start gap-2">
-                                    <div className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0" style={{ background: c }} />
+                                    <div className="w-2 h-2 rounded-full mt-1.5 shrink-0" style={{ background: c }} />
                                     <div>
                                         <div className="text-sm font-semibold text-gray-800 dark:text-gray-200">
                                             {w.nama} <span className="text-gray-400 font-normal text-xs">{w.umur}th</span>
@@ -383,7 +374,7 @@ const DetailPanel = ({ card, onClose }) => {
 
 export function DemografiIsu() {
     const [activePanel, setActivePanel] = useState<string | null>(null);
-    const [hoveredAction, setHoveredAction] = useState(null);
+    const [hoveredAction, setHoveredAction] = useState<number | null>(null);
 
     // computed stats
     const menularCount = wargaSakitData.filter(w => w.kategori === "Menular").length;
@@ -407,8 +398,6 @@ export function DemografiIsu() {
         { name: "Lansia", value: lansiaTerlantarData.length, color: "#8b5cf6" },
         { name: "Sekolah", value: anakPutusSekolahData.length, color: "#3b82f6" },
     ];
-
-    const dateStr = new Date().toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" });
 
     return (
         <div className="space-y-4">
@@ -449,7 +438,7 @@ export function DemografiIsu() {
                     <div className="mt-4 space-y-2">
                         {grandPieData.map((d, i) => (
                             <div key={i} className="flex items-center gap-2">
-                                <div className="w-1.5 h-1.5 rounded-sm flex-shrink-0" style={{ background: d.color }} />
+                                <div className="w-1.5 h-1.5 rounded-sm shrink-0" style={{ background: d.color }} />
                                 <span className="text-xs text-gray-500 dark:text-gray-400 w-14 truncate">{d.name}</span>
                                 <div className="flex-1"><SparkBar value={d.value} max={totalAll} color={d.color} height={4} /></div>
                                 <span className="text-xs font-bold font-mono w-5 text-right" style={{ color: d.color }}>{d.value}</span>
@@ -561,7 +550,7 @@ export function DemografiIsu() {
                             const c = w.bantuan === "Mandiri" ? "#10b981" : w.bantuan === "Perawatan intensif" ? "#ef4444" : "#f59e0b";
                             return (
                                 <div key={i} className="flex items-center gap-2">
-                                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: c }} />
+                                    <div className="w-2 h-2 rounded-full shrink-0" style={{ background: c }} />
                                     <span className="text-xs text-gray-600 dark:text-gray-400 flex-1 truncate">{w.nama}</span>
                                     <span className="text-xs text-gray-400">{w.umur}th</span>
                                 </div>
@@ -620,7 +609,7 @@ export function DemografiIsu() {
                             {grandPieData.map((d, i) => (
                                 <div key={i} className="flex items-center justify-between gap-2">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-sm flex-shrink-0" style={{ background: d.color }} />
+                                        <div className="w-2 h-2 rounded-sm shrink-0" style={{ background: d.color }} />
                                         <span className="text-xs text-gray-600 dark:text-gray-400">{d.name}</span>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -653,7 +642,7 @@ export function DemografiIsu() {
                                     borderColor: hoveredAction === i ? item.color + "77" : item.color + "33",
                                 }}
                             >
-                                <span className="text-sm flex-shrink-0">{item.icon}</span>
+                                <span className="text-sm shrink-0">{item.icon}</span>
                                 <span className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{item.text}</span>
                             </button>
                         ))}

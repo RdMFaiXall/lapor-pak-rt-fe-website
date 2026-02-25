@@ -8,8 +8,6 @@ import {
     Tooltip,
     XAxis,
     YAxis,
-    PieChart,
-    Pie,
 } from 'recharts'
 import {
     wargaMiskinData,

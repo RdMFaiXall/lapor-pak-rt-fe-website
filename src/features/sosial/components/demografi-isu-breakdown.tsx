@@ -58,6 +58,7 @@ interface SectionContainerProps {
     children: React.ReactNode
     className?: string
     count?: number
+    id?: string
 }
 
 function SectionContainer({
@@ -68,6 +69,7 @@ function SectionContainer({
     children,
     className,
     count,
+    id,
 }: SectionContainerProps) {
     const colorClasses: Record<string, string> = {
         amber: 'border-amber-100 dark:border-amber-900/30 bg-amber-50/10',
@@ -86,7 +88,7 @@ function SectionContainer({
     }
 
     return (
-        <Card className={cn('border-none shadow-none bg-transparent overflow-hidden', className)}>
+        <Card id={id} className={cn('border-none shadow-none bg-transparent overflow-hidden scroll-mt-24', className)}>
             <div className={cn('border rounded-2xl p-6 transition-all duration-300 hover:shadow-md h-full', colorClasses[color] || 'border-gray-100 bg-white dark:bg-gray-900')}>
                 <div className='flex items-start justify-between mb-8'>
                     <div className="flex items-center gap-4">
@@ -133,6 +135,7 @@ function WargaSakitSection() {
             icon={Activity}
             color='rose'
             count={wargaSakitData.length}
+            id="section-sakit"
         >
             <div className='space-y-8'>
                 <WargaSakitJenisPenyakitByAgeChart />
@@ -153,6 +156,7 @@ function WargaMeninggalSection() {
             icon={HeartPulse}
             color='slate'
             count={wargaMeninggalData.length}
+            id="section-meninggal"
         >
             <div className="space-y-6">
                 <div>
@@ -185,6 +189,7 @@ function WargaMiskinSection() {
             icon={Wallet}
             color='amber'
             count={wargaMiskinData.length}
+            id="section-miskin"
         >
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
                 <div className='lg:col-span-2'>
@@ -211,6 +216,7 @@ function LansiaTerlantarSection() {
             icon={Users}
             color='violet'
             count={lansiaTerlantarData.length}
+            id="section-lansia"
         >
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
@@ -234,6 +240,7 @@ function AnakPutusSekolahSection() {
             icon={GraduationCap}
             color='blue'
             count={anakPutusSekolahData.length}
+            id="section-sekolah"
         >
             <div className="space-y-6">
                 <PenyebabPerJenjangChart />
@@ -297,8 +304,17 @@ const issues = (grandTotal: number) => [
         text: 'text-blue-600 dark:text-blue-400',
         icon: GraduationCap,
         pct: Math.round((anakPutusSekolahData.length / grandTotal) * 100),
+        id: 'section-sekolah',
     },
 ]
+
+const issueToId: Record<string, string> = {
+    'Miskin Ekstrem': 'section-miskin',
+    'Warga Sakit': 'section-sakit',
+    'Warga Meninggal': 'section-meninggal',
+    'Lansia Terlantar': 'section-lansia',
+    'Putus Sekolah': 'section-sekolah',
+}
 
 // ─── Stat Card ────────────────────────────────────────────────────────────────
 
@@ -312,12 +328,19 @@ interface StatCardProps {
     text: string
     icon: React.ElementType
     grandTotal: number
+    onClick?: () => void
 }
 
-function StatCard({ label, count, pct, color, bg, border, text, icon: Icon }: StatCardProps) {
+function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onClick }: StatCardProps) {
     const barWidth = Math.max(4, pct)
     return (
-        <div className={`rounded-2xl border-2 ${bg} ${border} p-5 flex flex-col gap-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5`}>
+        <div
+            onClick={onClick}
+            className={cn(
+                `rounded-2xl border-2 ${bg} ${border} p-5 flex flex-col gap-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5`,
+                onClick && 'cursor-pointer active:scale-95'
+            )}
+        >
             <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-3 min-w-0">
                     <div
@@ -410,7 +433,11 @@ export function DemografiSummary() {
                     {allIssues.map((isu, i) => (
                         <div
                             key={i}
-                            className="h-full first:rounded-l-xl last:rounded-r-xl transition-all duration-500 relative group cursor-default"
+                            onClick={() => {
+                                const el = document.getElementById(issueToId[isu.label])
+                                el?.scrollIntoView({ behavior: 'smooth' })
+                            }}
+                            className="h-full first:rounded-l-xl last:rounded-r-xl transition-all duration-500 relative group cursor-pointer hover:opacity-80 active:scale-[0.98]"
                             style={{ width: `${Math.max(2, isu.pct)}%`, backgroundColor: isu.color }}
                             title={`${isu.label}: ${isu.count} kasus (${isu.pct}%)`}
                         />
@@ -419,12 +446,19 @@ export function DemografiSummary() {
                 {/* Legend */}
                 <div className="flex flex-wrap gap-x-5 gap-y-2 mt-3">
                     {allIssues.map((isu, i) => (
-                        <div key={i} className="flex items-center gap-2">
+                        <div
+                            key={i}
+                            onClick={() => {
+                                const el = document.getElementById(issueToId[isu.label])
+                                el?.scrollIntoView({ behavior: 'smooth' })
+                            }}
+                            className="flex items-center gap-2 cursor-pointer group"
+                        >
                             <div
-                                className="w-2.5 h-2.5 rounded-sm shrink-0"
+                                className="w-2.5 h-2.5 rounded-sm shrink-0 transition-transform group-hover:scale-125"
                                 style={{ backgroundColor: isu.color }}
                             />
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                                 {isu.label}
                             </span>
                             <span className="text-sm font-bold" style={{ color: isu.color }}>
@@ -439,7 +473,15 @@ export function DemografiSummary() {
             <div className="p-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                     {allIssues.map((isu, i) => (
-                        <StatCard key={i} {...isu} grandTotal={grandTotal} />
+                        <StatCard
+                            key={i}
+                            {...isu}
+                            grandTotal={grandTotal}
+                            onClick={() => {
+                                const el = document.getElementById(issueToId[isu.label])
+                                el?.scrollIntoView({ behavior: 'smooth' })
+                            }}
+                        />
                     ))}
                 </div>
             </div>

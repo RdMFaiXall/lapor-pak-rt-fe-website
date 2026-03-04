@@ -7,6 +7,7 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { DemografiIsuBreakdown } from './demografi-isu-breakdown'
+import ScrollToTopButton from './scroll-to-top-button'
 
 export default function MonitoringDashboard() {
     return (
@@ -45,6 +46,8 @@ export default function MonitoringDashboard() {
 
                 <DemografiIsuBreakdown />
             </Main>
+
+            <ScrollToTopButton />
         </div>
     )
 }

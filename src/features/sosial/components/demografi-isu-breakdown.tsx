@@ -138,9 +138,15 @@ function WargaSakitSection() {
             id="section-sakit"
         >
             <div className='space-y-8'>
+                <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                    <div className='lg:col-span-2'>
+                        <WargaSakitByDiseaseChart />
+                    </div>
+                    <div>
+                        <JenisPenyakit data={byDisease} />
+                    </div>
+                </div>
                 <WargaSakitJenisPenyakitByAgeChart />
-                <WargaSakitByDiseaseChart />
-                <JenisPenyakit data={byDisease} />
             </div>
         </SectionContainer>
     )

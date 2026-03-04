@@ -16,8 +16,6 @@ import {
     lansiaTerlantarData,
     anakPutusSekolahData,
 } from '../data/data'
-import CustomTooltip from '@/components/ui/custom-tooltip'
-import { Card, CardContent } from '@/components/ui/card'
 
 export function EconomicConditionChart() {
     const economicCount = wargaMiskinData.reduce((acc, curr) => {
@@ -46,7 +44,7 @@ export function EconomicConditionChart() {
                         <BarChart
                             data={chartData}
                             layout="vertical"
-                            margin={{ left: 8, right: 0, top: 0, bottom: 20 }}
+                            margin={{ left: 8, right: 60, top: 0, bottom: 20 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
@@ -72,10 +70,23 @@ export function EconomicConditionChart() {
                                 ))}
                                 <LabelList
                                     dataKey="value"
-                                    position="insideRight"
-                                    style={{ fill: '#fff', fontSize: 12, fontWeight: 'bold' }}
-                                    offset={15}
-                                    formatter={((value: unknown) => `${value ?? ''} kasus`) as never}
+                                    content={(props: any) => {
+                                        const { x, y, width, height, value } = props;
+                                        if (value === undefined || value === null) return null;
+                                        const isSmallValue = value < 2;
+                                        return (
+                                            <text
+                                                x={isSmallValue ? x + width + 8 : x + 10}
+                                                y={y + height / 2}
+                                                fill={isSmallValue ? "#64748b" : "#fff"}
+                                                fontSize={11}
+                                                fontWeight="bold"
+                                                dominantBaseline="middle"
+                                            >
+                                                {value} kasus
+                                            </text>
+                                        );
+                                    }}
                                 />
                             </Bar>
                         </BarChart>
@@ -176,78 +187,89 @@ export function WargaSakitByDiseaseChart() {
     const COLORS = ['#06b6d4', '#10b981', '#f59e0b', '#ef4444']
 
     const chartData = [
-        { name: 'Anak (0-14)', value: ageGroups['Anak'] || 0 },
-        { name: 'Produktif Muda (15-35)', value: ageGroups['Produktif Muda'] || 0 },
-        { name: 'Produktif Dewasa (36-59)', value: ageGroups['Produktif Dewasa'] || 0 },
-        { name: 'Lansia (60+)', value: ageGroups['Lansia'] || 0 }
+        { label: 'Anak', range: '(0-14 tahun)', value: ageGroups['Anak'] || 0 },
+        { label: 'Produktif Muda', range: '(15-35 tahun)', value: ageGroups['Produktif Muda'] || 0 },
+        { label: 'Produktif Dewasa', range: '(36-59 tahun)', value: ageGroups['Produktif Dewasa'] || 0 },
+        { label: 'Lansia', range: '(60+ tahun)', value: ageGroups['Lansia'] || 0 }
     ].map(item => ({
         ...item,
+        name: item.label,
         percentage: total > 0 ? ((item.value / total) * 100).toFixed(1) : '0'
     }))
 
-    return (
-        <Card>
-            <CardContent>
-                <div className='bg-white dark:bg-gray-800 rounded-xl p-4 h-full'>
-                    <h3 className="text-md font-semibold text-slate-400 mb-6">Kelompok Usia Warga Sakit</h3>
-                    <div className='flex flex-col lg:flex-row gap-8 items-start'>
-                        <div className='flex-1 h-[280px] w-full'>
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart
-                                    data={chartData}
-                                    layout="vertical"
-                                    margin={{ left: 0, right: 40, top: 0, bottom: 20 }}
-                                >
-                                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
-                                    <XAxis
-                                        type="number"
-                                        axisLine={false}
-                                        tickLine={false}
-                                        tick={{ fontSize: 12, fill: '#94a3b8' }}
-                                        tickFormatter={(val) => val.toString().replace(/,/g, '')}
-                                    />
-                                    <YAxis
-                                        dataKey="name"
-                                        type="category"
-                                        width={120}
-                                        tick={{ fontSize: 12, fontWeight: 600, fill: '#64748b' }}
-                                        axisLine={false}
-                                        tickLine={false}
-                                    />
-                                    <Tooltip
-                                        cursor={{ fill: 'transparent' }}
-                                        content={<CustomTooltip />}
-                                    />
-                                    <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
-                                        {chartData.map((_, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                        ))}
-                                        <LabelList
-                                            dataKey="value"
-                                            position="insideRight"
-                                            style={{ fill: '#fff', fontSize: 12, fontWeight: 'bold' }}
-                                            offset={15}
-                                        />
-                                    </Bar>
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
+    const maxValue = Math.max(...chartData.map(d => d.value), 0)
 
-                        <div className='w-full lg:w-48 space-y-4'>
-                            {chartData.map((item, index) => (
-                                <div key={index} className='flex items-start gap-3'>
-                                    <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                                    <div>
-                                        <p className='text-xs text-gray-400 font-medium'>{item.name}</p>
-                                        <p className='text-sm font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+    return (
+        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
+            <h3 className="text-md font-semibold text-slate-400 mb-6">Kelompok Usia Warga Sakit</h3>
+            <div className='flex flex-col lg:flex-row gap-8 items-start'>
+                <div className='flex-1 h-[280px] w-full'>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                            data={chartData}
+                            layout="vertical"
+                            margin={{ left: 8, right: 60, top: 0, bottom: 20 }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
+                            <XAxis
+                                type="number"
+                                domain={[0, maxValue]}
+                                axisLine={false}
+                                tickLine={false}
+                                tick={{ fontSize: 12, fill: '#94a3b8' }}
+                                tickFormatter={(val) => val.toString().replace(/,/g, '')}
+                            />
+                            <YAxis
+                                dataKey="name"
+                                type="category"
+                                width={130}
+                                tick={{ fontSize: 12, fontWeight: 600, fill: '#64748b' }}
+                                axisLine={false}
+                                tickLine={false}
+                            />
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
+                                {chartData.map((_, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                                <LabelList
+                                    dataKey="value"
+                                    content={(props: any) => {
+                                        const { x, y, width, height, value } = props;
+                                        if (value === undefined || value === null) return null;
+                                        const isSmallValue = value < 2;
+                                        return (
+                                            <text
+                                                x={isSmallValue ? x + width + 8 : x + 10}
+                                                y={y + height / 2}
+                                                fill={isSmallValue ? "#64748b" : "#fff"}
+                                                fontSize={11}
+                                                fontWeight="bold"
+                                                dominantBaseline="middle"
+                                            >
+                                                {value} kasus
+                                            </text>
+                                        );
+                                    }}
+                                />
+                            </Bar>
+                        </BarChart>
+                    </ResponsiveContainer>
                 </div>
-            </CardContent>
-        </Card>
+
+                <div className='w-full lg:w-48 space-y-4 shrink-0'>
+                    {chartData.map((item, index) => (
+                        <div key={index} className='flex items-start gap-3'>
+                            <div className='w-3 h-3 rounded-full mt-1.5 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+                            <div className='flex flex-col'>
+                                <p className='text-xs text-gray-400 font-medium'>{item.label}</p>
+                                <p className='text-[10px] text-gray-400 font-medium leading-tight'>{item.range}</p>
+                                <p className='text-sm font-bold text-gray-900 dark:text-gray-100 mt-0.5'>{item.percentage}%</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
     )
 }
 

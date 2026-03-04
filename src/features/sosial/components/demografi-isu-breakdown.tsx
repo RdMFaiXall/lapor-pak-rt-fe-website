@@ -321,7 +321,7 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon }: St
             <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-3 min-w-0">
                     <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                         style={{ background: color + '1a' }}
                     >
                         <Icon className="w-5 h-5" style={{ color }} />
@@ -330,7 +330,7 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon }: St
                         {label}
                     </span>
                 </div>
-                <span className={`text-3xl font-black leading-none flex-shrink-0 ${text}`}>
+                <span className={`text-3xl font-black leading-none shrink-0 ${text}`}>
                     {count}
                 </span>
             </div>
@@ -384,7 +384,7 @@ export function DemografiSummary() {
                     <div className="flex flex-wrap gap-2">
                         {belumBantuan > 0 && (
                             <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 text-amber-700 dark:text-amber-400 text-sm font-semibold">
-                                <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+                                <AlertTriangle className="w-4 h-4 shrink-0" />
                                 <span>{belumBantuan} warga miskin belum terima bantuan</span>
                             </div>
                         )}
@@ -421,7 +421,7 @@ export function DemografiSummary() {
                     {allIssues.map((isu, i) => (
                         <div key={i} className="flex items-center gap-2">
                             <div
-                                className="w-2.5 h-2.5 rounded-sm flex-shrink-0"
+                                className="w-2.5 h-2.5 rounded-sm shrink-0"
                                 style={{ backgroundColor: isu.color }}
                             />
                             <span className="text-sm text-gray-500 dark:text-gray-400">

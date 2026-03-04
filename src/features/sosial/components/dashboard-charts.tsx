@@ -35,8 +35,10 @@ export function EconomicConditionChart() {
         percentage: total > 0 ? ((value / total) * 100).toFixed(2) : '0'
     }))
 
+    const maxValue = Math.max(...chartData.map(d => d.value), 0)
+
     return (
-        <div className='bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700'>
+        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
             <h3 className="text-md font-semibold text-slate-400 mb-6">Kondisi Ekonomi</h3>
             <div className='flex flex-col lg:flex-row gap-8 items-start'>
                 <div className='flex-1 h-[280px] w-full'>
@@ -44,11 +46,12 @@ export function EconomicConditionChart() {
                         <BarChart
                             data={chartData}
                             layout="vertical"
-                            margin={{ left: 0, right: 30, top: 0, bottom: 20 }}
+                            margin={{ left: 8, right: 0, top: 0, bottom: 20 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
                                 type="number"
+                                domain={[0, maxValue]}
                                 axisLine={false}
                                 tickLine={false}
                                 tick={{ fontSize: 12, fill: '#94a3b8' }}
@@ -57,15 +60,12 @@ export function EconomicConditionChart() {
                             <YAxis
                                 dataKey="name"
                                 type="category"
-                                width={120}
+                                width={145}
                                 tick={{ fontSize: 12, fontWeight: 600, fill: '#64748b' }}
                                 axisLine={false}
                                 tickLine={false}
                             />
-                            <Tooltip
-                                cursor={{ fill: 'transparent' }}
-                                content={<CustomTooltip />}
-                            />
+
                             <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
                                 {chartData.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -75,13 +75,14 @@ export function EconomicConditionChart() {
                                     position="insideRight"
                                     style={{ fill: '#fff', fontSize: 12, fontWeight: 'bold' }}
                                     offset={15}
+                                    formatter={((value: unknown) => `${value ?? ''} kasus`) as never}
                                 />
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full lg:w-64 space-y-4'>
+                <div className='w-full lg:w-auto shrink-0 space-y-4'>
                     {chartData.map((item, index) => (
                         <div key={index} className='flex items-start gap-3'>
                             <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />

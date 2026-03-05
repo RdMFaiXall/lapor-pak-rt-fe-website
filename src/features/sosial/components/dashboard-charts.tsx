@@ -8,6 +8,8 @@ import {
     Tooltip,
     XAxis,
     YAxis,
+    Pie,
+    PieChart,
 } from 'recharts'
 import {
     wargaMiskinData,
@@ -70,6 +72,7 @@ export function EconomicConditionChart() {
                                 ))}
                                 <LabelList
                                     dataKey="value"
+                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                     content={(props: any) => {
                                         const { x, y, width, height, value } = props;
                                         if (value === undefined || value === null) return null;
@@ -197,73 +200,56 @@ export function WargaSakitByDiseaseChart() {
         percentage: total > 0 ? ((item.value / total) * 100).toFixed(1) : '0'
     }))
 
-    const maxValue = Math.max(...chartData.map(d => d.value), 0)
-
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Kelompok Usia Warga Sakit</h3>
-            <div className='flex flex-col lg:flex-row gap-8 items-start'>
-                <div className='flex-1 h-[280px] w-full'>
+            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Kelompok Usia Warga Sakit</h3>
+            <div className='flex flex-col items-center justify-center flex-1 w-full'>
+                <div className='h-[250px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                            data={chartData}
-                            layout="vertical"
-                            margin={{ left: 8, right: 60, top: 0, bottom: 20 }}
-                        >
-                            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
-                            <XAxis
-                                type="number"
-                                domain={[0, maxValue]}
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{ fontSize: 12, fill: '#94a3b8' }}
-                                tickFormatter={(val) => val.toString().replace(/,/g, '')}
-                            />
-                            <YAxis
-                                dataKey="name"
-                                type="category"
-                                width={130}
-                                tick={{ fontSize: 12, fontWeight: 600, fill: '#64748b' }}
-                                axisLine={false}
-                                tickLine={false}
-                            />
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
+                        <PieChart>
+                            <Pie
+                                data={chartData}
+                                cx="50%"
+                                cy="50%"
+                                outerRadius={105}
+                                dataKey="value"
+                                stroke="#fff"
+                                strokeWidth={2}
+                                paddingAngle={2}
+                                labelLine={false}
+                                label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+                                    const radius = innerRadius + (outerRadius - innerRadius) * 0.55;
+                                    const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
+                                    const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+                                    if (percent < 0.05) return null;
+                                    return (
+                                        <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central" fontSize={13} fontWeight="bold">
+                                            {`${(percent * 100).toFixed(0)}%`}
+                                        </text>
+                                    );
+                                }}
+                            >
                                 {chartData.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
-                                <LabelList
-                                    dataKey="value"
-                                    content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
-                                        if (value === undefined || value === null) return null;
-                                        const isSmallValue = value < 2;
-                                        return (
-                                            <text
-                                                x={isSmallValue ? x + width + 8 : x + 10}
-                                                y={y + height / 2}
-                                                fill={isSmallValue ? "#64748b" : "#fff"}
-                                                fontSize={11}
-                                                fontWeight="bold"
-                                                dominantBaseline="middle"
-                                            >
-                                                {value} kasus
-                                            </text>
-                                        );
-                                    }}
-                                />
-                            </Bar>
-                        </BarChart>
+                            </Pie>
+                            <Tooltip
+                                contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', backgroundColor: 'rgba(255, 255, 255, 0.95)' }}
+                                itemStyle={{ color: '#1f2937', fontWeight: 'bold' }}
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                formatter={(value: any, name: any, props: any) => [`${value} kasus (${props.payload.percentage}%)`, name]}
+                            />
+                        </PieChart>
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full lg:w-48 space-y-4 shrink-0'>
+                <div className='w-full grid grid-cols-2 gap-y-3 gap-x-2 mt-6 shrink-0'>
                     {chartData.map((item, index) => (
-                        <div key={index} className='flex items-start gap-3'>
-                            <div className='w-3 h-3 rounded-full mt-1.5 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+                        <div key={index} className='flex items-start gap-2'>
+                            <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
                             <div className='flex flex-col'>
-                                <p className='text-xs text-gray-400 font-medium'>{item.label}</p>
-                                <p className='text-[10px] text-gray-400 font-medium leading-tight'>{item.range}</p>
-                                <p className='text-sm font-bold text-gray-900 dark:text-gray-100 mt-0.5'>{item.percentage}%</p>
+                                <p className='text-xs text-gray-700 dark:text-gray-300 font-medium leading-tight'>{item.label} <span className="font-bold">({item.percentage}%)</span></p>
+                                <p className='text-[10px] text-gray-500 font-medium leading-tight'>{item.range}</p>
                             </div>
                         </div>
                     ))}

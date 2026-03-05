@@ -3,7 +3,7 @@ import {
     wargaMiskinData,
     wargaSakitData,
     lansiaTerlantarData,
-    anakPutusSekolahData,
+    anakTidakSekolahData,
 } from '../data/data'
 
 import {
@@ -61,7 +61,7 @@ export function SocialOverviewCards() {
         },
         {
             title: 'Putus Sekolah',
-            value: anakPutusSekolahData.length,
+            value: anakTidakSekolahData.length,
             icon: GraduationCap,
             color: 'text-blue-500',
             bg: 'bg-blue-100 dark:bg-blue-900/30',
@@ -111,7 +111,7 @@ export function SocialOverviewCards() {
                             { name: 'Warga Meninggal', value: wargaMeninggalData.length, color: '#6b7280' },
                             { name: 'Miskin Ekstrem', value: wargaMiskinData.length, color: '#f59e0b' },
                             { name: 'Lansia Terlantar', value: lansiaTerlantarData.length, color: '#8b5cf6' },
-                            { name: 'Putus Sekolah', value: anakPutusSekolahData.length, color: '#3b82f6' },
+                            { name: 'Putus Sekolah', value: anakTidakSekolahData.length, color: '#3b82f6' },
                         ].sort((a, b) => b.value - a.value)
 
                         const total = categories.reduce((acc, item) => acc + item.value, 0)

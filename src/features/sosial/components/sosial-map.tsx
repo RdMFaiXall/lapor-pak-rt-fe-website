@@ -1,7 +1,7 @@
 
 import MapComponent from '@/components/ui/maps';
 import {
-    anakPutusSekolahData,
+    anakTidakSekolahData,
     lansiaTerlantarData,
     wargaMeninggalData,
     wargaMiskinData,
@@ -61,10 +61,10 @@ const mapData = [
         victims: 1,
         position: [d.lat, d.lng]
     })),
-    ...anakPutusSekolahData.map(d => ({
+    ...anakTidakSekolahData.map(d => ({
         ...d,
         id: `putus-sekolah-${d.id}`,
-        category: 'anak-putus-sekolah',
+        category: 'anak-tidak-sekolah',
         title: `Putus Sekolah: ${d.nama}`,
         description: `Penyebab: ${d.penyebab}`,
         location: d.alamat,
@@ -81,7 +81,7 @@ const mapCategories = [
     { id: 'warga-meninggal', name: 'Warga Meninggal', color: '#6b7280' }, // Gray
     { id: 'warga-miskin', name: 'Warga Miskin', color: '#f59e0b' }, // Amber
     { id: 'lansia-terlantar', name: 'Lansia Terlantar', color: '#8b5cf6' }, // Violet
-    { id: 'anak-putus-sekolah', name: 'Anak Putus Sekolah', color: '#3b82f6' }, // Blue
+    { id: 'anak-tidak-sekolah', name: 'Anak Tidak Sekolah', color: '#3b82f6' }, // Blue
 ];
 
 export function SosialMap() {

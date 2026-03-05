@@ -8,7 +8,7 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import {
-    anakPutusSekolahData,
+    anakTidakSekolahData,
     lansiaTerlantarData,
     wargaMeninggalData,
     wargaMiskinData,
@@ -62,7 +62,7 @@ const allIssues: SocialIssue[] = [
         location: d.alamat,
         date: new Date().toISOString()
     })),
-    ...anakPutusSekolahData.map(d => ({
+    ...anakTidakSekolahData.map(d => ({
         id: String(d.id),
         type: 'Putus Sekolah' as const,
         name: d.nama,

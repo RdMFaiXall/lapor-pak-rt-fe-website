@@ -2,7 +2,7 @@
 
 import MapComponent from '@/components/ui/maps'
 import {
-    anakPutusSekolahData,
+    anakTidakSekolahData,
     lansiaTerlantarData,
     wargaMeninggalData,
     wargaMiskinData,
@@ -91,9 +91,9 @@ export function CleanSosialMap() {
                 kondisiKesehatan: d.kondisiKesehatan
             }
         })),
-        ...anakPutusSekolahData.map(d => ({
+        ...anakTidakSekolahData.map(d => ({
             id: `putus-${d.id}`,
-            category: 'anak-putus-sekolah',
+            category: 'anak-tidak-sekolah',
             title: `${d.nama}`,
             description: `${d.jenjang} - ${d.penyebab}`,
             location: d.alamat,

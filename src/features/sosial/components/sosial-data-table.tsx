@@ -6,13 +6,13 @@ import {
     wargaMiskinData,
     wargaSakitData,
     lansiaTerlantarData,
-    anakPutusSekolahData,
+    anakTidakSekolahData,
     categories
 } from '../data/data'
 import { Input } from '@/components/ui/input'
 import { Search, Filter, Download } from 'lucide-react'
 
-type TabType = 'all' | 'warga-sakit' | 'warga-meninggal' | 'warga-miskin' | 'lansia-terlantar' | 'anak-putus-sekolah'
+type TabType = 'all' | 'warga-sakit' | 'warga-meninggal' | 'warga-miskin' | 'lansia-terlantar' | 'anak-tidak-sekolah'
 
 export function SosialDataTable() {
     const [activeTab, setActiveTab] = useState<TabType>('all')
@@ -60,10 +60,10 @@ export function SosialDataTable() {
             date: '-',
             status: d.kondisiKesehatan
         })),
-        ...anakPutusSekolahData.map(d => ({
+        ...anakTidakSekolahData.map(d => ({
             ...d,
-            category: 'anak-putus-sekolah',
-            type: 'Anak Putus Sekolah',
+            category: 'anak-tidak-sekolah',
+            type: 'Anak Tidak Sekolah',
             mainInfo: d.nama,
             subInfo: `${d.jenjang} - ${d.penyebab}`,
             location: d.alamat,
@@ -102,7 +102,7 @@ export function SosialDataTable() {
         { id: 'warga-meninggal', label: 'Meninggal', count: wargaMeninggalData.length },
         { id: 'warga-miskin', label: 'Warga Miskin', count: wargaMiskinData.length },
         { id: 'lansia-terlantar', label: 'Lansia', count: lansiaTerlantarData.length },
-        { id: 'anak-putus-sekolah', label: 'Putus Sekolah', count: anakPutusSekolahData.length },
+        { id: 'anak-tidak-sekolah', label: 'Putus Sekolah', count: anakTidakSekolahData.length },
     ]
 
     return (

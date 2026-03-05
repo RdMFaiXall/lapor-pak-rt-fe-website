@@ -1,4 +1,4 @@
-import { fakerID_ID as faker } from '@faker-js/faker'
+﻿import { fakerID_ID as faker } from '@faker-js/faker'
 import { Sosial } from './schema'
 import {
     ArrowDownIcon,
@@ -59,18 +59,18 @@ export const priorities = [
 
 // Categories untuk dashboard
 export const categories = [
-    { id: 'warga-sakit', label: 'Warga Sakit', value: 'warga-sakit', color: '#ef4444', icon: '🏥' },
-    { id: 'warga-meninggal', label: 'Warga Meninggal', value: 'warga-meninggal', color: '#6b7280', icon: '⚰️' },
-    { id: 'warga-miskin', label: 'Warga Miskin Ekstrem', value: 'warga-miskin', color: '#f59e0b', icon: '💰' },
-    { id: 'lansia-terlantar', label: 'Lansia Terlantar', value: 'lansia-terlantar', color: '#8b5cf6', icon: '👴' },
-    { id: 'anak-tidak-sekolah', label: 'Anak Tidak Sekolah', value: 'anak-tidak-sekolah', color: '#3b82f6', icon: '🎓' },
+    { id: 'warga-sakit', label: 'Warga Sakit', value: 'warga-sakit', color: '#ef4444', icon: '≡ƒÅÑ' },
+    { id: 'warga-meninggal', label: 'Warga Meninggal', value: 'warga-meninggal', color: '#6b7280', icon: 'ΓÜ░∩╕Å' },
+    { id: 'warga-miskin', label: 'Warga Miskin Ekstrem', value: 'warga-miskin', color: '#f59e0b', icon: '≡ƒÆ░' },
+    { id: 'lansia-terlantar', label: 'Lansia Terlantar', value: 'lansia-terlantar', color: '#8b5cf6', icon: '≡ƒæ┤' },
+    { id: 'anak-putus-sekolah', label: 'Anak Putus Sekolah', value: 'anak-putus-sekolah', color: '#3b82f6', icon: '≡ƒÄô' },
 ];
 
 const titles = [
     'Pendataan penerima bantuan sosial',
     'Warga sakit butuh bantuan transportasi ke RS',
     'Keluarga kurang mampu membutuhkan sembako',
-    'Anak tidak sekolah perlu bantuan pendidikan',
+    'Anak putus sekolah perlu bantuan pendidikan',
     'Lampu penerangan jalan mati total',
     'Jalan berlubang membahayakan pengendara',
     'Fasilitas posyandu perlu perbaikan',
@@ -81,7 +81,7 @@ const descriptions = [
     'Mohon update data terbaru untuk penyaluran BLT bulan ini.',
     'Kondisi warga sudah lemas dan tidak ada kendaraan untuk ke puskesmas.',
     'Stok beras habis dan kepala keluarga sedang sakit tidak bisa bekerja.',
-    'Anak usia sekolah tidak bisa lanjut sekolah karena faktor ekonomi.',
+    'Anak usia sekolah dasar tidak bisa lanjut sekolah karena biaya.',
     'Gelap total di malam hari, rawan kejahatan dan kecelakaan.',
     'Sudah banyak pengendara motor yang terjatuh akibat jalan rusak.',
     'Atap posyandu bocor, kegiatan imunisasi jadi terganggu.',
@@ -174,31 +174,8 @@ export const lansiaTerlantarData = [
     { id: 1, nama: 'Pak Sarno', umur: 72, kondisi: 'Tinggal sendiri', kondisiKesehatan: 'Lemah', alamat: 'RT 001 RW 02', lat: -6.2084, lng: 106.8452, bantuan: 'Perlu pengawasan' },
     { id: 2, nama: 'Mbah Siti', umur: 78, kondisi: 'Tidak memiliki keluarga', kondisiKesehatan: 'Sakit', alamat: 'RT 002 RW 01', lat: -6.2104, lng: 106.8476, bantuan: 'Perlu perawatan' },
     { id: 3, nama: 'Pak Tono', umur: 69, kondisi: 'Tinggal dengan keluarga', kondisiKesehatan: 'Baik', alamat: 'RT 001 RW 03', lat: -6.2095, lng: 106.8465, bantuan: 'Mandiri' },
-    { id: 4, nama: 'Pak Kusumo', umur: 68, kondisi: 'Diusir keluarga', kondisiKesehatan: 'Baik', alamat: 'RT 003 RW 01', lat: -6.2116, lng: 106.8485, bantuan: 'Tempat tinggal' },
-    { id: 5, nama: 'Ponirah', umur: 80, kondisi: 'Lansia terlantar', kondisiKesehatan: 'Sakit', alamat: 'RT 004 RW 02', lat: -6.2115, lng: 106.8495, bantuan: 'Perawatan medis' },
-    { id: 6, nama: 'Mbah Warno', umur: 75, kondisi: 'Tinggal sendiri', kondisiKesehatan: 'Lemah', alamat: 'RT 002 RW 03', lat: -6.2108, lng: 106.8478, bantuan: 'Perlu pengawasan' },
-    { id: 7, nama: 'Ibu Sumirah', umur: 71, kondisi: 'Tidak memiliki keluarga', kondisiKesehatan: 'Kritis', alamat: 'RT 003 RW 02', lat: -6.2120, lng: 106.8490, bantuan: 'Perlu perawatan intensif' },
-    { id: 8, nama: 'Pak Djumadi', umur: 83, kondisi: 'Lansia terlantar', kondisiKesehatan: 'Lemah', alamat: 'RT 001 RW 01', lat: -6.2086, lng: 106.8453, bantuan: 'Bantuan sosial' },
-    { id: 9, nama: 'Mbah Kartini', umur: 76, kondisi: 'Tinggal dengan keluarga', kondisiKesehatan: 'Sakit', alamat: 'RT 004 RW 01', lat: -6.2124, lng: 106.8494, bantuan: 'Perawatan medis' },
-    { id: 10, nama: 'Pak Sukidjo', umur: 67, kondisi: 'Tinggal sendiri', kondisiKesehatan: 'Baik', alamat: 'RT 002 RW 02', lat: -6.2099, lng: 106.8469, bantuan: 'Pengawasan berkala' },
-    { id: 11, nama: 'Mbah Painem', umur: 85, kondisi: 'Diusir keluarga', kondisiKesehatan: 'Kritis', alamat: 'RT 005 RW 01', lat: -6.2138, lng: 106.8508, bantuan: 'Perawatan intensif' },
-    { id: 12, nama: 'Ibu Srinatun', umur: 70, kondisi: 'Tidak memiliki keluarga', kondisiKesehatan: 'Baik', alamat: 'RT 003 RW 03', lat: -6.2112, lng: 106.8483, bantuan: 'Pendampingan sosial' },
-];
-
-// Data untuk Anak Tidak Sekolah
-export const anakTidakSekolahData = [
-    { id: 1, nama: 'Andi Nugroho', kategoriUsia: '13 - 15 Tahun', alasanTidakSekolah: 'Faktor Ekonomi', alamat: 'RT 001 RW 02', lat: -6.2087, lng: 106.8455, orangTua: 'Slamet Riyadi', adaKendalaDokumen: true, dokumenBermasalah: ['Kartu Keluarga'], catatanTambahan: 'Keluarga tidak mampu membayar SPP' },
-    { id: 2, nama: 'Rina Safitri', kategoriUsia: '16 - 18 Tahun', alasanTidakSekolah: 'Faktor Keluarga', alamat: 'RT 002 RW 01', lat: -6.2107, lng: 106.8477, orangTua: 'Warni', adaKendalaDokumen: false, dokumenBermasalah: [], catatanTambahan: 'Sudah bekerja membantu keluarga' },
-    { id: 3, nama: 'Budi Setiawan', kategoriUsia: '6 - 12 Tahun', alasanTidakSekolah: 'Faktor Keluarga', alamat: 'RT 001 RW 03', lat: -6.2092, lng: 106.8462, orangTua: 'Tuti Handayani', adaKendalaDokumen: true, dokumenBermasalah: ['AKTA Kelahiran'], catatanTambahan: 'Belum diurus akta kelahirannya' },
-    { id: 4, nama: 'Lina Marliana', kategoriUsia: '16 - 18 Tahun', alasanTidakSekolah: 'Faktor Ekonomi', alamat: 'RT 003 RW 01', lat: -6.2119, lng: 106.8489, orangTua: 'Sumini', adaKendalaDokumen: false, dokumenBermasalah: [], catatanTambahan: 'Butuh bantuan seragam sekolah' },
-    { id: 5, nama: 'Eko Prasetyo', kategoriUsia: '13 - 15 Tahun', alasanTidakSekolah: 'Faktor Akses & Lingkungan', alamat: 'RT 002 RW 02', lat: -6.2119, lng: 106.8489, orangTua: 'Sumarjo', adaKendalaDokumen: true, dokumenBermasalah: ['AKTA Kelahiran', 'Kartu Keluarga'], catatanTambahan: 'Pindahan dari luar kota, dokumen hilang' },
-    { id: 6, nama: 'Sari Dewi', kategoriUsia: '6 - 12 Tahun', alasanTidakSekolah: 'Faktor Kesehatan', alamat: 'RT 001 RW 01', lat: -6.2089, lng: 106.8457, orangTua: 'Rubiyah', adaKendalaDokumen: false, dokumenBermasalah: [], catatanTambahan: 'Sedang menjalani pengobatan rutin' },
-    { id: 7, nama: 'Tegar Perdana', kategoriUsia: '6 - 12 Tahun', alasanTidakSekolah: 'Faktor Ekonomi', alamat: 'RT 004 RW 03', lat: -6.2120, lng: 106.8500, orangTua: 'Nining', adaKendalaDokumen: false, dokumenBermasalah: [], catatanTambahan: '' },
-    { id: 8, nama: 'Ayu Lestari', kategoriUsia: '13 - 15 Tahun', alasanTidakSekolah: 'Faktor Keluarga', alamat: 'RT 001 RW 02', lat: -6.2090, lng: 106.8460, orangTua: 'Suparman', adaKendalaDokumen: true, dokumenBermasalah: ['Kartu Keluarga'], catatanTambahan: 'Dokumen KK masih gabung dengan nenek' },
-    { id: 9, nama: 'Rian Hidayat', kategoriUsia: '6 - 12 Tahun', alasanTidakSekolah: 'Faktor Akses & Lingkungan', alamat: 'RT 005 RW 01', lat: -6.2135, lng: 106.8505, orangTua: 'Suroso', adaKendalaDokumen: false, dokumenBermasalah: [], catatanTambahan: 'Masalah transportasi ke sekolah asal' },
-    { id: 10, nama: 'Maya Sari', kategoriUsia: '16 - 18 Tahun', alasanTidakSekolah: 'Faktor Keluarga', alamat: 'RT 002 RW 03', lat: -6.2105, lng: 106.8475, orangTua: 'Warto', adaKendalaDokumen: false, dokumenBermasalah: [], catatanTambahan: 'Mengurusi adik di rumah' },
-    { id: 11, nama: 'Fajar Siddiq', kategoriUsia: '13 - 15 Tahun', alasanTidakSekolah: 'Faktor Ekonomi', alamat: 'RT 005 RW 02', lat: -6.2140, lng: 106.8510, orangTua: 'Bambang', adaKendalaDokumen: true, dokumenBermasalah: ['AKTA Kelahiran'], catatanTambahan: 'Tunggakan biaya sebelumnya' },
-    { id: 12, nama: 'Dinda Kirana', kategoriUsia: '6 - 12 Tahun', alasanTidakSekolah: 'Faktor Kesehatan', alamat: 'RT 003 RW 02', lat: -6.2125, lng: 106.8495, orangTua: 'Mulyono', adaKendalaDokumen: false, dokumenBermasalah: [], catatanTambahan: 'Belum bisa berjalan karena sakit sejak kecil' },
+    { id: 9, nama: 'Pak Kusumo', umur: 68, kondisi: 'Diusir keluarga', kondisiKesehatan: 'Baik', alamat: 'RT 003 RW 01', lat: -6.2116, lng: 106.8485, bantuan: 'Tempat tinggal' },
+    { id: 12, nama: 'Ponirah', umur: 80, kondisi: 'Lansia terlantar', kondisiKesehatan: 'Sakit', alamat: 'RT 004 RW 02', lat: -6.2115, lng: 106.8495, bantuan: 'Perawatan medis' },
 ];
 
 // Data untuk Anak Putus Sekolah
@@ -221,7 +198,6 @@ export const dashboardStats = {
     totalWargaMeninggal: wargaMeninggalData.length,
     totalWargaMiskin: wargaMiskinData.length,
     totalLansiaTerlantar: lansiaTerlantarData.length,
-    totalAnakTidakSekolah: anakTidakSekolahData.length,
     totalAnakPutusSekolah: anakPutusSekolahData.length,
     penerimaB: wargaMiskinData.filter(w => w.statusBantuan === 'Penerima').length,
 };

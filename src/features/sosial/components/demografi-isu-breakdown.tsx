@@ -12,6 +12,7 @@ import {
     wargaMiskinData,
     lansiaTerlantarData,
     anakPutusSekolahData,
+    anakTidakSekolahData,
 } from '../data/data'
 import { EconomicConditionChart, WargaSakitByDiseaseChart } from './dashboard-charts'
 import PenerimaBantuan from './penerima-bantuan'
@@ -32,6 +33,12 @@ import {
     JenjangPendidikanChart,
     PenyebabPutusSekolahChart,
 } from './anak-putus-sekolah-charts'
+import {
+    AlasanTidakSekolahChart,
+    KategoriUsiaChart,
+    KendalaDokumenChart,
+    AlasanPerUsiaChart,
+} from './anak-tidak-sekolah-charts'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
@@ -165,14 +172,16 @@ function WargaMeninggalSection() {
             id="section-meninggal"
         >
             <div className="space-y-6">
+                <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                    <div className='lg:col-span-2'>
+                        <PenyebabMeninggalChart />
+                    </div>
+                    <div>
+                        <WargaMeninggalPerUsiaChart />
+                    </div>
+                </div>
                 <div>
                     <PenyebabMeninggalByAgeChart />
-                </div>
-                <div>
-                    <WargaMeninggalPerUsiaChart />
-                </div>
-                <div>
-                    <PenyebabMeninggalChart />
                 </div>
             </div>
         </SectionContainer>
@@ -225,12 +234,40 @@ function LansiaTerlantarSection() {
             id="section-lansia"
         >
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
-                    <KondisiTempatTinggalChart />
-                </div>
                 <div>
                     <KondisiKesehatanChart />
                 </div>
+                <div className="lg:col-span-2">
+                    <KondisiTempatTinggalChart />
+                </div>
+            </div>
+        </SectionContainer>
+    )
+}
+
+// ─── Section: Anak Tidak Sekolah ───────────────────────────────────────────────
+
+function AnakTidakSekolahSection() {
+    return (
+        <SectionContainer
+            title='Anak Tidak Sekolah'
+            description='Distribusi alasan, usia, dan kendala dokumen pendaftaran anak tidak sekolah.'
+            icon={GraduationCap}
+            color='blue'
+            count={anakTidakSekolahData.length}
+            id="section-sekolah"
+        >
+            <div className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div>
+                        <KategoriUsiaChart />
+                    </div>
+                    <div className="lg:col-span-2">
+                        <AlasanTidakSekolahChart />
+                    </div>
+                </div>
+                <AlasanPerUsiaChart />
+                <KendalaDokumenChart />
             </div>
         </SectionContainer>
     )
@@ -246,14 +283,18 @@ function AnakPutusSekolahSection() {
             icon={GraduationCap}
             color='blue'
             count={anakPutusSekolahData.length}
-            id="section-sekolah"
+            id="section-putus-sekolah"
         >
             <div className="space-y-6">
-                <PenyebabPerJenjangChart />
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <JenjangPendidikanChart />
-                    <PenyebabPutusSekolahChart />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div>
+                        <JenjangPendidikanChart />
+                    </div>
+                    <div className="lg:col-span-2">
+                        <PenyebabPutusSekolahChart />
+                    </div>
                 </div>
+                <PenyebabPerJenjangChart />
             </div>
         </SectionContainer>
     )
@@ -302,15 +343,26 @@ const issues = (grandTotal: number) => [
         pct: Math.round((lansiaTerlantarData.length / grandTotal) * 100),
     },
     {
-        label: 'Putus Sekolah',
-        count: anakPutusSekolahData.length,
+        label: 'Tidak Sekolah',
+        count: anakTidakSekolahData.length,
         color: '#3b82f6',
         bg: 'bg-blue-50 dark:bg-blue-950/20',
         border: 'border-blue-200 dark:border-blue-800/40',
         text: 'text-blue-600 dark:text-blue-400',
         icon: GraduationCap,
-        pct: Math.round((anakPutusSekolahData.length / grandTotal) * 100),
+        pct: Math.round((anakTidakSekolahData.length / grandTotal) * 100),
         id: 'section-sekolah',
+    },
+    {
+        label: 'Putus Sekolah',
+        count: anakPutusSekolahData.length,
+        color: '#6366f1',
+        bg: 'bg-indigo-50 dark:bg-indigo-950/20',
+        border: 'border-indigo-200 dark:border-indigo-800/40',
+        text: 'text-indigo-600 dark:text-indigo-400',
+        icon: GraduationCap,
+        pct: Math.round((anakPutusSekolahData.length / grandTotal) * 100),
+        id: 'section-putus-sekolah',
     },
 ]
 
@@ -319,7 +371,8 @@ const issueToId: Record<string, string> = {
     'Warga Sakit': 'section-sakit',
     'Warga Meninggal': 'section-meninggal',
     'Lansia Terlantar': 'section-lansia',
-    'Putus Sekolah': 'section-sekolah',
+    'Tidak Sekolah': 'section-sekolah',
+    'Putus Sekolah': 'section-putus-sekolah',
 }
 
 // ─── Stat Card ────────────────────────────────────────────────────────────────
@@ -388,6 +441,7 @@ export function DemografiSummary() {
         wargaMeninggalData.length +
         wargaMiskinData.length +
         lansiaTerlantarData.length +
+        anakTidakSekolahData.length +
         anakPutusSekolahData.length
 
     const allIssues = issues(grandTotal)
@@ -477,7 +531,7 @@ export function DemografiSummary() {
 
             {/* ── Stat cards grid ── */}
             <div className="p-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {allIssues.map((isu, i) => (
                         <StatCard
                             key={i}
@@ -505,6 +559,7 @@ export function DemografiIsuBreakdown() {
                 <WargaSakitSection />
                 <WargaMeninggalSection />
                 <LansiaTerlantarSection />
+                <AnakTidakSekolahSection />
                 <AnakPutusSekolahSection />
             </div>
         </div>

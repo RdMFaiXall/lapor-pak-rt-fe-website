@@ -20,7 +20,7 @@ import {
     wargaMeninggalData,
     wargaMiskinData,
     lansiaTerlantarData,
-    anakPutusSekolahData
+    anakTidakSekolahData
 } from '../data/data'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Users, Activity, HeartPulse, GraduationCap, AlertTriangle } from 'lucide-react'
@@ -203,7 +203,7 @@ export function SocialSummaryCards() {
         { title: 'Warga Meninggal', count: wargaMeninggalData.length, icon: HeartPulse, color: 'text-gray-500' },
         { title: 'Warga Miskin Ekstrem', count: wargaMiskinData.length, icon: Users, color: 'text-yellow-500' },
         { title: 'Lansia Terlantar', count: lansiaTerlantarData.length, icon: AlertTriangle, color: 'text-purple-500' },
-        { title: 'Anak Putus Sekolah', count: anakPutusSekolahData.length, icon: GraduationCap, color: 'text-blue-500' },
+        { title: 'Anak Tidak Sekolah', count: anakTidakSekolahData.length, icon: GraduationCap, color: 'text-blue-500' },
     ];
 
     return (
@@ -366,10 +366,10 @@ export function LansiaCharts() {
     );
 }
 
-// 6. Anak Putus Sekolah Charts
+// 6. Anak Tidak Sekolah Charts
 export function AnakPutusSekolahCharts() {
-    const levelData = aggregateData(anakPutusSekolahData, 'jenjang');
-    const causeData = aggregateData(anakPutusSekolahData, 'penyebab');
+    const levelData = aggregateData(anakTidakSekolahData, 'jenjang');
+    const causeData = aggregateData(anakTidakSekolahData, 'penyebab');
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

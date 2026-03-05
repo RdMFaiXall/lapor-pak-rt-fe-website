@@ -16,7 +16,7 @@ import {
     wargaSakitData,
     wargaMeninggalData,
     lansiaTerlantarData,
-    anakPutusSekolahData,
+    anakTidakSekolahData,
 } from '../data/data'
 
 export function EconomicConditionChart() {
@@ -218,10 +218,10 @@ export function WargaSakitByDiseaseChart() {
                                 paddingAngle={2}
                                 labelLine={false}
                                 label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+                                    if (cx == null || cy == null || midAngle == null || innerRadius == null || outerRadius == null || percent == null || percent < 0.05) return null;
                                     const radius = innerRadius + (outerRadius - innerRadius) * 0.55;
                                     const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
                                     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
-                                    if (percent < 0.05) return null;
                                     return (
                                         <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central" fontSize={13} fontWeight="bold">
                                             {`${(percent * 100).toFixed(0)}%`}
@@ -243,7 +243,7 @@ export function WargaSakitByDiseaseChart() {
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full grid grid-cols-2 gap-y-3 gap-x-2 mt-6 shrink-0'>
+                <div className='w-full max-w-[240px] mx-auto grid grid-cols-2 gap-y-3 gap-x-2 mt-6 shrink-0'>
                     {chartData.map((item, index) => (
                         <div key={index} className='flex items-start gap-2'>
                             <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
@@ -403,9 +403,9 @@ export function LansiaTerlantarByConditionChart() {
     )
 }
 
-// Total Anak Putus Sekolah by Level - Card Layout
+// Total Anak Tidak Sekolah by Level - Card Layout
 export function AnakPutusSekolahByLevelChart() {
-    const levelCount = anakPutusSekolahData.reduce((acc, curr) => {
+    const levelCount = anakTidakSekolahData.reduce((acc, curr) => {
         acc[curr.jenjang] = (acc[curr.jenjang] || 0) + 1
         return acc
     }, {} as Record<string, number>)
@@ -421,7 +421,7 @@ export function AnakPutusSekolahByLevelChart() {
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
             <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
-                Total Anak Putus Sekolah
+                Total Anak Tidak Sekolah
             </h3>
             <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>
                 {total} kasus berdasarkan jenjang pendidikan
@@ -468,9 +468,9 @@ export function AnakPutusSekolahByLevelChart() {
     )
 }
 
-// Total Penyebab Anak Putus Sekolah - Vertical Bar
+// Total Penyebab Anak Tidak Sekolah - Vertical Bar
 export function AnakPutusSekolahByCauseChart() {
-    const causeCount = anakPutusSekolahData.reduce((acc, curr) => {
+    const causeCount = anakTidakSekolahData.reduce((acc, curr) => {
         acc[curr.penyebab] = (acc[curr.penyebab] || 0) + 1
         return acc
     }, {} as Record<string, number>)
@@ -486,7 +486,7 @@ export function AnakPutusSekolahByCauseChart() {
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
             <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
-                Total Penyebab Anak Putus Sekolah
+                Total Penyebab Anak Tidak Sekolah
             </h3>
             <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>
                 {total} kasus berdasarkan penyebab

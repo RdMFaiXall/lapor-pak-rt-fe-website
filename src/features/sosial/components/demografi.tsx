@@ -58,7 +58,7 @@ const lansiaTerlantarData = [
     { id: 5, nama: "Pak Mukri", umur: 75, kondisi: "Tinggal sendiri", kondisiKesehatan: "Lemah", alamat: "RT 002 RW 02", bantuan: "Perlu pendamping" },
 ];
 
-const anakPutusSekolahData = [
+const anakTidakSekolahData = [
     { id: 1, nama: "Andi Nugroho", umur: 15, jenjang: "SMP", penyebab: "Ekonomi", alamat: "RT 001 RW 02", tahunPutus: 2025 },
     { id: 2, nama: "Rina Safitri", umur: 16, jenjang: "SMA", penyebab: "Pernikahan Dini", alamat: "RT 002 RW 01", tahunPutus: 2025 },
     { id: 3, nama: "Budi Setiawan", umur: 12, jenjang: "SD", penyebab: "Masalah Keluarga", alamat: "RT 001 RW 03", tahunPutus: 2026 },
@@ -298,8 +298,8 @@ const DetailPanel = ({ card, onClose }: { card: string | null; onClose: () => vo
             );
         }
         if (card === "sekolah") {
-            const byPenyebab = countBy(anakPutusSekolahData, "penyebab");
-            const byJenjang = countBy(anakPutusSekolahData, "jenjang");
+            const byPenyebab = countBy(anakTidakSekolahData, "penyebab");
+            const byJenjang = countBy(anakTidakSekolahData, "jenjang");
             const maxP = byPenyebab[0]?.value || 1;
             const clrs = ["#3b82f6", "#60a5fa", "#93c5fd", "#1d4ed8"];
             return (
@@ -324,7 +324,7 @@ const DetailPanel = ({ card, onClose }: { card: string | null; onClose: () => vo
                         </div>
                     ))}
                     <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-5 mb-3">Daftar Anak</p>
-                    {anakPutusSekolahData.map((w, i) => (
+                    {anakTidakSekolahData.map((w, i) => (
                         <div key={i} className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
                             <div>
                                 <div className="text-sm font-semibold text-gray-800 dark:text-gray-200">
@@ -385,18 +385,18 @@ export function DemografiIsu() {
     const avgMeninggalAge = Math.round(wargaMeninggalData.reduce((s, w) => s + w.umur, 0) / wargaMeninggalData.length);
     const byCause = countBy(wargaMeninggalData, "penyebab");
     const intensif = lansiaTerlantarData.filter(w => w.bantuan === "Perawatan intensif").length;
-    const ekonomiPct = Math.round((anakPutusSekolahData.filter(w => w.penyebab === "Ekonomi").length / anakPutusSekolahData.length) * 100);
-    const byJenjang = countBy(anakPutusSekolahData, "jenjang");
+    const ekonomiPct = Math.round((anakTidakSekolahData.filter(w => w.penyebab === "Ekonomi").length / anakTidakSekolahData.length) * 100);
+    const byJenjang = countBy(anakTidakSekolahData, "jenjang");
     const sakitByDisease = countBy(wargaSakitData, "jenisPenyakit").slice(0, 4);
     const maxDisease = sakitByDisease[0]?.value || 1;
-    const totalAll = wargaSakitData.length + wargaMeninggalData.length + wargaMiskinData.length + lansiaTerlantarData.length + anakPutusSekolahData.length;
+    const totalAll = wargaSakitData.length + wargaMeninggalData.length + wargaMiskinData.length + lansiaTerlantarData.length + anakTidakSekolahData.length;
 
     const grandPieData = [
         { name: "Sakit", value: wargaSakitData.length, color: "#ef4444" },
         { name: "Meninggal", value: wargaMeninggalData.length, color: "#6b7280" },
         { name: "Miskin", value: wargaMiskinData.length, color: "#f59e0b" },
         { name: "Lansia", value: lansiaTerlantarData.length, color: "#8b5cf6" },
-        { name: "Sekolah", value: anakPutusSekolahData.length, color: "#3b82f6" },
+        { name: "Sekolah", value: anakTidakSekolahData.length, color: "#3b82f6" },
     ];
 
     return (
@@ -567,7 +567,7 @@ export function DemografiIsu() {
                 {/* ANAK PUTUS SEKOLAH — col 4 */}
                 <BentoCard id="sekolah" color="#3b82f6" colSpan={4} onClick={setActivePanel}>
                     <div className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Putus Sekolah</div>
-                    <div className="text-5xl font-black tracking-tighter text-blue-500 leading-none">{anakPutusSekolahData.length}</div>
+                    <div className="text-5xl font-black tracking-tighter text-blue-500 leading-none">{anakTidakSekolahData.length}</div>
                     <div className="flex gap-1.5 flex-wrap mt-3 mb-3">
                         {byJenjang.map((j, i) => {
                             const clrs = ["#3b82f6", "#60a5fa", "#93c5fd", "#1d4ed8"];

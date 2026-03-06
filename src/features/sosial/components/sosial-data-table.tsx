@@ -7,6 +7,7 @@ import {
     wargaSakitData,
     lansiaTerlantarData,
     anakTidakSekolahData,
+    anakPutusSekolahData,
     categories
 } from '../data/data'
 import { Input } from '@/components/ui/input'
@@ -65,10 +66,20 @@ export function SosialDataTable() {
             category: 'anak-tidak-sekolah',
             type: 'Anak Tidak Sekolah',
             mainInfo: d.nama,
+            subInfo: `${d.kategoriUsia} - ${d.alasanTidakSekolah}`,
+            location: d.alamat,
+            date: `-`,
+            status: d.alasanTidakSekolah
+        })),
+        ...anakPutusSekolahData.map(d => ({
+            ...d,
+            category: 'anak-tidak-sekolah',
+            type: 'Anak Putus Sekolah',
+            mainInfo: d.nama,
             subInfo: `${d.jenjang} - ${d.penyebab}`,
             location: d.alamat,
             date: `-`,
-            status: d.jenjang
+            status: d.penyebab
         })),
     ]
 

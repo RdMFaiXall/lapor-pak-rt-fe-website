@@ -7,6 +7,7 @@ import {
     wargaMeninggalData,
     wargaMiskinData,
     wargaSakitData,
+    anakPutusSekolahData,
     categories
 } from '../data/data'
 import { useState } from 'react'
@@ -92,6 +93,24 @@ export function CleanSosialMap() {
             }
         })),
         ...anakTidakSekolahData.map(d => ({
+            id: `tidak-sekolah-${d.id}`,
+            category: 'anak-tidak-sekolah',
+            title: `${d.nama}`,
+            description: `${d.kategoriUsia} - ${d.alasanTidakSekolah}`,
+            location: d.alamat,
+            date: `-`,
+            victims: 1,
+            position: [d.lat, d.lng],
+            status: d.alasanTidakSekolah,
+            fileStatus: 'active',
+            details: {
+                nama: d.nama,
+                kategoriUsia: d.kategoriUsia,
+                alasanTidakSekolah: d.alasanTidakSekolah,
+                orangTua: d.orangTua
+            }
+        })),
+        ...anakPutusSekolahData.map(d => ({
             id: `putus-${d.id}`,
             category: 'anak-tidak-sekolah',
             title: `${d.nama}`,
@@ -176,7 +195,7 @@ export function CleanSosialMap() {
 
             {/* Selected Incident Details */}
             {selectedIncident && (
-                <div className='mt-6 p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 rounded-lg border border-blue-100 dark:border-gray-700'>
+                <div className='mt-6 p-6 bg-linear-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 rounded-lg border border-blue-100 dark:border-gray-700'>
                     <div className='flex items-start justify-between mb-4'>
                         <h4 className='text-base font-semibold text-gray-900 dark:text-white'>
                             Detail Informasi

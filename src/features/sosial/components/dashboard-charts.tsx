@@ -16,7 +16,7 @@ import {
     wargaSakitData,
     wargaMeninggalData,
     lansiaTerlantarData,
-    anakTidakSekolahData,
+    anakPutusSekolahData,
 } from '../data/data'
 
 export function EconomicConditionChart() {
@@ -405,7 +405,7 @@ export function LansiaTerlantarByConditionChart() {
 
 // Total Anak Tidak Sekolah by Level - Card Layout
 export function AnakPutusSekolahByLevelChart() {
-    const levelCount = anakTidakSekolahData.reduce((acc, curr) => {
+    const levelCount = anakPutusSekolahData.reduce((acc, curr) => {
         acc[curr.jenjang] = (acc[curr.jenjang] || 0) + 1
         return acc
     }, {} as Record<string, number>)
@@ -470,7 +470,7 @@ export function AnakPutusSekolahByLevelChart() {
 
 // Total Penyebab Anak Tidak Sekolah - Vertical Bar
 export function AnakPutusSekolahByCauseChart() {
-    const causeCount = anakTidakSekolahData.reduce((acc, curr) => {
+    const causeCount = anakPutusSekolahData.reduce((acc, curr) => {
         acc[curr.penyebab] = (acc[curr.penyebab] || 0) + 1
         return acc
     }, {} as Record<string, number>)

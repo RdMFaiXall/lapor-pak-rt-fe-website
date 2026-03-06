@@ -203,16 +203,16 @@ export const anakTidakSekolahData = [
 
 // Data untuk Anak Putus Sekolah
 export const anakPutusSekolahData = [
-    { id: 1, nama: 'Andi Nugroho', umur: 15, jenjang: 'SMP', penyebab: 'Ekonomi', alamat: 'RT 001 RW 02', lat: -6.2087, lng: 106.8455, tahunPutus: 2025, oranTua: 'Slamet Riyadi' },
-    { id: 2, nama: 'Rina Safitri', umur: 16, jenjang: 'SMA', penyebab: 'Pernikahan dini', alamat: 'RT 002 RW 01', lat: -6.2107, lng: 106.8477, tahunPutus: 2025, oranTua: 'Warni' },
-    { id: 3, nama: 'Budi Setiawan', umur: 12, jenjang: 'SD', penyebab: 'Masalah keluarga', alamat: 'RT 001 RW 03', lat: -6.2092, lng: 106.8462, tahunPutus: 2026, oranTua: 'Tuti Handayani' },
-    { id: 4, nama: 'Lina Marliana', umur: 17, jenjang: 'SMK', penyebab: 'Ekonomi', alamat: 'RT 003 RW 01', lat: -6.2119, lng: 106.8489, tahunPutus: 2025, oranTua: 'Sumini' },
-    { id: 5, nama: 'Eko Prasetyo', umur: 14, jenjang: 'SMP', penyebab: 'Kurang motivasi', alamat: 'RT 002 RW 02', lat: -6.2119, lng: 106.8489, tahunPutus: 2025, oranTua: 'Sumini' },
-    { id: 6, nama: 'Sari Dewi', umur: 13, jenjang: 'SMP', penyebab: 'Disabilitas', alamat: 'RT 001 RW 01', lat: -6.2089, lng: 106.8457, tahunPutus: 2025, oranTua: 'Rubiyah' },
-    { id: 7, nama: 'Tegar Perdana', umur: 10, jenjang: 'SD', penyebab: 'Ekonomi', alamat: 'RT 004 RW 03', lat: -6.2120, lng: 106.8500, tahunPutus: 2026, oranTua: 'Nining' },
-    { id: 8, nama: 'Ayu Lestari', umur: 15, jenjang: 'SMP', penyebab: 'Pekerja anak', alamat: 'RT 001 RW 02', lat: -6.2090, lng: 106.8460, tahunPutus: 2025, oranTua: 'Suparman' },
-    { id: 9, nama: 'Rian Hidayat', umur: 11, jenjang: 'SD', penyebab: 'Ekonomi', alamat: 'RT 005 RW 01', lat: -6.2135, lng: 106.8505, tahunPutus: 2026, oranTua: 'Suroso' },
-    { id: 10, nama: 'Maya Sari', umur: 16, jenjang: 'SMA', penyebab: 'Masalah keluarga', alamat: 'RT 002 RW 03', lat: -6.2105, lng: 106.8475, tahunPutus: 2025, oranTua: 'Warto' },
+    { id: 1, nama: 'Andi Nugroho', umur: 15, jenjang: 'SMP', penyebab: 'Ekonomi', alamat: 'RT 001 RW 02', lat: -6.2087, lng: 106.8455, tahunPutus: 2025, orangTua: 'Slamet Riyadi' },
+    { id: 2, nama: 'Rina Safitri', umur: 16, jenjang: 'SMA', penyebab: 'Pernikahan dini', alamat: 'RT 002 RW 01', lat: -6.2107, lng: 106.8477, tahunPutus: 2025, orangTua: 'Warni' },
+    { id: 3, nama: 'Budi Setiawan', umur: 12, jenjang: 'SD', penyebab: 'Masalah keluarga', alamat: 'RT 001 RW 03', lat: -6.2092, lng: 106.8462, tahunPutus: 2026, orangTua: 'Tuti Handayani' },
+    { id: 4, nama: 'Lina Marliana', umur: 17, jenjang: 'SMK', penyebab: 'Ekonomi', alamat: 'RT 003 RW 01', lat: -6.2119, lng: 106.8489, tahunPutus: 2025, orangTua: 'Sumini' },
+    { id: 5, nama: 'Eko Prasetyo', umur: 14, jenjang: 'SMP', penyebab: 'Kurang motivasi', alamat: 'RT 002 RW 02', lat: -6.2119, lng: 106.8489, tahunPutus: 2025, orangTua: 'Sumini' },
+    { id: 6, nama: 'Sari Dewi', umur: 13, jenjang: 'SMP', penyebab: 'Disabilitas', alamat: 'RT 001 RW 01', lat: -6.2089, lng: 106.8457, tahunPutus: 2025, orangTua: 'Rubiyah' },
+    { id: 7, nama: 'Tegar Perdana', umur: 10, jenjang: 'SD', penyebab: 'Ekonomi', alamat: 'RT 004 RW 03', lat: -6.2120, lng: 106.8500, tahunPutus: 2026, orangTua: 'Nining' },
+    { id: 8, nama: 'Ayu Lestari', umur: 15, jenjang: 'SMP', penyebab: 'Pekerja anak', alamat: 'RT 001 RW 02', lat: -6.2090, lng: 106.8460, tahunPutus: 2025, orangTua: 'Suparman' },
+    { id: 9, nama: 'Rian Hidayat', umur: 11, jenjang: 'SD', penyebab: 'Ekonomi', alamat: 'RT 005 RW 01', lat: -6.2135, lng: 106.8505, tahunPutus: 2026, orangTua: 'Suroso' },
+    { id: 10, nama: 'Maya Sari', umur: 16, jenjang: 'SMA', penyebab: 'Masalah keluarga', alamat: 'RT 002 RW 03', lat: -6.2105, lng: 106.8475, tahunPutus: 2025, orangTua: 'Warto' },
 ];
 
 // Summary statistics

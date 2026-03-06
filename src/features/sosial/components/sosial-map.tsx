@@ -1,11 +1,11 @@
-
 import MapComponent from '@/components/ui/maps';
 import {
     anakTidakSekolahData,
     lansiaTerlantarData,
     wargaMeninggalData,
     wargaMiskinData,
-    wargaSakitData
+    wargaSakitData,
+    anakPutusSekolahData
 } from '../data/data';
 
 const mapData = [
@@ -62,6 +62,19 @@ const mapData = [
         position: [d.lat, d.lng]
     })),
     ...anakTidakSekolahData.map(d => ({
+        ...d,
+        id: `tidak-sekolah-${d.id}`,
+        category: 'anak-tidak-sekolah',
+        title: `Tidak Sekolah: ${d.nama}`,
+        description: `Alasan: ${d.alasanTidakSekolah}`,
+        location: d.alamat,
+        date: '-',
+        status: d.alasanTidakSekolah,
+        fileStatus: 'Open',
+        victims: 1,
+        position: [d.lat, d.lng]
+    })),
+    ...anakPutusSekolahData.map(d => ({
         ...d,
         id: `putus-sekolah-${d.id}`,
         category: 'anak-tidak-sekolah',

@@ -66,7 +66,7 @@ const allIssues: SocialIssue[] = [
         id: String(d.id),
         type: 'Putus Sekolah' as const,
         name: d.nama,
-        detail: d.penyebab,
+        detail: d.alasanTidakSekolah,
         location: d.alamat,
         date: new Date().toISOString()
     })),

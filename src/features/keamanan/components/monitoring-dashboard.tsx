@@ -1,18 +1,17 @@
-
-import { KasusCategoryChart, PriorityChart } from './monitoring-charts'
-import { KeamananMap } from './keamanan-map'
 import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Main } from '@/components/layout/main'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import { KeamananIsuBreakdown } from './keamanan-isu-breakdown'
+import ScrollToTopButton from './scroll-to-top-button'
 
 export default function MonitoringDashboard() {
     return (
-        <div className='space-y-4'>
+        <div className='min-h-screen bg-gray-50 dark:bg-gray-950'>
             <Header>
                 <Search />
                 <div className='ms-auto flex items-center gap-4'>
@@ -23,53 +22,32 @@ export default function MonitoringDashboard() {
             </Header>
 
             <Main>
-                <div className='mb-8'>
-                    <h1 className='text-3xl font-bold tracking-tight text-foreground'>Laporan Situasi Keamanan</h1>
-                    <p className='text-lg text-muted-foreground mt-2'>
-                        Per {format(new Date(), 'dd MMMM yyyy', { locale: id })}, wilayah ini berada dalam status <span className='font-semibold text-yellow-600'>Waspada</span>.
-                        Terdapat peningkatan aktivitas pencurian di malam hari, namun personel keamanan telah ditingkatkan di titik-titik rawan.
-                    </p>
-                </div>
-
-                <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8'>
-                    <div className='lg:col-span-2'>
-                        <div className='mb-4'>
-                            <h3 className='text-lg font-semibold text-foreground'>Peta Sebaran Insiden</h3>
-                            <p className='text-sm text-muted-foreground'>
-                                Konsentrasi kejadian terpusat di area pemukiman padat.
+                <div className='mb-6'>
+                    <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3'>
+                        <div>
+                            <h1 className='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
+                                Laporan Situasi Keamanan
+                            </h1>
+                            <p className='text-sm text-gray-500 dark:text-gray-400 mt-0.5'>
+                                Ringkasan, peta sebaran, and proporsi insiden keamanan wilayah
                             </p>
                         </div>
-                        <div className='rounded-lg overflow-hidden'>
-                            <KeamananMap />
+                        <div className='flex items-center gap-2 bg-white dark:bg-gray-900 rounded-lg px-4 py-2 shadow-sm border border-gray-200 dark:border-gray-800 self-start'>
+                            <div className='w-2 h-2 rounded-full bg-emerald-400 animate-pulse' />
+                            <div>
+                                <p className='text-xs text-gray-400'>Update terakhir</p>
+                                <p className='text-xs font-semibold text-gray-700 dark:text-gray-300'>
+                                    {format(new Date(), 'dd MMM yyyy, HH:mm', { locale: id })}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div className='lg:col-span-1 space-y-8'>
-                        <div>
-                            <h3 className='text-lg font-semibold text-foreground mb-2'>Ringkasan Eksekutif</h3>
-                            <ul className='space-y-4'>
-                                <li className='flex justify-between items-center border-b pb-2'>
-                                    <span className='text-muted-foreground'>Total Insiden Minggu Ini</span>
-                                    <span className='text-xl font-bold'>12</span>
-                                </li>
-                                <li className='flex justify-between items-center border-b pb-2'>
-                                    <span className='text-muted-foreground'>Penyelesaian Kasus</span>
-                                    <span className='text-xl font-bold text-green-600'>85%</span>
-                                </li>
-                                <li className='flex justify-between items-center border-b pb-2'>
-                                    <span className='text-muted-foreground'>Waktu Respon Rata-rata</span>
-                                    <span className='text-xl font-bold'>15 Menit</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <PriorityChart />
                     </div>
                 </div>
 
-                <div className='grid grid-cols-1 gap-8'>
-                    <KasusCategoryChart />
-                </div>
-            </Main >
+                <KeamananIsuBreakdown />
+            </Main>
+
+            <ScrollToTopButton />
         </div>
     )
 }

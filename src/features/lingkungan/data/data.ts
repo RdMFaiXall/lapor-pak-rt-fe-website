@@ -58,33 +58,31 @@ export const priorities = [
 ]
 
 export const categories = [
-    { value: 'sampah', label: 'Penumpukan Sampah', color: '#d97706' }, // Amber
-    { value: 'banjir', label: 'Banjir/Genangan', color: '#3b82f6' }, // Blue
-    { value: 'polusi', label: 'Polusi Udara/Bau', color: '#71717a' }, // Zinc
-    { value: 'limbah', label: 'Limbah Berbahaya', color: '#a855f7' }, // Purple
-    { value: 'pohon', label: 'Pohon Tumbang', color: '#22c55e' }, // Green
-    { value: 'lainnya', label: 'Lainnya', color: '#9ca3af' }, // Gray
+    { value: 'sampah', label: 'Sampah Menumpuk', color: '#d97706' }, // Amber
+    { value: 'saluran', label: 'Saluran Air Tersumbat', color: '#3b82f6' }, // Blue
+    { value: 'jalan', label: 'Jalan Rusak', color: '#64748b' }, // Slate
+    { value: 'penerangan', label: 'Penerangan Jalan', color: '#eab308' }, // Yellow
 ]
 
 const titles = [
     'Sampah menumpuk di selokan utama',
-    'Banjir setinggi lutut di jalan masuk',
-    'Bau menyengat dari pembakaran sampah',
-    'Limbah rumah tangga dibuang sembarangan',
-    'Pohon tumbang menghalangi jalan',
     'Saluran air tersumbat menyebabkan genangan',
-    'Kerja bakti pembersihan lingkungan',
-    'Pengasapan (fogging) nyamuk DBD',
+    'Jalan berlubang dan rusak parah',
+    'Lampu jalan mati di perempatan',
+    'Tumpukan sampah liar di lahan kosong',
+    'Gorong-gorong mampet oleh sampah plastik',
+    'Aspal terkelupas dan membahayakan',
+    'Penerangan sangat minim di gang',
 ]
 
 const descriptions = [
     'Warga mengeluhkan bau tidak sedap dan potensi penyakit dari tumpukan sampah.',
-    'Hujan deras menyebabkan air sungai meluap ke jalanan warga.',
-    'Asap pembakaran sampah mengganggu pernapasan warga sekitar.',
-    'Mohon bantuan petugas untuk mengevakuasi pohon tumbang secepatnya.',
+    'Hujan deras menyebabkan air tidak bisa mengalir dan menggenang.',
+    'Banyak kendaraan yang terperosok ke dalam lubang jalan yang cukup dalam.',
+    'Area tersebut sangat gelap di malam hari, rawan tindakan kriminal.',
     'Selokan mampet karena banyak sampah plastik yang dibuang sembarangan.',
-    'Diperlukan koordinasi untuk jadwal kerja bakti minggu depan.',
-    'Banyak warga yang terjangkit demam berdarah, perlu tindakan segera.',
+    'Mohon perbaikan jalan segera sebelum memakan korban kecelakaan.',
+    'Lampu jalan sudah putus selama 3 hari berturut-turut.',
 ]
 
 export const mockLingkunganData: Lingkungan[] = Array.from({ length: 20 }).map(() => ({

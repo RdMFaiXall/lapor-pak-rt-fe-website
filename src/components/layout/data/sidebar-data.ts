@@ -3,7 +3,6 @@ import {
   Coins,
   Command,
   GalleryVerticalEnd,
-  GraduationCap,
   HeartPulse,
   LayoutDashboard,
   ShieldAlert,
@@ -79,11 +78,6 @@ export const sidebarData: SidebarData = {
           title: 'Kesehatan',
           url: '/kesehatan/monitoring',
           icon: HeartPulse,
-        },
-        {
-          title: 'Pendidikan',
-          url: '/pendidikan/monitoring',
-          icon: GraduationCap,
         },
         {
           title: 'Ekonomi',

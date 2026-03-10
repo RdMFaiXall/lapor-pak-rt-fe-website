@@ -1,70 +1,91 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { mockData } from '../constants'
-import { Bar, BarChart, Cell, LabelList, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { PieChart as PieChartIcon, BarChart3 } from 'lucide-react'
+import { AlertTriangle } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { Card } from '@/components/ui/card'
+import { BencanaTypeChart, BencanaResolution, BencanaImpactSummary } from './bencana-charts'
 
-const COLORS = ['#2563eb', '#db2777', '#7c3aed', '#059669', '#d97706', '#0891b2']
+// ─── Shared Components ────────────────────────────────────────────────────────
 
-export default function MonitoringView() {
-    // Data untuk Grafik
-    const totalReports = mockData.length
-    const chartData = Object.values(
-        mockData.reduce((acc, curr) => {
-            const isu = curr.jenis_bencana
-            if (!acc[isu]) {
-                acc[isu] = { name: isu, jumlah: 0 }
-            }
-            acc[isu].jumlah += 1
-            return acc
-        }, {} as Record<string, { name: string; jumlah: number }>)
-    )
-        .sort((a, b) => b.jumlah - a.jumlah)
-        .map((item, index) => {
-            const percentage = ((item.jumlah / totalReports) * 100).toFixed(1)
-            return {
-                ...item,
-                percentage,
-                fill: COLORS[index % COLORS.length],
-                label: `${item.jumlah}` // Just the number for cleaner look inside bar? Or Keep percentage? User said "(2, 20)".
-                // Let's keep distinct number.
-            }
-        })
+interface SectionContainerProps {
+    title: string
+    description?: string
+    icon: any
+    color: string
+    children: React.ReactNode
+    className?: string
+    count?: number
+    id?: string
+}
 
-    // Dynamic height for Bar Chart: at least 200px, or 60px per item
-    const barChartHeight = Math.max(chartData.length * 60, 200)
+function SectionContainer({
+    title,
+    description,
+    icon: Icon,
+    color,
+    children,
+    className,
+    count,
+    id,
+}: SectionContainerProps) {
+    const colorClasses: Record<string, string> = {
+        amber: 'border-amber-100 dark:border-amber-900/30 bg-amber-50/10',
+        rose: 'border-rose-100 dark:border-rose-900/30 bg-rose-50/10',
+        slate: 'border-slate-300 dark:border-slate-800 bg-slate-50/10',
+        violet: 'border-violet-100 dark:border-violet-900/30 bg-violet-50/10',
+        blue: 'border-blue-100 dark:border-blue-900/30 bg-blue-50/10',
+    }
 
-    const CustomTooltip = ({ active, payload, label }: any) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className="rounded-lg border bg-background p-2 shadow-sm">
-                    <div className="grid grid-cols-2 gap-2">
-                        <div className="flex flex-col">
-                            <span className="text-[0.70rem] uppercase text-muted-foreground">
-                                Bencana
-                            </span>
-                            <span className="font-bold text-muted-foreground mr-2">
-                                {label || payload[0].payload.name}
-                            </span>
+    const iconColorClasses: Record<string, string> = {
+        amber: 'text-amber-500 bg-amber-100 dark:bg-amber-950/40',
+        rose: 'text-rose-500 bg-rose-100 dark:bg-rose-950/40',
+        slate: 'text-slate-500 bg-slate-100 dark:bg-slate-800',
+        violet: 'text-violet-500 bg-violet-100 dark:bg-violet-950/40',
+        blue: 'text-blue-500 bg-blue-100 dark:bg-blue-950/40',
+    }
+
+    return (
+        <Card id={id} className={cn('border-none shadow-none bg-transparent overflow-hidden scroll-mt-24', className)}>
+            <div className={cn('border rounded-2xl p-6 transition-all duration-300 hover:shadow-md h-full', colorClasses[color] || 'border-gray-100 bg-white dark:bg-gray-900')}>
+                <div className='flex items-start justify-between mb-8'>
+                    <div className="flex items-center gap-4">
+                        <div className={cn('p-3 rounded-xl', iconColorClasses[color])}>
+                            <Icon className="w-6 h-6" />
                         </div>
-                        <div className="flex flex-col">
-                            <span className="text-[0.70rem] uppercase text-muted-foreground">
-                                Jumlah
-                            </span>
-                            <span className="font-bold">
-                                {payload[0].value} Laporan
-                            </span>
+                        <div>
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                                {title}
+                            </h3>
+                            {description && (
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    {description}
+                                </p>
+                            )}
                         </div>
                     </div>
+                    {count !== undefined && (
+                        <div className="flex flex-col items-end">
+                            <span className={cn('px-3 py-1.5 rounded-xl text-2xl font-black leading-none flex items-baseline gap-1', iconColorClasses[color])}>
+                                {count}
+                                <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Laporan</span>
+                            </span>
+                        </div>
+                    )}
                 </div>
-            )
-        }
-        return null
-    }
+                <div className="space-y-6">
+                    {children}
+                </div>
+            </div>
+        </Card>
+    )
+}
+
+export default function MonitoringView() {
+    const totalReports = mockData.length
 
     return (
         <>
@@ -83,105 +104,27 @@ export default function MonitoringView() {
                     </p>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3">
-                    {/* Area Grafik Bar - Takes 2/3 width on large screens */}
-                    <Card className="lg:col-span-2 shadow-md flex flex-col">
-                        <CardHeader>
-                            <div className="flex items-center space-x-2">
-                                <BarChart3 className="h-5 w-5 text-muted-foreground" />
-                                <CardTitle className="text-lg font-medium">Statistik Bencana</CardTitle>
+                <div className="space-y-12 pb-20">
+                    <SectionContainer
+                        title='Bencana'
+                        description='Data laporan kejadian bencana dari warga.'
+                        icon={AlertTriangle}
+                        color='rose'
+                        count={totalReports}
+                        id="section-bencana"
+                    >
+                        <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                            <div className='lg:col-span-2'>
+                                <BencanaTypeChart />
                             </div>
-                            <CardDescription>
-                                Jenis bencana yang paling sering terjadi.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className='pl-2 flex-1'>
-                            {/* Dynamic height container for scrolling or fitting */}
-                            <div style={{ height: `${barChartHeight}px`, width: '100%' }}>
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart
-                                        data={chartData}
-                                        layout="vertical"
-                                        margin={{ left: 0, right: 20, top: 10, bottom: 10 }}
-                                    >
-
-                                        <XAxis type="number" hide />
-                                        <YAxis
-                                            dataKey="name"
-                                            type="category"
-                                            width={140}
-                                            tick={{ fontSize: 13, fill: '#6b7280' }}
-                                            axisLine={false}
-                                            tickLine={false}
-                                            interval={0}
-                                        />
-                                        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
-                                        <Bar dataKey="jumlah" radius={[0, 4, 4, 0]} barSize={50}>
-                                            {chartData.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={entry.fill} />
-                                            ))}
-                                            <LabelList
-                                                dataKey="label"
-                                                position="insideRight"
-                                                style={{ fill: '#fff', fontSize: 13, fontWeight: 'bold' }}
-                                                offset={10}
-                                            />
-                                        </Bar>
-                                    </BarChart>
-                                </ResponsiveContainer>
+                            <div className='flex flex-col gap-8'>
+                                <BencanaResolution />
                             </div>
-                        </CardContent>
-                    </Card>
-
-                    {/* Area Grafik Pie - Takes 1/3 width on large screens */}
-                    <Card className="lg:col-span-1 shadow-md flex flex-col">
-                        <CardHeader>
-                            <div className="flex items-center space-x-2">
-                                <PieChartIcon className="h-5 w-5 text-muted-foreground" />
-                                <CardTitle className="text-lg font-medium">Proporsi Jenis Bencana</CardTitle>
-                            </div>
-                            <CardDescription>
-                                Perbandingan persentase laporan bencana.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="flex-1">
-                            <div className='h-[400px] w-full flex items-center justify-center relative'>
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <PieChart>
-                                        <Pie
-                                            data={chartData}
-                                            cx="50%"
-                                            cy="50%"
-                                            innerRadius={80}
-                                            outerRadius={120}
-                                            paddingAngle={2}
-                                            dataKey="jumlah"
-                                            nameKey="name"
-                                            isAnimationActive={true}
-                                        >
-                                            {chartData.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={entry.fill} />
-                                            ))}
-                                        </Pie>
-                                        <Tooltip content={<CustomTooltip />} />
-                                        <Legend
-                                            layout="vertical"
-                                            verticalAlign="bottom"
-                                            align="center"
-                                            height={100}
-                                            iconType="circle"
-                                            formatter={(value) => <span className="text-xs text-muted-foreground ml-1">{value}</span>}
-                                        />
-                                        {/* Center Text for Donut Chart - Adjusted positioning */}
-                                        <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
-                                            <tspan x="50%" dy="-5em" fontSize="12" fill="#6b7280">Total Laporan</tspan>
-                                            <tspan x="50%" dy="1.6em" fontSize="24" fontWeight="bold" fill="#111827">{totalReports}</tspan>
-                                        </text>
-                                    </PieChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </CardContent>
-                    </Card>
+                        </div>
+                        <div>
+                            <BencanaImpactSummary />
+                        </div>
+                    </SectionContainer>
                 </div>
             </Main>
         </>

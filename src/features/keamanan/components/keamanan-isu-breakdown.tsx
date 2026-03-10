@@ -2,9 +2,7 @@ import {
     Activity,
     AlertTriangle,
     ShieldAlert,
-    Flame,
-    Users,
-    MoreHorizontal
+    Users
 } from 'lucide-react'
 
 import { Card } from '@/components/ui/card'
@@ -12,9 +10,11 @@ import { cn } from '@/lib/utils'
 
 import { categories, mockKeamananData } from '../data/data'
 
-import { KasusCategoryChart, PriorityChart } from './monitoring-charts'
+
+import { PencurianStatusChart, PencurianResolution, PencurianPriorityList } from './pencurian-charts'
 import { KeamananMap } from './keamanan-map'
-import { StatsCards } from './stats-cards'
+import { GangguanStatusChart, GangguanResolution, GangguanPriorityList } from './gangguan-section'
+import { KeributanLocationChart, KeributanResolution, KeributanPriorityList } from './keributan-section'
 
 // ─── Shared Components ────────────────────────────────────────────────────────
 
@@ -90,19 +90,7 @@ function SectionContainer({
 
 // ─── Sections ────────────────────────────────────────────────────────
 
-function QuickStatsSection() {
-    return (
-        <SectionContainer
-            title='Ringkasan Eksekutif'
-            description='Statistik cepat status keamanan lingkungan RT'
-            icon={Activity}
-            color='emerald'
-            id="section-quickstats"
-        >
-            <StatsCards />
-        </SectionContainer>
-    )
-}
+
 
 function PetaSebaranSection() {
     return (
@@ -120,31 +108,86 @@ function PetaSebaranSection() {
     )
 }
 
-function KategoriPrioritasSection() {
-    return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <SectionContainer
-                title='Proporsi Kategori & Prioritas'
-                description='Distribusi jenis laporan keamanan yang masuk.'
-                icon={Flame}
-                color='rose'
-                id="section-priority"
-                className="h-full"
-            >
-                <PriorityChart />
-            </SectionContainer>
 
-            <SectionContainer
-                title='Statistik Kategori Keamanan'
-                description='Frekuensi laporan berdasarkan kategori.'
-                icon={AlertTriangle}
-                color='amber'
-                id="section-category"
-                className="h-full"
-            >
-                <KasusCategoryChart />
-            </SectionContainer>
-        </div>
+
+function PencurianSection() {
+    const pencurianCount = mockKeamananData.filter(d => d.category === 'pencurian').length
+
+    return (
+        <SectionContainer
+            title='Pencurian'
+            description='Data pengaduan pencurian, penyelesaian, and prioritas penanganan.'
+            icon={ShieldAlert}
+            color='rose'
+            count={pencurianCount}
+            id="section-pencurian"
+        >
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                <div className='lg:col-span-2'>
+                    <PencurianStatusChart />
+                </div>
+                <div className='flex flex-col gap-8'>
+                    <PencurianResolution />
+                </div>
+            </div>
+            <div>
+                <PencurianPriorityList />
+            </div>
+        </SectionContainer>
+    )
+}
+
+function GangguanKetertibanMalamSection() {
+    const gangguanCount = mockKeamananData.filter(d => d.category === 'gangguan').length
+
+    return (
+        <SectionContainer
+            title='Gangguan Ketertiban Malam'
+            description='Data pengaduan gangguan ketertiban malam, penyelesaian, dan tingkat prioritas.'
+            icon={Activity}
+            color='yellow'
+            count={gangguanCount}
+            id="section-gangguan"
+        >
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                <div className='lg:col-span-2'>
+                    <GangguanStatusChart />
+                </div>
+                <div className='flex flex-col gap-8'>
+                    <GangguanResolution />
+                </div>
+            </div>
+            <div>
+                <GangguanPriorityList />
+            </div>
+        </SectionContainer>
+    )
+}
+
+function KeributanWargaSection() {
+    const keributanCount = mockKeamananData.filter(d => d.category === 'keributan').length
+
+    return (
+        <SectionContainer
+            title='Keributan Warga'
+            description='Data insiden keributan berdasarkan lokasi, status penyelesaian, dan tingkat prioritas.'
+            icon={Users}
+            color='orange'
+            count={keributanCount}
+            id="section-keributan"
+        >
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                <div className='lg:col-span-2'>
+                    <KeributanLocationChart />
+                </div>
+                <div className='flex flex-col gap-8'>
+                    <KeributanResolution />
+                </div>
+            </div>
+            <div>
+                <KeributanPriorityList />
+            </div>
+        </SectionContainer>
     )
 }
 
@@ -165,23 +208,16 @@ const issues = (grandTotal: number) => {
             bgClass = 'bg-rose-50 dark:bg-rose-950/20';
             borderClass = 'border-rose-200 dark:border-rose-800/40';
             textClass = 'text-rose-600 dark:text-rose-400';
-        } else if (cat.value === 'perkelahian') {
+        } else if (cat.value === 'keributan') {
             icon = Users;
             bgClass = 'bg-orange-50 dark:bg-orange-950/20';
             borderClass = 'border-orange-200 dark:border-orange-800/40';
             textClass = 'text-orange-600 dark:text-orange-400';
-        } else if (cat.value === 'kebakaran') {
-            icon = Flame;
-            bgClass = 'bg-amber-50 dark:bg-amber-950/20';
-            borderClass = 'border-amber-200 dark:border-amber-800/40';
-            textClass = 'text-amber-600 dark:text-amber-400';
         } else if (cat.value === 'gangguan') {
             icon = Activity;
             bgClass = 'bg-yellow-50 dark:bg-yellow-950/20';
             borderClass = 'border-yellow-200 dark:border-yellow-800/40';
             textClass = 'text-yellow-600 dark:text-yellow-400';
-        } else if (cat.value === 'lainnya') {
-            icon = MoreHorizontal;
         }
 
         return {
@@ -366,9 +402,10 @@ export function KeamananIsuBreakdown() {
             <KeamananSummary />
 
             <div className="space-y-16">
-                <QuickStatsSection />
+                <PencurianSection />
+                <GangguanKetertibanMalamSection />
+                <KeributanWargaSection />
                 <PetaSebaranSection />
-                <KategoriPrioritasSection />
             </div>
         </div>
     )

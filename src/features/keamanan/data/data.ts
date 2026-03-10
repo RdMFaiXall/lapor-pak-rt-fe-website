@@ -60,10 +60,8 @@ export const priorities = [
 
 export const categories = [
     { value: 'pencurian', label: 'Pencurian', color: '#ef4444' }, // Red
-    { value: 'perkelahian', label: 'Perkelahian', color: '#dc2626' }, // Darker Red
-    { value: 'kebakaran', label: 'Kebakaran', color: '#f97316' }, // Orange
-    { value: 'gangguan', label: 'Gangguan Ketertiban', color: '#eab308' }, // Yellow
-    { value: 'lainnya', label: 'Lainnya', color: '#6b7280' }, // Gray
+    { value: 'gangguan', label: 'Gangguan Ketertiban Malam', color: '#eab308' }, // Yellow
+    { value: 'keributan', label: 'Keributan Warga', color: '#dc2626' }, // Darker Red
 ]
 
 const titles = [

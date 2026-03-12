@@ -85,7 +85,7 @@ const descriptions = [
     'Lampu jalan sudah putus selama 3 hari berturut-turut.',
 ]
 
-export const mockLingkunganData: Lingkungan[] = Array.from({ length: 20 }).map(() => ({
+const generatedData: Lingkungan[] = Array.from({ length: 40 }).map(() => ({
     id: `LG-${faker.number.int({ min: 1000, max: 9999 })}`,
     title: faker.helpers.arrayElement(titles),
     status: faker.helpers.arrayElement(statuses).value,
@@ -98,3 +98,45 @@ export const mockLingkunganData: Lingkungan[] = Array.from({ length: 20 }).map((
     reportedBy: faker.person.fullName(),
     date: faker.date.recent({ days: 30 }).toISOString(),
 }))
+
+// Ensure exactly 4 'Sedang' (in-progress) cases for 'sampah' category
+let sampahInProgress = 0
+generatedData.forEach(d => {
+    if (d.category === 'sampah') {
+        if (d.status === 'in-progress') {
+            sampahInProgress++
+            if (sampahInProgress > 4) d.status = 'open' // excess
+        }
+    }
+})
+
+// If under 4, convert other sampah cases, or push new ones
+if (sampahInProgress < 4) {
+    for (const d of generatedData) {
+        if (d.category === 'sampah' && d.status !== 'in-progress') {
+            d.status = 'in-progress'
+            sampahInProgress++
+            if (sampahInProgress === 4) break
+        }
+    }
+    
+    // If still under 4, push new cases
+    while (sampahInProgress < 4) {
+        generatedData.push({
+            id: `LG-${faker.number.int({ min: 1000, max: 9999 })}`,
+            title: faker.helpers.arrayElement(titles),
+            status: 'in-progress',
+            priority: 'medium',
+            category: 'sampah',
+            location: `RT ${faker.number.int({ min: 1, max: 10 })} / RW ${faker.number.int({ min: 1, max: 5 })}`,
+            lat: -6.200000 + (Math.random() * 0.01 - 0.005),
+            lng: 106.816666 + (Math.random() * 0.01 - 0.005),
+            description: faker.helpers.arrayElement(descriptions),
+            reportedBy: faker.person.fullName(),
+            date: faker.date.recent({ days: 30 }).toISOString(),
+        })
+        sampahInProgress++
+    }
+}
+
+export const mockLingkunganData: Lingkungan[] = generatedData

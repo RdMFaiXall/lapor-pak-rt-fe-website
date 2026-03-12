@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 
 import { mockLingkunganData, categories } from '../data/data'
 import { LingkunganMap } from './lingkungan-map'
-import { LingkunganCategorySection } from './lingkungan-category-section'
+import { LingkunganCategorySection, SaluranCategorySection, JalanCategorySection, PeneranganCategorySection } from './lingkungan-category-section'
 
 // ─── Summary Calculation ────────────────────────────────────────────────────────
 
@@ -250,24 +250,21 @@ export default function MonitoringDashboard() {
                         color="amber"
                     />
 
-                    <LingkunganCategorySection
-                        categoryId="saluran"
+                    <SaluranCategorySection
                         title="Saluran Air Tersumbat"
                         description="Data pengaduan saluran air, drainase tersumbat, dan genangan air."
                         icon={Droplets}
                         color="blue"
                     />
 
-                    <LingkunganCategorySection
-                        categoryId="jalan"
+                    <JalanCategorySection
                         title="Jalan Rusak"
                         description="Data pengaduan jalan berlubang, aspal rusak, dan infrastruktur akses."
                         icon={MapIcon}
                         color="slate"
                     />
 
-                    <LingkunganCategorySection
-                        categoryId="penerangan"
+                    <PeneranganCategorySection
                         title="Penerangan Jalan"
                         description="Data pengaduan lampu jalan mati dan area minim penerangan."
                         icon={Lightbulb}

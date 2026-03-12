@@ -11,9 +11,9 @@ import { cn } from '@/lib/utils'
 import { categories, mockKeamananData } from '../data/data'
 
 
-import { PencurianStatusChart, PencurianResolution, PencurianPriorityList } from './pencurian-charts'
+import { PencurianStatusChart, ObjekPencurian, JenisFasilitasDicuri } from './pencurian-charts'
 import { KeamananMap } from './keamanan-map'
-import { GangguanStatusChart, GangguanResolution, GangguanPriorityList } from './gangguan-section'
+import { GangguanStatusChart, GangguanPriorityList } from './gangguan-section'
 import { KeributanLocationChart, KeributanResolution, KeributanPriorityList } from './keributan-section'
 
 // ─── Shared Components ────────────────────────────────────────────────────────
@@ -123,39 +123,34 @@ function PencurianSection() {
             id="section-pencurian"
         >
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                <div className='flex flex-col gap-8'>
+                    <ObjekPencurian />
+                </div>
                 <div className='lg:col-span-2'>
                     <PencurianStatusChart />
                 </div>
-                <div className='flex flex-col gap-8'>
-                    <PencurianResolution />
-                </div>
             </div>
             <div>
-                <PencurianPriorityList />
+                <JenisFasilitasDicuri />
             </div>
         </SectionContainer>
     )
 }
 
-function GangguanKetertibanMalamSection() {
-    const gangguanCount = mockKeamananData.filter(d => d.category === 'gangguan').length
+function KeributanWargaSection() {
+    const gangguanCount = mockKeamananData.filter(d => d.category === 'keributan').length
 
     return (
         <SectionContainer
-            title='Gangguan Ketertiban Malam'
-            description='Data pengaduan gangguan ketertiban malam, penyelesaian, dan tingkat prioritas.'
+            title='Keributan Warga'
+            description='Data insiden keributan berdasarkan lokasi, status penyelesaian, dan tingkat prioritas.'
             icon={Activity}
             color='yellow'
             count={gangguanCount}
-            id="section-gangguan"
+            id="section-keributan"
         >
-            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-                <div className='lg:col-span-2'>
-                    <GangguanStatusChart />
-                </div>
-                <div className='flex flex-col gap-8'>
-                    <GangguanResolution />
-                </div>
+            <div className='w-full'>
+                <GangguanStatusChart />
             </div>
             <div>
                 <GangguanPriorityList />
@@ -164,17 +159,17 @@ function GangguanKetertibanMalamSection() {
     )
 }
 
-function KeributanWargaSection() {
-    const keributanCount = mockKeamananData.filter(d => d.category === 'keributan').length
+function GangguanKetertibanMalamSection() {
+    const keributanCount = mockKeamananData.filter(d => d.category === 'gangguan').length
 
     return (
         <SectionContainer
-            title='Keributan Warga'
-            description='Data insiden keributan berdasarkan lokasi, status penyelesaian, dan tingkat prioritas.'
+            title='Gangguan Ketertiban Malam'
+            description='Data pengaduan gangguan ketertiban malam dan tanggal kejadian.'
             icon={Users}
             color='orange'
             count={keributanCount}
-            id="section-keributan"
+            id="section-gangguan"
         >
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
                 <div className='lg:col-span-2'>
@@ -298,33 +293,19 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onCl
 export function KeamananSummary() {
     const grandTotal = mockKeamananData.length
     const allIssues = issues(grandTotal)
-    const dalamPenanganan = mockKeamananData.filter((w) => w.status === 'in-progress').length
 
     return (
         <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
             {/* ── Header ── */}
             <div className="px-6 pt-6 pb-5 border-b border-gray-100 dark:border-gray-800">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    {/* Title + grand total */}
-                    <div className="flex items-baseline gap-3">
-                        <h2 className="text-lg font-semibold text-gray-500 dark:text-gray-400">
-                            Total Laporan
-                        </h2>
-                        <span className="text-4xl font-black text-gray-900 dark:text-white leading-none">
-                            {grandTotal}
-                        </span>
-                    </div>
-
-                    {/* Alert chips */}
-                    <div className="flex flex-wrap gap-2">
-                        {dalamPenanganan > 0 && (
-                            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 text-amber-700 dark:text-amber-400 text-sm font-semibold">
-                                <AlertTriangle className="w-4 h-4 shrink-0" />
-                                <span>{dalamPenanganan} laporan sedang ditangani</span>
-                            </div>
-                        )}
-                    </div>
+                <div className="flex items-baseline gap-3">
+                    <h2 className="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                        Total Laporan
+                    </h2>
+                    <span className="text-4xl font-black text-gray-900 dark:text-white leading-none">
+                        {grandTotal}
+                    </span>
                 </div>
             </div>
 

@@ -60,8 +60,8 @@ export const priorities = [
 
 export const categories = [
     { value: 'pencurian', label: 'Pencurian', color: '#ef4444' }, // Red
-    { value: 'gangguan', label: 'Gangguan Ketertiban Malam', color: '#eab308' }, // Yellow
-    { value: 'keributan', label: 'Keributan Warga', color: '#dc2626' }, // Darker Red
+    { value: 'keributan', label: 'Keributan Warga', color: '#eab308' }, // Yellow
+    { value: 'gangguan', label: 'Gangguan Ketertiban Malam', color: '#dc2626' }, // Darker Red
 ]
 
 const titles = [

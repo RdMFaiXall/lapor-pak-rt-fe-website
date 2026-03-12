@@ -7,12 +7,13 @@ import { Main } from '@/components/layout/main'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 
-import { Trash2, Droplets, Map as MapIcon, Lightbulb, AlertTriangle, AlertCircle } from 'lucide-react'
+import { Trash2, Droplets, Map as MapIcon, Lightbulb, AlertCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 import { mockLingkunganData, categories } from '../data/data'
 import { LingkunganMap } from './lingkungan-map'
 import { LingkunganCategorySection, SaluranCategorySection, JalanCategorySection, PeneranganCategorySection } from './lingkungan-category-section'
+import ScrollToTopButton from './scroll-to-top-button'
 
 // ─── Summary Calculation ────────────────────────────────────────────────────────
 
@@ -99,9 +100,14 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onCl
                         {label}
                     </span>
                 </div>
-                <span className={`text-3xl font-black leading-none shrink-0 ${text}`}>
-                    {count}
-                </span>
+                <div className="flex flex-col items-end">
+                    <span className={`text-3xl font-black leading-none ${text}`}>
+                        {count}
+                    </span>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider opacity-70 mt-1 ${text}`}>
+                        Kasus
+                    </span>
+                </div>
             </div>
 
             <div>
@@ -125,7 +131,6 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onCl
 export function LingkunganSummary() {
     const grandTotal = mockLingkunganData.length
     const allIssues = issues(grandTotal)
-    const dalamPenanganan = mockLingkunganData.filter((w) => w.status === 'in-progress').length
 
     return (
         <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden mb-8">
@@ -142,12 +147,7 @@ export function LingkunganSummary() {
                     </div>
 
                     <div className="flex flex-wrap gap-2">
-                        {dalamPenanganan > 0 && (
-                            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 text-amber-700 dark:text-amber-400 text-sm font-semibold">
-                                <AlertTriangle className="w-4 h-4 shrink-0" />
-                                <span>{dalamPenanganan} laporan sedang ditangani</span>
-                            </div>
-                        )}
+                        {/* Removed badge per request */}
                     </div>
                 </div>
             </div>
@@ -248,6 +248,7 @@ export default function MonitoringDashboard() {
                         description="Data pengaduan penumpukan sampah liar, penyelesaian, dan prioritas penanganan."
                         icon={Trash2}
                         color="amber"
+                        count={mockLingkunganData.filter(d => d.category === 'sampah').length}
                     />
 
                     <SaluranCategorySection
@@ -255,6 +256,7 @@ export default function MonitoringDashboard() {
                         description="Data pengaduan saluran air, drainase tersumbat, dan genangan air."
                         icon={Droplets}
                         color="blue"
+                        count={mockLingkunganData.filter(d => d.category === 'saluran').length}
                     />
 
                     <JalanCategorySection
@@ -262,6 +264,7 @@ export default function MonitoringDashboard() {
                         description="Data pengaduan jalan berlubang, aspal rusak, dan infrastruktur akses."
                         icon={MapIcon}
                         color="slate"
+                        count={mockLingkunganData.filter(d => d.category === 'jalan').length}
                     />
 
                     <PeneranganCategorySection
@@ -269,6 +272,7 @@ export default function MonitoringDashboard() {
                         description="Data pengaduan lampu jalan mati dan area minim penerangan."
                         icon={Lightbulb}
                         color="yellow"
+                        count={mockLingkunganData.filter(d => d.category === 'penerangan').length}
                     />
 
                     {/* Peta Sebaran as a Section too, matching Keamanan style */}
@@ -294,6 +298,7 @@ export default function MonitoringDashboard() {
                     </div>
                 </div>
             </Main>
+            <ScrollToTopButton />
         </div>
     )
 }

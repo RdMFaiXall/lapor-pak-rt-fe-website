@@ -39,6 +39,7 @@ function SectionContainer({
     children,
     className,
     id,
+    count,
 }: SectionContainerProps) {
     const colorClasses: Record<string, string> = {
         amber: 'border-amber-100 dark:border-amber-900/30 bg-amber-50/10',
@@ -81,6 +82,14 @@ function SectionContainer({
                             )}
                         </div>
                     </div>
+                    {count !== undefined && (
+                        <div className="flex flex-col items-end">
+                            <span className={cn('px-3 py-1.5 rounded-xl text-2xl font-black leading-none flex items-baseline gap-1', iconColorClasses[color])}>
+                                {count}
+                                <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
+                            </span>
+                        </div>
+                    )}
                 </div>
                 <div className="space-y-6">
                     {children}
@@ -601,9 +610,10 @@ interface SaluranCategorySectionProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon: any
     color: string
+    count?: number
 }
 
-export function SaluranCategorySection({ title, description, icon, color }: SaluranCategorySectionProps) {
+export function SaluranCategorySection({ title, description, icon, color, count }: SaluranCategorySectionProps) {
     return (
         <SectionContainer
             title={title}
@@ -611,6 +621,7 @@ export function SaluranCategorySection({ title, description, icon, color }: Salu
             icon={icon}
             color={color}
             id="section-saluran"
+            count={count}
         >
             {/* Row 1: Pie Status + Kondisi Sumbatan bar */}
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
@@ -914,9 +925,10 @@ interface JalanCategorySectionProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon: any
     color: string
+    count?: number
 }
 
-export function JalanCategorySection({ title, description, icon, color }: JalanCategorySectionProps) {
+export function JalanCategorySection({ title, description, icon, color, count }: JalanCategorySectionProps) {
     return (
         <SectionContainer
             title={title}
@@ -924,6 +936,7 @@ export function JalanCategorySection({ title, description, icon, color }: JalanC
             icon={icon}
             color={color}
             id="section-jalan"
+            count={count}
         >
             {/* Row 1: Jenis Jalan bar + Kondisi Kerusakan pie */}
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
@@ -1059,18 +1072,18 @@ export function PeneranganTitikTerdampakChart() {
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
             <h3 className="text-md font-semibold text-slate-400 mb-6">Jumlah Titik Terdampak</h3>
-            <div className='flex flex-col lg:flex-row gap-8 items-start flex-1'>
-                <div className='flex-1 h-[200px] w-full'>
+            <div className='flex flex-col gap-6 items-start flex-1'>
+                <div className='w-full h-[200px]'>
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
                             data={chartData}
                             layout="vertical"
-                            margin={{ left: 8, right: 40, top: 0, bottom: 20 }}
+                            margin={{ left: 8, right: 30, top: 0, bottom: 30 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
                                 type="number"
-                                domain={[0, maxValue + 1]}
+                                domain={[0, maxValue]}
                                 axisLine={false}
                                 tickLine={false}
                                 tick={{ fontSize: 12, fill: '#94a3b8' }}
@@ -1078,7 +1091,7 @@ export function PeneranganTitikTerdampakChart() {
                                 label={{
                                     value: 'Jumlah Kasus',
                                     position: 'insideBottom',
-                                    offset: -12,
+                                    offset: -16,
                                     fontSize: 11,
                                     fill: '#94a3b8',
                                     fontWeight: 700,
@@ -1092,7 +1105,7 @@ export function PeneranganTitikTerdampakChart() {
                                 axisLine={false}
                                 tickLine={false}
                             />
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={32}>
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={28}>
                                 {chartData.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={TITIK_TERDAMPAK_COLORS[index % TITIK_TERDAMPAK_COLORS.length]} />
                                 ))}
@@ -1122,13 +1135,13 @@ export function PeneranganTitikTerdampakChart() {
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full lg:w-auto shrink-0 space-y-4'>
+                <div className='w-full flex flex-wrap justify-center gap-x-8 gap-y-4 pt-2 border-t border-gray-100 dark:border-gray-800/60'>
                     {chartData.map((item, index) => (
-                        <div key={index} className='flex items-start gap-3'>
-                            <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: TITIK_TERDAMPAK_COLORS[index % TITIK_TERDAMPAK_COLORS.length] }} />
-                            <div>
-                                <p className='text-xs text-gray-400 font-medium'>{item.name}</p>
-                                <p className='text-sm font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
+                        <div key={index} className='flex items-center gap-2.5'>
+                            <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: TITIK_TERDAMPAK_COLORS[index % TITIK_TERDAMPAK_COLORS.length] }} />
+                            <div className='flex items-center gap-2'>
+                                <p className='text-xs text-gray-500 font-medium'>{item.name}</p>
+                                <p className='text-xs font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
                             </div>
                         </div>
                     ))}
@@ -1446,9 +1459,10 @@ interface PeneranganCategorySectionProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon: any
     color: string
+    count?: number
 }
 
-export function PeneranganCategorySection({ title, description, icon, color }: PeneranganCategorySectionProps) {
+export function PeneranganCategorySection({ title, description, icon, color, count }: PeneranganCategorySectionProps) {
     return (
         <SectionContainer
             title={title}
@@ -1456,6 +1470,7 @@ export function PeneranganCategorySection({ title, description, icon, color }: P
             icon={icon}
             color={color}
             id="section-penerangan"
+            count={count}
         >
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
                 <div>

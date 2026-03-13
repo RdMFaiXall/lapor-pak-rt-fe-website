@@ -1,13 +1,13 @@
-import { AlertTriangle, Activity, UserPlus, HeartPulse, Stethoscope } from 'lucide-react'
+import { Activity, UserPlus, HeartPulse, Stethoscope } from 'lucide-react'
 import { mockData } from '../constants'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
 import {
-    KondisiDBDChart,
-    LingkunganDBDChart,
-    StuntingPMTChart,
-    StuntingUmurChart,
+    LokasiPerawatanChart,
+    PerkembanganKasusChart,
+    PerkembanganPerLokasiChart,
+    IndikasiPertumbuhanChart,
     UsiaKandunganChart,
     FaktorRisikoChart,
     AlasanBPJSChart
@@ -100,7 +100,7 @@ function WabahDBDSection() {
     return (
         <SectionContainer
             title='Wabah DBD'
-            description='Monitoring kondisi pasien dan faktor lingkungan penyebaran DBD.'
+            description='Monitoring perkembangan kasus dan lokasi perawatan pasien DBD.'
             icon={Activity}
             color='rose'
             count={dbdData.length}
@@ -108,12 +108,13 @@ function WabahDBDSection() {
         >
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
                 <div>
-                    <KondisiDBDChart />
+                    <LokasiPerawatanChart />
                 </div>
                 <div className='lg:col-span-2'>
-                    <LingkunganDBDChart />
+                    <PerkembanganKasusChart />
                 </div>
             </div>
+            <PerkembanganPerLokasiChart />
         </SectionContainer>
     )
 }
@@ -122,20 +123,13 @@ function StuntingSection() {
     return (
         <SectionContainer
             title='Stunting / Gizi Buruk'
-            description='Analisis distribusi usia stunting dan penerimaan PMT.'
+            description='Analisis indikasi pertumbuhan tubuh balita usia 0-5 tahun.'
             icon={HeartPulse}
             color='emerald'
             count={stuntingData.length}
             id="section-stunting"
         >
-            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-                <div className='lg:col-span-2'>
-                    <StuntingUmurChart />
-                </div>
-                <div>
-                    <StuntingPMTChart />
-                </div>
-            </div>
+            <IndikasiPertumbuhanChart />
         </SectionContainer>
     )
 }
@@ -265,9 +259,14 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onCl
                         {label}
                     </span>
                 </div>
-                <span className={`text-3xl font-black leading-none shrink-0 ${text}`}>
-                    {count}
-                </span>
+                <div className="flex flex-col items-end">
+                    <span className={`text-3xl font-black leading-none ${text}`}>
+                        {count}
+                    </span>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider opacity-70 mt-1 ${text}`}>
+                        Kasus
+                    </span>
+                </div>
             </div>
 
             <div>
@@ -289,7 +288,6 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onCl
 export function KesehatanSummary() {
     const grandTotal = mockData.length
     const allIssues = issues(grandTotal)
-    const kritisCount = mockData.filter(d => d.status_kesehatan === 'Kritis').length
 
     return (
         <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
@@ -305,16 +303,6 @@ export function KesehatanSummary() {
                         <span className="text-4xl font-black text-gray-900 dark:text-white leading-none">
                             {grandTotal}
                         </span>
-                    </div>
-
-                    {/* Alert chips */}
-                    <div className="flex flex-wrap gap-2">
-                        {kritisCount > 0 && (
-                            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 text-rose-700 dark:text-rose-400 text-sm font-semibold">
-                                <AlertTriangle className="w-4 h-4 shrink-0" />
-                                <span>{kritisCount} warga dengan status kesehatan Kritis</span>
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>

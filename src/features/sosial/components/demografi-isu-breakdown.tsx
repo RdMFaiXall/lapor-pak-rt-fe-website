@@ -1,5 +1,4 @@
 import {
-    AlertTriangle,
     Activity,
     Users,
     HeartPulse,
@@ -445,7 +444,6 @@ export function DemografiSummary() {
         anakPutusSekolahData.length
 
     const allIssues = issues(grandTotal)
-    const belumBantuan = wargaMiskinData.filter((w) => w.statusBantuan !== 'Penerima').length
 
     return (
         <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
@@ -465,12 +463,6 @@ export function DemografiSummary() {
 
                     {/* Alert chips */}
                     <div className="flex flex-wrap gap-2">
-                        {belumBantuan > 0 && (
-                            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 text-amber-700 dark:text-amber-400 text-sm font-semibold">
-                                <AlertTriangle className="w-4 h-4 shrink-0" />
-                                <span>{belumBantuan} warga miskin belum terima bantuan</span>
-                            </div>
-                        )}
                         {/* {menularCount > 0 && (
                             <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 text-rose-700 dark:text-rose-400 text-sm font-semibold">
                                 <Activity className="w-4 h-4 flex-shrink-0" />

@@ -37,7 +37,7 @@ const JenisBantuan = ({ data }: JenisBantuanProps) => {
     return (
         <TooltipProvider delayDuration={200}>
             <Card className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 mt-6'>
-                <h3 className="text-md font-semibold text-slate-400 mb-6">Jenis Bantuan Yang Diterima</h3>
+                <h3 className="text-md font-bold text-black mb-6">Jenis Bantuan Yang Diterima</h3>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-6">
                     {items.map((item) => {

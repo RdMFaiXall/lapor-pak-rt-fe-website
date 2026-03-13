@@ -248,7 +248,6 @@ export default function MonitoringDashboard() {
                         description="Data pengaduan penumpukan sampah liar, penyelesaian, dan prioritas penanganan."
                         icon={Trash2}
                         color="amber"
-                        count={mockLingkunganData.filter(d => d.category === 'sampah').length}
                     />
 
                     <SaluranCategorySection

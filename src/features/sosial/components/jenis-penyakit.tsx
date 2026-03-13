@@ -1,5 +1,5 @@
 import { Card } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell, LabelList } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell, LabelList, Label } from 'recharts';
 
 interface JenisPenyakitProps {
     data: { name: string; value: number }[];
@@ -26,17 +26,20 @@ const JenisPenyakit = ({ data }: JenisPenyakitProps) => {
                     <BarChart
                         data={chartData}
                         layout="vertical"
-                        margin={{ left: 8, right: 60, top: 0, bottom: 20 }}
+                        margin={{ left: 8, right: 60, top: 0, bottom: 25 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                         <XAxis
                             type="number"
                             domain={[0, maxValue]}
+                            allowDecimals={false}
                             axisLine={false}
                             tickLine={false}
                             tick={{ fontSize: 12, fill: '#94a3b8' }}
                             tickFormatter={(val) => val.toString().replace(/,/g, '')}
-                        />
+                        >
+                            <Label value="Jumlah Kasus" offset={-15} position="insideBottom" style={{ fill: '#64748b', fontWeight: 'bold', fontSize: 13 }} />
+                        </XAxis>
                         <YAxis
                             dataKey="name"
                             type="category"
@@ -54,17 +57,21 @@ const JenisPenyakit = ({ data }: JenisPenyakitProps) => {
                                 content={(props: any) => {
                                     const { x, y, width, height, value } = props;
                                     if (value === undefined || value === null) return null;
-                                    const isSmallValue = value < maxValue * 0.15;
                                     const displayValue = `${value} kasus (${chartData[props.index]?.percentage}%)`;
+                                    
+                                    // Semua text dibuat align left saja dalam bar (seperti permintaan)
+                                    // Jika value sangat kecil sehingga text tidak muat di bar, kita lempar ke luar bar.
+                                    const isSmallValue = value < maxValue * 0.15;
+                                    
                                     return (
                                         <text
-                                            x={isSmallValue ? x + width + 8 : x + width - 8}
+                                            x={isSmallValue ? x + width + 8 : x + 10}
                                             y={y + height / 2}
                                             fill={isSmallValue ? "#64748b" : "#fff"}
                                             fontSize={11}
                                             fontWeight="bold"
                                             dominantBaseline="middle"
-                                            textAnchor={isSmallValue ? "start" : "end"}
+                                            textAnchor="start"
                                         >
                                             {displayValue}
                                         </text>

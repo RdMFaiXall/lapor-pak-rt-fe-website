@@ -11,6 +11,7 @@ import {
     Pie,
     PieChart,
 } from 'recharts'
+import { Card } from '@/components/ui/card'
 import { mockData } from '../constants'
 
 // Helpers
@@ -21,10 +22,10 @@ const bpjsData = mockData.filter(d => d.isu_kesehatan === 'Warga Belum BPJS')
 
 // --- WABAH DBD CHARTS ---
 
-export function KondisiDBDChart() {
-    const kondisiCount = dbdData.reduce((acc, curr) => {
-        if (curr.kondisi_dbd) {
-            acc[curr.kondisi_dbd] = (acc[curr.kondisi_dbd] || 0) + 1
+export function LokasiPerawatanChart() {
+    const lokasiCount = dbdData.reduce((acc, curr) => {
+        if (curr.lokasi_perawatan) {
+            acc[curr.lokasi_perawatan] = (acc[curr.lokasi_perawatan] || 0) + 1
         }
         return acc
     }, {} as Record<string, number>)
@@ -32,7 +33,7 @@ export function KondisiDBDChart() {
     const total = dbdData.length
     const COLORS = ['#ef4444', '#f59e0b', '#06b6d4']
 
-    const chartData = Object.entries(kondisiCount).map(([name, value]) => ({
+    const chartData = Object.entries(lokasiCount).map(([name, value]) => ({
         name,
         value,
         percentage: total > 0 ? ((value / total) * 100).toFixed(1) : '0'
@@ -40,7 +41,7 @@ export function KondisiDBDChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Kondisi Pasien DBD</h3>
+            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Lokasi Perawatan</h3>
             <div className='flex flex-col items-center justify-center flex-1 w-full'>
                 <div className='h-[250px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
@@ -81,14 +82,21 @@ export function KondisiDBDChart() {
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full max-w-[240px] mx-auto grid grid-cols-1 gap-y-3 gap-x-2 mt-6 shrink-0'>
+                <div className='w-full mx-auto grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-4 mt-8 shrink-0'>
                     {chartData.map((item, index) => (
-                        <div key={index} className='flex items-center gap-3 w-full justify-between'>
-                            <div className='flex items-center gap-2'>
-                                <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                                <p className='text-xs text-gray-700 dark:text-gray-300 font-medium'>{item.name}</p>
+                        <div key={index} className='flex items-start gap-3'>
+                            <div 
+                                className='w-3 h-3 rounded-full shrink-0 mt-1' 
+                                style={{ backgroundColor: COLORS[index % COLORS.length] }} 
+                            />
+                            <div className='flex flex-col'>
+                                <p className='text-xs text-gray-600 dark:text-gray-400 font-medium leading-none'>
+                                    {item.name} <span className='font-bold ml-1 text-gray-900 dark:text-white'>({item.percentage}%)</span>
+                                </p>
+                                <p className='text-[10px] text-gray-400 font-medium mt-1'>
+                                    ({item.value} kasus)
+                                </p>
                             </div>
-                            <span className="text-xs font-bold">{item.percentage}%</span>
                         </div>
                     ))}
                 </div>
@@ -97,110 +105,36 @@ export function KondisiDBDChart() {
     )
 }
 
-export function LingkunganDBDChart() {
-    const lingkunganCount = dbdData.reduce((acc, curr) => {
-        if (curr.lingkungan_dbd) {
-            curr.lingkungan_dbd.forEach(l => {
-                acc[l] = (acc[l] || 0) + 1
-            })
+export function PerkembanganKasusChart() {
+    const perkembanganCount = dbdData.reduce((acc, curr) => {
+        if (curr.perkembangan_kasus) {
+            acc[curr.perkembangan_kasus] = (acc[curr.perkembangan_kasus] || 0) + 1
         }
         return acc
     }, {} as Record<string, number>)
 
-    const chartData = Object.entries(lingkunganCount)
-        .map(([name, value]) => ({ name, value }))
-        .sort((a, b) => b.value - a.value)
-
-    const COLORS = ['#f43f5e', '#fb923c', '#fbbf24', '#34d399', '#60a5fa']
     const total = dbdData.length
 
-    return (
-        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
-            <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
-                Kondisi Lingkungan (DBD)
-            </h3>
-            <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>
-                Faktor lingkungan yang memicu kasus DBD
-            </p>
+    const COLORS = ['#f59e0b', '#ef4444', '#10b981', '#6b7280']
 
-            <div className='space-y-4'>
-                {chartData.map((item, index) => {
-                    const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : '0'
-                    return (
-                        <div key={index}>
-                            <div className='flex items-center justify-between mb-2'>
-                                <div className='flex items-center gap-3'>
-                                    <div
-                                        className='w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md'
-                                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                                    >
-                                        {item.value}
-                                    </div>
-                                    <span className='text-sm font-semibold text-gray-900 dark:text-white'>
-                                        {item.name}
-                                    </span>
-                                </div>
-                                <span
-                                    className='text-lg font-bold'
-                                    style={{ color: COLORS[index % COLORS.length] }}
-                                >
-                                    {percentage}%
-                                </span>
-                            </div>
-                            <div className='w-full bg-gray-100 dark:bg-gray-700 rounded-full h-3'>
-                                <div
-                                    className='h-3 rounded-full transition-all duration-500 shadow-sm'
-                                    style={{
-                                        width: `${percentage}%`,
-                                        backgroundColor: COLORS[index % COLORS.length]
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
-        </div>
-    )
-}
-
-
-// --- STUNTING CHARTS ---
-
-export function StuntingUmurChart() {
-    const umurCount = stuntingData.reduce((acc, curr) => {
-        let group = ''
-        const umur = curr.umur_bulan || 0
-        if (umur <= 12) group = '0-12 Bulan'
-        else if (umur <= 24) group = '13-24 Bulan'
-        else if (umur <= 36) group = '25-36 Bulan'
-        else group = '>36 Bulan'
-
-        acc[group] = (acc[group] || 0) + 1
-        return acc
-    }, {} as Record<string, number>)
-
-    const chartData = [
-        { name: '0-12 Bulan', value: umurCount['0-12 Bulan'] || 0 },
-        { name: '13-24 Bulan', value: umurCount['13-24 Bulan'] || 0 },
-        { name: '25-36 Bulan', value: umurCount['25-36 Bulan'] || 0 },
-        { name: '>36 Bulan', value: umurCount['>36 Bulan'] || 0 }
-    ]
+    const chartData = Object.entries(perkembanganCount).map(([name, value]) => ({
+        name,
+        value,
+        percentage: total > 0 ? ((value / total) * 100).toFixed(1) : '0'
+    })).sort((a, b) => b.value - a.value)
 
     const maxValue = Math.max(...chartData.map(d => d.value), 0)
-    const COLORS = ['#10b981', '#14b8a6', '#06b6d4', '#0ea5e9']
-    const total = stuntingData.length
 
     return (
-        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Distribusi Umur Stunting</h3>
-            <div className='flex flex-col lg:flex-row gap-8 items-start'>
-                <div className='flex-1 h-[280px] w-full'>
+        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
+            <h3 className="text-md font-semibold text-slate-400 mb-6">Perkembangan Kasus</h3>
+            <div className='flex flex-col gap-6 flex-1 w-full'>
+                <div className='h-[250px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
                             data={chartData}
                             layout="vertical"
-                            margin={{ left: 8, right: 60, top: 0, bottom: 20 }}
+                            margin={{ left: 8, right: 60, top: 0, bottom: 25 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
@@ -210,6 +144,7 @@ export function StuntingUmurChart() {
                                 tickLine={false}
                                 tick={{ fontSize: 12, fill: '#94a3b8' }}
                                 tickFormatter={(val) => val.toString().replace(/,/g, '')}
+                                label={{ value: 'Jumlah Kasus', position: 'insideBottom', offset: -15, fill: '#94a3b8', fontSize: 12 }}
                             />
                             <YAxis
                                 dataKey="name"
@@ -251,15 +186,14 @@ export function StuntingUmurChart() {
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full lg:w-auto shrink-0 space-y-4'>
+                <div className='w-full grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2'>
                     {chartData.map((item, index) => {
-                        const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : '0'
                         return (
                             <div key={index} className='flex items-start gap-3'>
                                 <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
                                 <div>
-                                    <p className='text-xs text-gray-400 font-medium'>{item.name}</p>
-                                    <p className='text-sm font-bold text-gray-900 dark:text-gray-100'>{percentage}%</p>
+                                    <p className='text-xs text-gray-400 font-medium leading-tight'>{item.name}</p>
+                                    <p className='text-sm font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
                                 </div>
                             </div>
                         )
@@ -270,69 +204,178 @@ export function StuntingUmurChart() {
     )
 }
 
-export function StuntingPMTChart() {
-    const pmtCount = stuntingData.reduce((acc, curr) => {
-        const status = curr.status_pmt ? 'Sudah Mendapat PMT' : 'Belum Mendapat PMT'
-        acc[status] = (acc[status] || 0) + 1
-        return acc
-    }, {} as Record<string, number>)
+const PERKEMBANGAN = [
+    { label: 'Terindikasi DBD', abbr: 'IND', color: '#f59e0b', bg: '#fef3c7' },
+    { label: 'Positif DBD', abbr: 'POS', color: '#ef4444', bg: '#fee2e2' },
+    { label: 'Sembuh', abbr: 'SMB', color: '#10b981', bg: '#d1fae5' },
+    { label: 'Meninggal', abbr: 'MGL', color: '#6b7280', bg: '#f3f4f6' },
+];
 
-    const chartData = Object.entries(pmtCount).map(([name, value]) => ({
-        name,
-        value
-    })).sort((a, b) => b.value - a.value)
-
-    const COLORS = ['#10b981', '#f43f5e']
-    const total = stuntingData.length
+export function PerkembanganPerLokasiChart() {
+    const LOKASI_LIST = [
+        { key: 'Di rumah', label: 'Di rumah', color: '#06b6d4' },
+        { key: 'Puskesmas', label: 'Puskesmas', color: '#10b981' },
+        { key: 'Rumah Sakit', label: 'Rumah Sakit', color: '#f59e0b' },
+    ];
 
     return (
-        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full'>
-            <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
-                Status Penerimaan Program Makanan Tambahan (PMT)
+        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
+            <h3 className='text-md font-semibold text-slate-400 mb-6'>
+                Perkembangan Kasus per Lokasi Perawatan
             </h3>
-            <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>
-                {total} kasus stunting
-            </p>
 
-            <div className='space-y-4'>
-                {chartData.map((item, index) => {
-                    const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : '0'
+            <div className='flex-1 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6'>
+                {PERKEMBANGAN.map((item) => {
+                    const filteredData = dbdData.filter(d => d.perkembangan_kasus === item.label);
+                    const totalKasus = filteredData.length;
+                    
+                    const countByLokasi = filteredData.reduce((acc, curr) => {
+                        if (curr.lokasi_perawatan) {
+                            acc[curr.lokasi_perawatan] = (acc[curr.lokasi_perawatan] || 0) + 1;
+                        }
+                        return acc;
+                    }, {} as Record<string, number>);
+
                     return (
-                        <div key={index}>
-                            <div className='flex items-center justify-between mb-2'>
-                                <div className='flex items-center gap-3'>
-                                    <div
-                                        className='w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md'
-                                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                                    >
-                                        {item.value}
-                                    </div>
-                                    <span className='text-sm font-semibold text-gray-900 dark:text-white'>
-                                        {item.name}
+                        <div key={item.label} className="flex flex-col bg-gray-50/50 dark:bg-gray-900/20 p-4 rounded-xl border border-gray-50 dark:border-gray-800/50">
+                            <div className='flex items-center justify-between mb-4'>
+                                <span className='text-sm font-semibold text-gray-900 dark:text-white'>
+                                    {item.label}
+                                </span>
+                                <div className='flex items-center gap-1.5 px-2.5 py-1 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700'>
+                                    <span className='text-xs font-bold text-gray-900 dark:text-white'>
+                                        {totalKasus}
+                                    </span>
+                                    <span className='text-[10px] text-gray-500 font-medium'>
+                                        kasus
                                     </span>
                                 </div>
-                                <span
-                                    className='text-lg font-bold'
-                                    style={{ color: COLORS[index % COLORS.length] }}
-                                >
-                                    {percentage}%
-                                </span>
                             </div>
-                            <div className='w-full bg-gray-100 dark:bg-gray-700 rounded-full h-3'>
-                                <div
-                                    className='h-3 rounded-full transition-all duration-500 shadow-sm'
-                                    style={{
-                                        width: `${percentage}%`,
-                                        backgroundColor: COLORS[index % COLORS.length]
-                                    }}
-                                />
+
+                            <div className='space-y-3.5'>
+                                {LOKASI_LIST.map((lokasi) => {
+                                    const count = countByLokasi[lokasi.key] || 0;
+                                    const percentage = totalKasus > 0 ? ((count / totalKasus) * 100).toFixed(1) : '0';
+
+                                    return (
+                                        <div key={lokasi.key}>
+                                            <div className='flex items-center justify-between mb-1.5 px-1'>
+                                                <div className='flex items-center gap-2'>
+                                                    <div className="w-2 h-2 rounded-full shadow-sm" style={{ backgroundColor: lokasi.color }} />
+                                                    <span className='text-[11px] font-medium text-gray-600 dark:text-gray-400'>
+                                                        {lokasi.label}
+                                                    </span>
+                                                </div>
+                                                <div className='flex items-center gap-2'>
+                                                    <span className='text-xs font-bold text-gray-800 dark:text-gray-200'>
+                                                        {count}
+                                                    </span>
+                                                    <span className='text-[10px] text-gray-400 font-medium min-w-[32px] text-right'>
+                                                        ({percentage}%)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className='w-full bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-2 overflow-hidden'>
+                                                <div
+                                                    className='h-full rounded-full transition-all duration-700 ease-out'
+                                                    style={{
+                                                        width: `${percentage}%`,
+                                                        backgroundColor: lokasi.color
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
-                    )
+                    );
                 })}
             </div>
         </div>
-    )
+    );
+}
+
+
+// --- STUNTING CHARTS ---
+
+const INDIKASI_PERTUMBUHAN = [
+    { label: 'Tubuh Anak Terlihat Pendek', abbr: 'PDK', color: '#fba11b', bg: '#fef3c7' },
+    { label: 'Anak Terlihat Sangat Kurus', abbr: 'KRS', color: '#ef4444', bg: '#fee2e2' },
+    { label: 'Sering Sakit (Batuk/Diare Berulang)', abbr: 'SKT', color: '#10b981', bg: '#d1fae5' },
+    { label: 'Belum/Jarang ke Posyandu', abbr: 'PSY', color: '#6b7280', bg: '#f3f4f6' },
+];
+
+export function IndikasiPertumbuhanChart() {
+    const indikasiCount = stuntingData.reduce((acc, curr) => {
+        if (curr.indikasi_pertumbuhan) {
+            curr.indikasi_pertumbuhan.forEach(ind => {
+                acc[ind] = (acc[ind] || 0) + 1;
+            });
+        }
+        return acc;
+    }, {} as Record<string, number>);
+
+    const totalKasus = stuntingData.length;
+
+    const items = INDIKASI_PERTUMBUHAN.map(ind => ({
+        ...ind,
+        value: indikasiCount[ind.label] || 0
+    }));
+
+    return (
+        <Card className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full'>
+            <h3 className="text-md font-semibold text-slate-400 mb-6">Indikasi Pertumbuhan (Pendataan Khusus Balita (0-5 Tahun))</h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
+                {items.map((item) => {
+                    const pct = totalKasus > 0 ? (item.value / totalKasus) * 100 : 0;
+                    const pctDisplay = pct > 0 ? pct.toFixed(1) : '0';
+
+                    return (
+                        <div key={item.label} className="flex flex-col gap-2">
+                            {/* Top row: badge + count + label */}
+                            <div className="flex items-start gap-3">
+                                {/* Colored badge */}
+                                <div
+                                    className="w-9 h-9 flex-shrink-0 rounded-xl flex items-center justify-center text-xs font-bold leading-none"
+                                    style={{ backgroundColor: item.bg, color: item.color }}
+                                >
+                                    {item.abbr}
+                                </div>
+                                {/* Count + label */}
+                                <div className="flex flex-col min-w-0">
+                                    <span className="text-xl font-extrabold text-gray-900 dark:text-white leading-none">
+                                        {item.value}{' '}
+                                        <span className="text-sm font-semibold text-slate-500">Kasus</span>
+                                    </span>
+                                    <span className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-tight">
+                                        {item.label}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Progress bar + percentage */}
+                            <div className="mt-2">
+                                <div className="h-1.5 w-full rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                                    <div
+                                        className="h-full rounded-full transition-all duration-700"
+                                        style={{
+                                            width: `${Math.max(pct > 0 ? 4 : 0, pct)}%`,
+                                            backgroundColor: item.color,
+                                        }}
+                                    />
+                                </div>
+                                <span className="text-xs font-semibold mt-1 block" style={{ color: item.color }}>
+                                    {pctDisplay}%
+                                </span>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </Card>
+    );
 }
 
 // --- IBU HAMIL BERISIKO CHARTS ---
@@ -397,14 +440,21 @@ export function UsiaKandunganChart() {
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full mx-auto grid grid-cols-1 gap-y-3 gap-x-2 mt-6 shrink-0'>
+                <div className='w-full mx-auto grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-4 mt-8 shrink-0'>
                     {chartData.map((item, index) => (
-                        <div key={index} className='flex items-center gap-3 w-full justify-between'>
-                            <div className='flex items-center gap-2'>
-                                <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                                <p className='text-xs text-gray-700 dark:text-gray-300 font-medium'>{item.name}</p>
+                        <div key={index} className='flex items-start gap-3'>
+                            <div 
+                                className='w-3 h-3 rounded-full shrink-0 mt-1' 
+                                style={{ backgroundColor: COLORS[index % COLORS.length] }} 
+                            />
+                            <div className='flex flex-col'>
+                                <p className='text-xs text-gray-600 dark:text-gray-400 font-medium leading-none'>
+                                    {item.name} <span className='font-bold ml-1 text-gray-900 dark:text-white'>({item.percentage}%)</span>
+                                </p>
+                                <p className='text-[10px] text-gray-400 font-medium mt-1'>
+                                    ({item.value} kasus)
+                                </p>
                             </div>
-                            <span className="text-xs font-bold">{item.percentage}%</span>
                         </div>
                     ))}
                 </div>
@@ -412,6 +462,13 @@ export function UsiaKandunganChart() {
         </div>
     )
 }
+
+const FAKTOR_RISIKO = [
+    { label: 'Darah Tinggi (Hipertensi)', abbr: 'HPT', color: '#ef4444', bg: '#fee2e2' },
+    { label: 'Usia Terlalu Muda (<20) / Tua (>35)', abbr: 'USA', color: '#f59e0b', bg: '#fef3c7' },
+    { label: 'Kurang Energi (Kurus/Lemas)', abbr: 'KEK', color: '#ec4899', bg: '#fce7f3' },
+    { label: 'Jarak Kehamilan Terlalu Dekat (<2th)', abbr: 'JRK', color: '#8b5cf6', bg: '#f3e8ff' },
+];
 
 export function FaktorRisikoChart() {
     const risikoCount = ibuHamilData.reduce((acc, curr) => {
@@ -423,57 +480,60 @@ export function FaktorRisikoChart() {
         return acc
     }, {} as Record<string, number>)
 
-    const chartData = Object.entries(risikoCount)
-        .map(([name, value]) => ({ name, value }))
-        .sort((a, b) => b.value - a.value)
+    const totalKasus = ibuHamilData.length
 
-    const COLORS = ['#e879f9', '#c084fc', '#a855f7', '#7e22ce']
-    const total = ibuHamilData.length
+    const items = FAKTOR_RISIKO.map(r => ({
+        ...r,
+        value: risikoCount[r.label] || 0
+    }));
 
     return (
-        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
-            <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
+        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full'>
+            <h3 className='text-md font-semibold text-slate-400 mb-6'>
                 Faktor Risiko Ibu Hamil
             </h3>
-            <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>
-                Penyebab risiko pada kehamilan
-            </p>
 
-            <div className='space-y-4'>
-                {chartData.map((item, index) => {
-                    const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : '0'
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+                {items.map((item) => {
+                    const pct = totalKasus > 0 ? (item.value / totalKasus) * 100 : 0;
+                    const pctDisplay = pct > 0 ? pct.toFixed(1) : '0';
+
                     return (
-                        <div key={index}>
-                            <div className='flex items-center justify-between mb-2'>
-                                <div className='flex items-center gap-3'>
-                                    <div
-                                        className='w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md'
-                                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                                    >
-                                        {item.value}
-                                    </div>
-                                    <span className='text-sm font-semibold text-gray-900 dark:text-white'>
-                                        {item.name}
+                        <div key={item.label} className="flex flex-col gap-2">
+                            <div className="flex items-start gap-3">
+                                <div
+                                    className="w-9 h-9 flex-shrink-0 rounded-xl flex items-center justify-center text-xs font-bold leading-none"
+                                    style={{ backgroundColor: item.bg, color: item.color }}
+                                >
+                                    {item.abbr}
+                                </div>
+                                <div className="flex flex-col min-w-0">
+                                    <span className="text-xl font-extrabold text-gray-900 dark:text-white leading-none">
+                                        {item.value}{' '}
+                                        <span className="text-sm font-semibold text-slate-500">Kasus</span>
+                                    </span>
+                                    <span className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-tight">
+                                        {item.label}
                                     </span>
                                 </div>
-                                <span
-                                    className='text-lg font-bold'
-                                    style={{ color: COLORS[index % COLORS.length] }}
-                                >
-                                    {percentage}%
+                            </div>
+
+                            <div className="mt-2">
+                                <div className="h-1.5 w-full rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                                    <div
+                                        className="h-full rounded-full transition-all duration-700"
+                                        style={{
+                                            width: `${Math.max(pct > 0 ? 4 : 0, pct)}%`,
+                                            backgroundColor: item.color,
+                                        }}
+                                    />
+                                </div>
+                                <span className="text-xs font-semibold mt-1 block" style={{ color: item.color }}>
+                                    {pctDisplay}%
                                 </span>
                             </div>
-                            <div className='w-full bg-gray-100 dark:bg-gray-700 rounded-full h-3'>
-                                <div
-                                    className='h-3 rounded-full transition-all duration-500 shadow-sm'
-                                    style={{
-                                        width: `${percentage}%`,
-                                        backgroundColor: COLORS[index % COLORS.length]
-                                    }}
-                                />
-                            </div>
                         </div>
-                    )
+                    );
                 })}
             </div>
         </div>
@@ -499,12 +559,7 @@ export function AlasanBPJSChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
-                Alasan Tidak Memiliki BPJS
-            </h3>
-            <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>
-                {total} kasus warga tidak memiliki jaminan kesehatan
-            </p>
+            <h3 className="text-md font-semibold text-slate-400 mb-6">Alasan Tidak Memiliki BPJS</h3>
 
             <div className='grid grid-cols-1 gap-3 flex-1'>
                 {chartData.map((item, index) => {

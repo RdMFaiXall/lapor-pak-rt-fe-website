@@ -15,7 +15,7 @@ export default function PenerimaBantuan({ count, totalPenduduk = 18 }: PenerimaB
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full gap-5'>
 
             {/* Title */}
-            <p className="text-md font-semibold text-slate-400 mb-1">
+            <p className="text-md font-bold text-black mb-1">
                 Penerima Bantuan
             </p>
 
@@ -24,7 +24,7 @@ export default function PenerimaBantuan({ count, totalPenduduk = 18 }: PenerimaB
                 <div className="flex items-start gap-2.5">
                     <span className="mt-0.5 w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: SUDAH_COLOR }} />
                     <div>
-                        <p className="text-xs text-slate-500 leading-tight">Sudah menerima bantuan</p>
+                        <p className="text-xs font-bold text-slate-500 leading-tight">Sudah menerima bantuan</p>
                         <p className="text-sm font-extrabold text-gray-900 dark:text-white leading-tight">
                             {sudahPct.toFixed(1)}%
                         </p>
@@ -33,7 +33,7 @@ export default function PenerimaBantuan({ count, totalPenduduk = 18 }: PenerimaB
                 <div className="flex items-start gap-2.5">
                     <span className="mt-0.5 w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: BELUM_COLOR }} />
                     <div>
-                        <p className="text-xs text-slate-500 leading-tight">Belum menerima bantuan</p>
+                        <p className="text-xs font-bold text-slate-500 leading-tight">Belum menerima bantuan</p>
                         <p className="text-sm font-extrabold text-gray-900 dark:text-white leading-tight">
                             {belumPct.toFixed(1)}%
                         </p>

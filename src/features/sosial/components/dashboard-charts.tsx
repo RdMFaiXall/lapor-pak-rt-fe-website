@@ -10,6 +10,7 @@ import {
     YAxis,
     Pie,
     PieChart,
+    Label,
 } from 'recharts'
 import {
     wargaMiskinData,
@@ -39,7 +40,7 @@ export function EconomicConditionChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Kondisi Ekonomi</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Kondisi Ekonomi</h3>
             <div className='flex flex-col lg:flex-row gap-8 items-start'>
                 <div className='flex-1 h-[280px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
@@ -56,7 +57,9 @@ export function EconomicConditionChart() {
                                 tickLine={false}
                                 tick={{ fontSize: 12, fill: '#94a3b8' }}
                                 tickFormatter={(val) => val.toString().replace(/,/g, '')}
-                            />
+                            >
+                                <Label value="Jumlah Kasus" offset={-10} position="insideBottom" style={{ fill: '#94a3b8', fontSize: 12, fontWeight: 'bold' }} />
+                            </XAxis>
                             <YAxis
                                 dataKey="name"
                                 type="category"
@@ -74,9 +77,10 @@ export function EconomicConditionChart() {
                                     dataKey="value"
                                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                     content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
+                                        const { x, y, width, height, value, index } = props;
                                         if (value === undefined || value === null) return null;
                                         const isSmallValue = value < 2;
+                                        const percentage = chartData[index]?.percentage || '0';
                                         return (
                                             <text
                                                 x={isSmallValue ? x + width + 8 : x + 10}
@@ -86,7 +90,7 @@ export function EconomicConditionChart() {
                                                 fontWeight="bold"
                                                 dominantBaseline="middle"
                                             >
-                                                {value} kasus
+                                                {value} kasus ({percentage}%)
                                             </text>
                                         );
                                     }}
@@ -94,18 +98,6 @@ export function EconomicConditionChart() {
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
-                </div>
-
-                <div className='w-full lg:w-auto shrink-0 space-y-4'>
-                    {chartData.map((item, index) => (
-                        <div key={index} className='flex items-start gap-3'>
-                            <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                            <div>
-                                <p className='text-xs text-gray-400 font-medium'>{item.name}</p>
-                                <p className='text-sm font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
-                            </div>
-                        </div>
-                    ))}
                 </div>
             </div>
         </div>
@@ -131,7 +123,7 @@ export function SocialAidChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700'>
-            <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
+            <h3 className='text-md font-bold text-black dark:text-white mb-1'>
                 Total Penerima Bantuan
             </h3>
             <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>

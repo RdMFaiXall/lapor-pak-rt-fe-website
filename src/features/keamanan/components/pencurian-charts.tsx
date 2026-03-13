@@ -201,40 +201,40 @@ function FasilitasPanel({
     const total = items.reduce((s, i) => s + i.value, 0)
 
     return (
-        <div className="flex-1 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm">
+        <div className="flex flex-col bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
             {/* Header */}
-            <div className="flex items-center justify-between mb-4">
-                <span className="text-base font-bold text-gray-800 dark:text-white">{title}</span>
-                <span className="text-sm font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 rounded-full">
-                    {total} kasus
+            <div className="flex items-start justify-between mb-6 gap-2">
+                <span className="text-base font-bold text-gray-900 dark:text-white leading-tight">
+                    {title}
                 </span>
+                <div className="flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-gray-800 rounded-full shadow-sm border border-gray-100 dark:border-gray-700 shrink-0">
+                    <span className="text-sm font-bold text-gray-900 dark:text-white">{total}</span>
+                    <span className="text-xs text-gray-500 font-medium">kasus</span>
+                </div>
             </div>
 
             {/* Rows */}
-            <div className="flex flex-col gap-3">
+            <div className="space-y-4">
                 {items.map((item) => {
                     const pct = total > 0 ? (item.value / total) * 100 : 0
                     const barWidth = Math.max(pct > 0 ? 4 : 0, pct)
                     return (
                         <div key={item.label}>
-                            <div className="flex items-center gap-2.5 mb-1">
-                                <span
-                                    className="w-2.5 h-2.5 rounded-full shrink-0"
-                                    style={{ backgroundColor: item.color }}
-                                />
-                                <span className="flex-1 text-sm text-gray-600 dark:text-gray-300 truncate">
-                                    {item.label}
-                                </span>
-                                <span className="text-sm font-bold text-gray-900 dark:text-white shrink-0">
-                                    {item.value}
-                                </span>
-                                <span className="text-xs text-gray-400 shrink-0 w-14 text-right">
-                                    ({pct.toFixed(1)}%)
-                                </span>
+                            <div className="flex items-center justify-between mb-2 px-0.5">
+                                <div className="flex items-center gap-2.5">
+                                    <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                        {item.label}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-800 dark:text-gray-200">{item.value}</span>
+                                    <span className="text-xs text-gray-400 min-w-[40px] text-right">({pct.toFixed(1)}%)</span>
+                                </div>
                             </div>
-                            <div className="h-1.5 w-full rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                            <div className="w-full bg-gray-100 dark:bg-gray-700/50 rounded-full h-1.5 overflow-hidden">
                                 <div
-                                    className="h-full rounded-full transition-all duration-700"
+                                    className="h-full rounded-full transition-all duration-700 ease-out"
                                     style={{ width: `${barWidth}%`, backgroundColor: item.color }}
                                 />
                             </div>

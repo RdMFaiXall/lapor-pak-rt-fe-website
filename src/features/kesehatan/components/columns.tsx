@@ -115,7 +115,7 @@ export const columns: ColumnDef<HealthReport>[] = [
                 case 'Wabah DBD':
                     return (
                         <div className="text-sm">
-                            <div className="font-medium">{data.kondisi_dbd}</div>
+                            <div className="font-medium">{data.perkembangan_kasus}</div>
                             <div className="text-xs text-muted-foreground">
                                 {data.lingkungan_dbd?.slice(0, 1).join(', ')}...
                             </div>

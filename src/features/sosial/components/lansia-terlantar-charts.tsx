@@ -11,6 +11,7 @@ import {
     YAxis,
     Pie,
     PieChart,
+    Label,
 } from 'recharts'
 import { lansiaTerlantarData } from '../data/data'
 
@@ -37,7 +38,7 @@ export function KondisiTempatTinggalChart() {
 
     return (
         <Card className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full">
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Kondisi Tempat Tinggal</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Kondisi Tempat Tinggal</h3>
 
             <div className="flex-1 w-full min-h-[280px] relative">
                 <ResponsiveContainer width="100%" height="100%">
@@ -55,7 +56,9 @@ export function KondisiTempatTinggalChart() {
                             tick={{ fontSize: 12, fill: '#94a3b8' }}
                             tickFormatter={(val) => val.toString().replace(/,/g, '')}
                             allowDecimals={false}
-                        />
+                        >
+                            <Label value="Jumlah Kasus" offset={-15} position="insideBottom" style={{ fill: '#64748b', fontWeight: 'bold', fontSize: 13 }} />
+                        </XAxis>
                         <YAxis
                             dataKey="name"
                             type="category"
@@ -64,7 +67,7 @@ export function KondisiTempatTinggalChart() {
                             axisLine={false}
                             tickLine={false}
                         />
-                        <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={32}>
+                        <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
                             {chartData.map((_, index) => (
                                 <Cell key={`cell-${index}`} fill={LANSIA_COLORS[index % LANSIA_COLORS.length]} />
                             ))}
@@ -78,13 +81,13 @@ export function KondisiTempatTinggalChart() {
                                     const displayValue = `${value} kasus (${chartData[index]?.percentage}%)`;
                                     return (
                                         <text
-                                            x={isSmallValue ? x + width + 8 : x + width - 8}
+                                            x={isSmallValue ? x + width + 8 : x + 10}
                                             y={y + height / 2}
                                             fill={isSmallValue ? '#64748b' : '#fff'}
                                             fontSize={11}
                                             fontWeight="bold"
                                             dominantBaseline="middle"
-                                            textAnchor={isSmallValue ? 'start' : 'end'}
+                                            textAnchor="start"
                                         >
                                             {displayValue}
                                         </text>
@@ -118,7 +121,7 @@ export function KondisiKesehatanChart() {
 
     return (
         <Card className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full">
-            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Kondisi Kesehatan</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mt-2 mb-4">Kondisi Kesehatan</h3>
             <div className="flex flex-col items-center justify-center flex-1 w-full">
                 <div className="h-[250px] w-full">
                     <ResponsiveContainer width="100%" height="100%">

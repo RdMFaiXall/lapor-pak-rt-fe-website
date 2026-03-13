@@ -194,7 +194,7 @@ export function WargaSakitByDiseaseChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Kelompok Usia Warga Sakit</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mt-2 mb-4">Warga Sakit</h3>
             <div className='flex flex-col items-center justify-center flex-1 w-full'>
                 <div className='h-[250px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">

@@ -11,6 +11,7 @@ import {
     Tooltip,
     XAxis,
     YAxis,
+    Label,
 } from 'recharts'
 import { anakPutusSekolahData } from '../data/data'
 
@@ -50,7 +51,9 @@ function buildPenyebabByJenjangData() {
     }
 
     // Unique jenjang
-    const allJenjang = [...new Set(anakPutusSekolahData.map(w => w.jenjang))]
+    const rawJenjang = [...new Set(anakPutusSekolahData.map(w => w.jenjang))]
+    const jenjangOrder = ['SD', 'SMP', 'SMA', 'SMK', 'MTS']
+    const allJenjang = jenjangOrder.filter(j => rawJenjang.includes(j)).concat(rawJenjang.filter(j => !jenjangOrder.includes(j)))
 
     return {
         chartData: Object.entries(map)
@@ -70,7 +73,7 @@ export function PenyebabPerJenjangChart() {
 
     return (
         <Card className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full mt-4 mt-0">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">
                 Penyebab per Jenjang Pendidikan Terakhir
             </h3>
 
@@ -86,7 +89,7 @@ export function PenyebabPerJenjangChart() {
                                     {penyebab.total}
                                 </span>
                                 <span className="text-[10px] text-gray-500 font-medium">
-                                    anak
+                                    kasus
                                 </span>
                             </div>
                         </div>
@@ -151,7 +154,7 @@ export function JenjangPendidikanChart() {
 
     return (
         <Card className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full">
-            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Jenjang Pendidikan Terakhir</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mt-2 mb-4">Jenjang Pendidikan Terakhir</h3>
             <div className="flex flex-col items-center justify-center flex-1 w-full">
                 <div className="h-[250px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
@@ -186,7 +189,7 @@ export function JenjangPendidikanChart() {
                                 contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', backgroundColor: 'rgba(255, 255, 255, 0.95)' }}
                                 itemStyle={{ color: '#1f2937', fontWeight: 'bold' }}
                                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                formatter={(value: any, name: any, props: any) => [`${value} anak (${props.payload.percentage}%)`, name]}
+                                formatter={(value: any, name: any, props: any) => [`${value} kasus (${props.payload.percentage}%)`, name]}
                             />
                         </PieChart>
                     </ResponsiveContainer>
@@ -229,7 +232,7 @@ export function PenyebabPutusSekolahChart() {
 
     return (
         <Card className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full">
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Penyebab Anak Putus Sekolah</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Penyebab Anak Putus Sekolah</h3>
             <div className="flex-1 w-full min-h-[280px] relative">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
@@ -246,7 +249,9 @@ export function PenyebabPutusSekolahChart() {
                             tick={{ fontSize: 12, fill: '#94a3b8' }}
                             tickFormatter={(val) => val.toString().replace(/,/g, '')}
                             allowDecimals={false}
-                        />
+                        >
+                            <Label value="Jumlah Kasus" offset={-15} position="insideBottom" style={{ fill: '#64748b', fontWeight: 'bold', fontSize: 13 }} />
+                        </XAxis>
                         <YAxis
                             dataKey="name"
                             type="category"
@@ -255,7 +260,7 @@ export function PenyebabPutusSekolahChart() {
                             axisLine={false}
                             tickLine={false}
                         />
-                        <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={32}>
+                        <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={38}>
                             {chartData.map((_, index) => (
                                 <Cell key={`cell-${index}`} fill={PENYEBAB_COLORS[index % PENYEBAB_COLORS.length]} />
                             ))}
@@ -266,16 +271,16 @@ export function PenyebabPutusSekolahChart() {
                                     const { x, y, width, height, value, index } = props;
                                     if (value === undefined || value === null) return null;
                                     const isSmallValue = value < maxValue * 0.15;
-                                    const displayValue = `${value} anak (${chartData[index]?.percentage}%)`;
+                                    const displayValue = `${value} kasus (${chartData[index]?.percentage}%)`;
                                     return (
                                         <text
-                                            x={isSmallValue ? x + width + 8 : x + width - 8}
+                                            x={isSmallValue ? x + width + 8 : x + 10}
                                             y={y + height / 2}
                                             fill={isSmallValue ? '#64748b' : '#fff'}
                                             fontSize={11}
                                             fontWeight="bold"
                                             dominantBaseline="middle"
-                                            textAnchor={isSmallValue ? 'start' : 'end'}
+                                            textAnchor="start"
                                         >
                                             {displayValue}
                                         </text>

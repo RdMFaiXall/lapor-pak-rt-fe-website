@@ -61,8 +61,10 @@ export function ReportDetailSheet({
                             <h3 className='mb-2 text-sm font-medium text-muted-foreground'>Detail Wabah DBD</h3>
                             <div className='grid grid-cols-2 gap-4 text-sm'>
                                 <div>
-                                    <span className='block text-xs text-muted-foreground'>Status Perawatan</span>
-                                    <span className='font-medium'>{report.kondisi_dbd}</span>
+                                    <span className='block text-xs text-muted-foreground'>Status & Lokasi Perawatan</span>
+                                    <span className='font-medium'>
+                                        {report.perkembangan_kasus || '-'} ({report.lokasi_perawatan || '-'})
+                                    </span>
                                 </div>
                                 <div className='col-span-2'>
                                     <span className='block text-xs text-muted-foreground'>Kondisi Lingkungan</span>

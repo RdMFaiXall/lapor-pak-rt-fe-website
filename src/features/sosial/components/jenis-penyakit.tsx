@@ -19,7 +19,7 @@ const JenisPenyakit = ({ data }: JenisPenyakitProps) => {
 
     return (
         <Card className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Jenis Penyakit</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Jenis Penyakit</h3>
 
             <div className="flex-1 w-full min-h-[350px] relative">
                 <ResponsiveContainer width="100%" height="100%">

@@ -116,7 +116,7 @@ function SectionContainer({
                         <div className="flex flex-col items-end">
                             <span className={cn('px-3 py-1.5 rounded-xl text-2xl font-black leading-none flex items-baseline gap-1', iconColorClasses[color])}>
                                 {count}
-                                <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
+                                <span className="text-[15px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
                             </span>
                         </div>
                     )}
@@ -411,9 +411,14 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onCl
                         {label}
                     </span>
                 </div>
-                <span className={`text-3xl font-black leading-none shrink-0 ${text}`}>
-                    {count}
-                </span>
+                <div className="flex flex-col items-end shrink-0">
+                    <span className={`text-3xl font-black leading-none ${text}`}>
+                        {count}
+                    </span>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider opacity-70 mt-1 ${text}`}>
+                        Kasus
+                    </span>
+                </div>
             </div>
 
             <div>

@@ -38,7 +38,7 @@ export default function WargaSakitJenisPenyakitByAgeChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className='text-md font-semibold text-slate-400 mb-6'>
+            <h3 className='text-md font-bold text-black dark:text-white mb-6'>
                 Jenis Penyakit per Kelompok Usia
             </h3>
 

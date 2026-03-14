@@ -4,11 +4,10 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { ConfigDrawer } from '@/components/config-drawer'
-import { mockData } from '../constants'
 import { AlertTriangle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Card } from '@/components/ui/card'
-import { BencanaTypeChart, BencanaResolution, BencanaImpactSummary } from './bencana-charts'
+import { BencanaTypeChart, BencanaResolution, BencanaImpactSummary, kategoriBencanaTotal } from './bencana-charts'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 
@@ -74,7 +73,7 @@ function SectionContainer({
                         <div className="flex flex-col items-end">
                             <span className={cn('px-3 py-1.5 rounded-xl text-2xl font-black leading-none flex items-baseline gap-1', iconColorClasses[color])}>
                                 {count}
-                                <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Laporan</span>
+                                <span className="text-[15px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
                             </span>
                         </div>
                     )}
@@ -88,7 +87,7 @@ function SectionContainer({
 }
 
 export default function MonitoringView() {
-    const totalReports = mockData.length
+    const totalReports = kategoriBencanaTotal
 
     return (
         <div className='min-h-screen bg-gray-50 dark:bg-gray-950'>
@@ -109,7 +108,7 @@ export default function MonitoringView() {
                                 Laporan Bencana
                             </h1>
                             <p className='text-sm text-gray-500 dark:text-gray-400 mt-0.5'>
-                                Rekapitulasi dan analisis laporan kejadian bencana yang diterima dari warga, mencakup kategori, dampak korban, dan fasilitas yang terdampak.
+                                Rekapitulasi laporan kejadian bencana, mencakup kategori, dampak korban, dan fasilitas yang terdampak.
                             </p>
                         </div>
                         <div className='flex items-center gap-2 bg-white dark:bg-gray-900 rounded-lg px-4 py-2 shadow-sm border border-gray-200 dark:border-gray-800 self-start'>
@@ -117,7 +116,7 @@ export default function MonitoringView() {
                             <div>
                                 <p className='text-xs text-gray-400'>Update terakhir</p>
                                 <p className='text-xs font-semibold text-gray-700 dark:text-gray-300'>
-                                    {format(new Date(), 'dd MMM yyyy, HH:mm', { locale: id })}
+                                    {format(new Date(), 'dd MMMM yyyy, HH:mm', { locale: id })} WIB
                                 </p>
                             </div>
                         </div>

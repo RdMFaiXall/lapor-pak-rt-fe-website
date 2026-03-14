@@ -7,7 +7,6 @@ import {
     XAxis,
     YAxis,
 } from 'recharts'
-import { Card } from '@/components/ui/card'
 
 // ─── Objek Pencurian ──────────────────────────────────────────────────────────
 // Replaced PencurianResolution: compare Barang Pribadi vs Aset/Fasilitas Umum
@@ -17,12 +16,14 @@ const objekData = [
     { name: 'Aset/Fasilitas Umum', value: 22, color: '#3b82f6' },
 ]
 
+export const pencurianTotal = objekData.reduce((s, d) => s + d.value, 0)
+
 export function ObjekPencurian() {
     const total = objekData.reduce((s, d) => s + d.value, 0)
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full gap-5'>
-            <p className="text-md font-semibold text-slate-400 mb-1">Objek Pencurian</p>
+            <p className="text-md font-bold text-black dark:text-white mb-6">Objek Pencurian</p>
 
             {/* Legend */}
             <div className="flex flex-col gap-2.5">
@@ -110,7 +111,7 @@ const TrendTooltip = ({ active, payload, label }: any) => {
 export function PencurianStatusChart() {
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full min-h-[300px]'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Tanggal Pencurian</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Tanggal Pencurian</h3>
             <ResponsiveContainer width="100%" height={240}>
                 <LineChart
                     data={trendData}
@@ -201,7 +202,7 @@ function FasilitasPanel({
     const total = items.reduce((s, i) => s + i.value, 0)
 
     return (
-        <div className="flex flex-col bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+        <div className="flex flex-col bg-gray-50/50 dark:bg-gray-900/20 p-4 rounded-xl border border-gray-50 dark:border-gray-800/50">
             {/* Header */}
             <div className="flex items-start justify-between mb-6 gap-2">
                 <span className="text-base font-bold text-gray-900 dark:text-white leading-tight">
@@ -248,13 +249,13 @@ function FasilitasPanel({
 
 export function JenisFasilitasDicuri() {
     return (
-        <Card className='bg-transparent border-none shadow-none mt-6'>
-            <h3 className="text-md font-semibold text-slate-400 mb-4">Jenis Fasilitas yang Dicuri</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col mt-6'>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Jenis Fasilitas yang Dicuri</h3>
+            <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
                 <FasilitasPanel title="Barang Milik Pribadi" items={barangPribadi} />
                 <FasilitasPanel title="Aset / Fasilitas Umum" items={asetUmum} />
             </div>
-        </Card>
+        </div>
     )
 }
 

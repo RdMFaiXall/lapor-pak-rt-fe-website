@@ -12,18 +12,20 @@ import { Card } from '@/components/ui/card'
 // ─── Jenis Keributan (badge grid style) ──────────────────────────────────────
 
 const jenisKeributanData = [
-    { abbr: 'CA', label: 'Cekcok Antar Warga',      value: 18, color: '#ef4444', bg: '#fee2e2' },
-    { abbr: 'KW', label: 'Keributan Warga',          value: 13, color: '#f97316', bg: '#ffedd5' },
-    { abbr: 'KM', label: 'Keributan Karena Mabuk',   value: 9,  color: '#eab308', bg: '#fef9c3' },
-    { abbr: 'LN', label: 'Lainnya',                  value: 5,  color: '#22c55e', bg: '#dcfce7' },
+    { abbr: 'CA', label: 'Cekcok Antar Warga', value: 18, color: '#ef4444', bg: '#fee2e2' },
+    { abbr: 'KW', label: 'Keributan Warga', value: 13, color: '#f97316', bg: '#ffedd5' },
+    { abbr: 'KM', label: 'Keributan Karena Mabuk', value: 9, color: '#eab308', bg: '#fef9c3' },
+    { abbr: 'LN', label: 'Lainnya', value: 5, color: '#22c55e', bg: '#dcfce7' },
 ]
+
+export const keributanTotal = jenisKeributanData.reduce((s, d) => s + d.value, 0)
 
 export function GangguanStatusChart() {
     const total = jenisKeributanData.reduce((s, d) => s + d.value, 0)
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 w-full'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Jenis Keributan</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Jenis Keributan</h3>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-6">
                 {jenisKeributanData.map((item) => {
@@ -108,7 +110,7 @@ const TrendTooltip = ({ active, payload, label }: any) => {
 export function GangguanPriorityList() {
     return (
         <Card className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 mt-6'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Tanggal Kejadian</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Tanggal Kejadian</h3>
             <ResponsiveContainer width="100%" height={240}>
                 <LineChart
                     data={trendDataGangguan}

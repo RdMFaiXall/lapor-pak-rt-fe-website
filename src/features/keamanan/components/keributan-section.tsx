@@ -16,12 +16,14 @@ import {
 // ─── 1. Jenis Gangguan — vertical bar chart (style: jenis-penyakit.tsx) ────────
 
 const jenisGangguanData = [
-    { name: 'Keributan Malam',       value: 18 },
+    { name: 'Keributan Malam', value: 18 },
     { name: 'Musik Bervolume Tinggi', value: 13 },
-    { name: 'Kendaraan Bising',       value: 9  },
-    { name: 'Petasan Berlebihan',     value: 6  },
-    { name: 'Lainnya',                value: 4  },
+    { name: 'Kendaraan Bising', value: 9 },
+    { name: 'Petasan Berlebihan', value: 6 },
+    { name: 'Lainnya', value: 4 },
 ]
+
+export const gangguanTotal = jenisGangguanData.reduce((s, d) => s + d.value, 0)
 
 const GANGGUAN_COLORS = ['#dc2626', '#f97316', '#eab308', '#3b82f6', '#6b7280']
 
@@ -35,14 +37,14 @@ export function KeributanLocationChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Jenis Gangguan</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Jenis Gangguan</h3>
 
             <div className="flex-1 w-full min-h-[280px] relative">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                         data={chartData}
                         layout="vertical"
-                        margin={{ left: 8, right: 80, top: 0, bottom: 10 }}
+                        margin={{ left: 8, right: 80, top: 0, bottom: 30 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                         <XAxis
@@ -52,6 +54,7 @@ export function KeributanLocationChart() {
                             tickLine={false}
                             tick={{ fontSize: 12, fill: '#94a3b8' }}
                             tickFormatter={val => val.toString()}
+                            label={{ value: 'Jumlah Kasus', position: 'insideBottom', offset: -15, fill: '#64748b', fontSize: 12, fontWeight: 'bold' }}
                         />
                         <YAxis
                             dataKey="name"
@@ -61,7 +64,7 @@ export function KeributanLocationChart() {
                             axisLine={false}
                             tickLine={false}
                         />
-                        <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={32}>
+                        <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={44}>
                             {chartData.map((_, index) => (
                                 <Cell key={`cell-${index}`} fill={GANGGUAN_COLORS[index % GANGGUAN_COLORS.length]} />
                             ))}
@@ -76,13 +79,13 @@ export function KeributanLocationChart() {
                                     const label = `${value} kasus (${pct}%)`
                                     return (
                                         <text
-                                            x={isSmall ? x + width + 8 : x + width - 8}
+                                            x={isSmall ? x + width + 8 : x + 10}
                                             y={y + height / 2}
                                             fill={isSmall ? '#64748b' : '#fff'}
                                             fontSize={11}
                                             fontWeight="bold"
                                             dominantBaseline="middle"
-                                            textAnchor={isSmall ? 'start' : 'end'}
+                                            textAnchor="start"
                                         >
                                             {label}
                                         </text>
@@ -101,8 +104,8 @@ export function KeributanLocationChart() {
 
 const pihakData = [
     { name: 'Warga Sendiri', value: 22, color: '#dc2626' },
-    { name: 'Warga Luar',    value: 14, color: '#f97316' },
-    { name: 'Tidak Dikenal', value: 8,  color: '#6b7280' },
+    { name: 'Warga Luar', value: 14, color: '#f97316' },
+    { name: 'Tidak Dikenal', value: 8, color: '#6b7280' },
 ]
 
 
@@ -116,7 +119,7 @@ export function KeributanResolution() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full'>
-            <p className="text-md font-semibold text-slate-400 mb-4">Pihak yang Terlibat</p>
+            <p className="text-md font-bold text-black dark:text-white mb-6">Pihak yang Terlibat</p>
 
             <div className='flex flex-col items-center justify-center flex-1 w-full'>
                 {/* Pie chart */}
@@ -182,16 +185,16 @@ export function KeributanResolution() {
 
 const PIHAK_GROUPS = [
     { key: 'wargaSendiri', label: 'Warga Sendiri', color: '#dc2626' },
-    { key: 'wargaLuar',    label: 'Warga Luar',    color: '#f97316' },
+    { key: 'wargaLuar', label: 'Warga Luar', color: '#f97316' },
     { key: 'tidakDikenal', label: 'Tidak Dikenal', color: '#6b7280' },
 ]
 
 const gangguanPerPihak = [
-    { name: 'Keributan Malam',        wargaSendiri: 8,  wargaLuar: 7,  tidakDikenal: 3  },
-    { name: 'Musik Bervolume Tinggi', wargaSendiri: 7,  wargaLuar: 4,  tidakDikenal: 2  },
-    { name: 'Kendaraan Bising',       wargaSendiri: 4,  wargaLuar: 3,  tidakDikenal: 2  },
-    { name: 'Petasan Berlebihan',     wargaSendiri: 2,  wargaLuar: 3,  tidakDikenal: 1  },
-    { name: 'Lainnya',                wargaSendiri: 1,  wargaLuar: 2,  tidakDikenal: 1  },
+    { name: 'Keributan Malam', wargaSendiri: 8, wargaLuar: 7, tidakDikenal: 3 },
+    { name: 'Musik Bervolume Tinggi', wargaSendiri: 7, wargaLuar: 4, tidakDikenal: 2 },
+    { name: 'Kendaraan Bising', wargaSendiri: 4, wargaLuar: 3, tidakDikenal: 2 },
+    { name: 'Petasan Berlebihan', wargaSendiri: 2, wargaLuar: 3, tidakDikenal: 1 },
+    { name: 'Lainnya', wargaSendiri: 1, wargaLuar: 2, tidakDikenal: 1 },
 ].map(d => ({
     ...d,
     total: d.wargaSendiri + d.wargaLuar + d.tidakDikenal,
@@ -200,7 +203,7 @@ const gangguanPerPihak = [
 export function KeributanPriorityList() {
     return (
         <Card className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 mt-6'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Jenis Gangguan per Pihak Terlibat</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Jenis Gangguan per Pihak Terlibat</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {gangguanPerPihak.map((gangguan) => (

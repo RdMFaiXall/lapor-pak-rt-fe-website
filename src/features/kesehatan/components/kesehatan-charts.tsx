@@ -41,7 +41,7 @@ export function LokasiPerawatanChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Lokasi Perawatan</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Lokasi Perawatan</h3>
             <div className='flex flex-col items-center justify-center flex-1 w-full'>
                 <div className='h-[250px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
@@ -82,12 +82,12 @@ export function LokasiPerawatanChart() {
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full mx-auto grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-4 mt-8 shrink-0'>
+                <div className='w-full flex flex-wrap justify-center gap-y-5 gap-x-8 mt-8 shrink-0'>
                     {chartData.map((item, index) => (
                         <div key={index} className='flex items-start gap-3'>
-                            <div 
-                                className='w-3 h-3 rounded-full shrink-0 mt-1' 
-                                style={{ backgroundColor: COLORS[index % COLORS.length] }} 
+                            <div
+                                className='w-3 h-3 rounded-full shrink-0 mt-1'
+                                style={{ backgroundColor: COLORS[index % COLORS.length] }}
                             />
                             <div className='flex flex-col'>
                                 <p className='text-xs text-gray-600 dark:text-gray-400 font-medium leading-none'>
@@ -127,7 +127,7 @@ export function PerkembanganKasusChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Perkembangan Kasus</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Perkembangan Kasus</h3>
             <div className='flex flex-col gap-6 flex-1 w-full'>
                 <div className='h-[250px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
@@ -139,12 +139,12 @@ export function PerkembanganKasusChart() {
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
                                 type="number"
-                                domain={[0, maxValue ? maxValue + 1 : 5]}
+                                domain={[0, 'dataMax']}
                                 axisLine={false}
                                 tickLine={false}
                                 tick={{ fontSize: 12, fill: '#94a3b8' }}
                                 tickFormatter={(val) => val.toString().replace(/,/g, '')}
-                                label={{ value: 'Jumlah Kasus', position: 'insideBottom', offset: -15, fill: '#94a3b8', fontSize: 12 }}
+                                label={{ value: 'Jumlah Kasus', position: 'insideBottom', offset: -15, fill: '#64748b', fontSize: 12, fontWeight: 'bold' }}
                             />
                             <YAxis
                                 dataKey="name"
@@ -156,7 +156,7 @@ export function PerkembanganKasusChart() {
                             />
                             <Tooltip cursor={{ fill: 'transparent' }} />
 
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={50}>
                                 {chartData.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
@@ -164,9 +164,10 @@ export function PerkembanganKasusChart() {
                                     dataKey="value"
                                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                     content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
+                                        const { x, y, width, height, value, index } = props;
                                         if (value === undefined || value === null) return null;
-                                        const isSmallValue = value < 10;
+                                        const isSmallValue = value < maxValue * 0.20;
+                                        const displayValue = `${value} kasus (${chartData[index]?.percentage}%)`;
                                         return (
                                             <text
                                                 x={isSmallValue ? x + width + 8 : x + 10}
@@ -175,8 +176,9 @@ export function PerkembanganKasusChart() {
                                                 fontSize={11}
                                                 fontWeight="bold"
                                                 dominantBaseline="middle"
+                                                textAnchor="start"
                                             >
-                                                {value} kasus
+                                                {displayValue}
                                             </text>
                                         );
                                     }}
@@ -184,20 +186,6 @@ export function PerkembanganKasusChart() {
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
-                </div>
-
-                <div className='w-full grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2'>
-                    {chartData.map((item, index) => {
-                        return (
-                            <div key={index} className='flex items-start gap-3'>
-                                <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                                <div>
-                                    <p className='text-xs text-gray-400 font-medium leading-tight'>{item.name}</p>
-                                    <p className='text-sm font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
-                                </div>
-                            </div>
-                        )
-                    })}
                 </div>
             </div>
         </div>
@@ -220,7 +208,7 @@ export function PerkembanganPerLokasiChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className='text-md font-semibold text-slate-400 mb-6'>
+            <h3 className='text-md font-bold text-black dark:text-white mb-6'>
                 Perkembangan Kasus per Lokasi Perawatan
             </h3>
 
@@ -228,7 +216,7 @@ export function PerkembanganPerLokasiChart() {
                 {PERKEMBANGAN.map((item) => {
                     const filteredData = dbdData.filter(d => d.perkembangan_kasus === item.label);
                     const totalKasus = filteredData.length;
-                    
+
                     const countByLokasi = filteredData.reduce((acc, curr) => {
                         if (curr.lokasi_perawatan) {
                             acc[curr.lokasi_perawatan] = (acc[curr.lokasi_perawatan] || 0) + 1;
@@ -325,7 +313,7 @@ export function IndikasiPertumbuhanChart() {
 
     return (
         <Card className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Indikasi Pertumbuhan (Pendataan Khusus Balita (0-5 Tahun))</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Indikasi Pertumbuhan (Pendataan Khusus Balita (0-5 Tahun))</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
                 {items.map((item) => {
@@ -399,7 +387,7 @@ export function UsiaKandunganChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Usia Kandungan Berisiko</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Usia Kandungan Berisiko</h3>
             <div className='flex flex-col items-center justify-center flex-1 w-full'>
                 <div className='h-[250px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
@@ -443,9 +431,9 @@ export function UsiaKandunganChart() {
                 <div className='w-full mx-auto grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-4 mt-8 shrink-0'>
                     {chartData.map((item, index) => (
                         <div key={index} className='flex items-start gap-3'>
-                            <div 
-                                className='w-3 h-3 rounded-full shrink-0 mt-1' 
-                                style={{ backgroundColor: COLORS[index % COLORS.length] }} 
+                            <div
+                                className='w-3 h-3 rounded-full shrink-0 mt-1'
+                                style={{ backgroundColor: COLORS[index % COLORS.length] }}
                             />
                             <div className='flex flex-col'>
                                 <p className='text-xs text-gray-600 dark:text-gray-400 font-medium leading-none'>
@@ -489,7 +477,7 @@ export function FaktorRisikoChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full'>
-            <h3 className='text-md font-semibold text-slate-400 mb-6'>
+            <h3 className='text-md font-bold text-black dark:text-white mb-6'>
                 Faktor Risiko Ibu Hamil
             </h3>
 
@@ -559,7 +547,7 @@ export function AlasanBPJSChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Alasan Tidak Memiliki BPJS</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Alasan Tidak Memiliki BPJS</h3>
 
             <div className='grid grid-cols-1 gap-3 flex-1'>
                 {chartData.map((item, index) => {

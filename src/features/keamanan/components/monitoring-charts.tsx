@@ -148,7 +148,7 @@ export function PriorityChart() {
                             formatter={(value) => <span className="text-xs text-muted-foreground ml-1">{value}</span>}
                         />
                         <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
-                            <tspan x="50%" dy="-5em" fontSize="12" fill="#6b7280">Total Laporan</tspan>
+                            <tspan x="50%" dy="-5em" fontSize="12" fill="#6b7280">Total Semua Kasus</tspan>
                             <tspan x="50%" dy="1.6em" fontSize="24" fontWeight="bold" fill="#111827">{totalReports}</tspan>
                         </text>
                     </PieChart>

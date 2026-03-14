@@ -37,7 +37,7 @@ export default function MonitoringDashboard() {
                             <div>
                                 <p className='text-xs text-gray-400'>Update terakhir</p>
                                 <p className='text-xs font-semibold text-gray-700 dark:text-gray-300'>
-                                    {format(new Date(), 'dd MMM yyyy, HH:mm', { locale: id })}
+                                    {format(new Date(), 'dd MMMM yyyy, HH:mm', { locale: id })} WIB
                                 </p>
                             </div>
                         </div>

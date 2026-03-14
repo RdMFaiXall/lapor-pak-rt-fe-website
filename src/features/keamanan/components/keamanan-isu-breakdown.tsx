@@ -8,13 +8,13 @@ import {
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
-import { categories, mockKeamananData } from '../data/data'
+import { categories } from '../data/data'
 
 
-import { PencurianStatusChart, ObjekPencurian, JenisFasilitasDicuri } from './pencurian-charts'
+import { PencurianStatusChart, ObjekPencurian, JenisFasilitasDicuri, pencurianTotal } from './pencurian-charts'
 import { KeamananMap } from './keamanan-map'
-import { GangguanStatusChart, GangguanPriorityList } from './gangguan-section'
-import { KeributanLocationChart, KeributanResolution, KeributanPriorityList } from './keributan-section'
+import { GangguanStatusChart, GangguanPriorityList, keributanTotal } from './gangguan-section'
+import { KeributanLocationChart, KeributanResolution, KeributanPriorityList, gangguanTotal } from './keributan-section'
 
 // ─── Shared Components ────────────────────────────────────────────────────────
 
@@ -36,6 +36,7 @@ function SectionContainer({
     color,
     children,
     className,
+    count,
     id,
 }: SectionContainerProps) {
     const colorClasses: Record<string, string> = {
@@ -79,6 +80,14 @@ function SectionContainer({
                             )}
                         </div>
                     </div>
+                    {count !== undefined && (
+                        <div className="flex flex-col items-end">
+                            <span className={cn('px-3 py-1.5 rounded-xl text-2xl font-black leading-none flex items-baseline gap-1', iconColorClasses[color])}>
+                                {count}
+                                <span className="text-[15px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
+                            </span>
+                        </div>
+                    )}
                 </div>
                 <div className="space-y-6">
                     {children}
@@ -111,15 +120,13 @@ function PetaSebaranSection() {
 
 
 function PencurianSection() {
-    const pencurianCount = mockKeamananData.filter(d => d.category === 'pencurian').length
-
     return (
         <SectionContainer
             title='Pencurian'
             description='Data pengaduan pencurian, penyelesaian, and prioritas penanganan.'
             icon={ShieldAlert}
             color='rose'
-            count={pencurianCount}
+            count={pencurianTotal}
             id="section-pencurian"
         >
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
@@ -138,15 +145,13 @@ function PencurianSection() {
 }
 
 function KeributanWargaSection() {
-    const gangguanCount = mockKeamananData.filter(d => d.category === 'keributan').length
-
     return (
         <SectionContainer
             title='Keributan Warga'
             description='Data insiden keributan berdasarkan lokasi, status penyelesaian, dan tingkat prioritas.'
             icon={Activity}
             color='yellow'
-            count={gangguanCount}
+            count={keributanTotal}
             id="section-keributan"
         >
             <div className='w-full'>
@@ -160,15 +165,13 @@ function KeributanWargaSection() {
 }
 
 function GangguanKetertibanMalamSection() {
-    const keributanCount = mockKeamananData.filter(d => d.category === 'gangguan').length
-
     return (
         <SectionContainer
             title='Gangguan Ketertiban Malam'
             description='Data pengaduan gangguan ketertiban malam dan tanggal kejadian.'
             icon={Users}
             color='orange'
-            count={keributanCount}
+            count={gangguanTotal}
             id="section-gangguan"
         >
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
@@ -188,9 +191,15 @@ function GangguanKetertibanMalamSection() {
 
 // ─── Summary Calculation ────────────────────────────────────────────────────────
 
+const staticCounts: Record<string, number> = {
+    pencurian: pencurianTotal,
+    keributan: keributanTotal,
+    gangguan: gangguanTotal,
+}
+
 const issues = (grandTotal: number) => {
     return categories.map(cat => {
-        const count = mockKeamananData.filter(item => item.category === cat.value).length;
+        const count = staticCounts[cat.value] ?? 0;
         const pct = grandTotal > 0 ? Math.round((count / grandTotal) * 100) : 0;
 
         let icon = AlertTriangle;
@@ -267,9 +276,12 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onCl
                         {label}
                     </span>
                 </div>
-                <span className={`text-3xl font-black leading-none shrink-0 ${text}`}>
-                    {count}
-                </span>
+                <div className="flex flex-col items-end shrink-0">
+                    <span className={`text-3xl font-black leading-none ${text}`}>
+                        {count}
+                    </span>
+                    <span className="text-[11px] font-semibold uppercase tracking-wide mt-0.5" style={{ color }}> kasus</span>
+                </div>
             </div>
 
             <div>
@@ -291,7 +303,7 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onCl
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export function KeamananSummary() {
-    const grandTotal = mockKeamananData.length
+    const grandTotal = pencurianTotal + keributanTotal + gangguanTotal
     const allIssues = issues(grandTotal)
 
     return (
@@ -301,7 +313,7 @@ export function KeamananSummary() {
             <div className="px-6 pt-6 pb-5 border-b border-gray-100 dark:border-gray-800">
                 <div className="flex items-baseline gap-3">
                     <h2 className="text-lg font-semibold text-gray-500 dark:text-gray-400">
-                        Total Laporan
+                        Total Semua Kasus
                     </h2>
                     <span className="text-4xl font-black text-gray-900 dark:text-white leading-none">
                         {grandTotal}

@@ -81,7 +81,7 @@ function SectionContainer({
                         <div className="flex flex-col items-end">
                             <span className={cn('px-3 py-1.5 rounded-xl text-2xl font-black leading-none flex items-baseline gap-1', iconColorClasses[color])}>
                                 {count}
-                                <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
+                                <span className="text-[15px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
                             </span>
                         </div>
                     )}

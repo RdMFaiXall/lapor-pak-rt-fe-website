@@ -22,6 +22,8 @@ const kategoriBencanaData = [
     { name: 'Pohon Tumbang', value: 7 },
 ]
 
+export const kategoriBencanaTotal = kategoriBencanaData.reduce((s, d) => s + d.value, 0)
+
 const BENCANA_COLORS = ['#2563eb', '#db2777', '#d97706', '#7c3aed', '#0891b2', '#dc2626', '#059669']
 
 export function BencanaTypeChart() {
@@ -36,14 +38,14 @@ export function BencanaTypeChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Kategori Bencana</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Kategori Bencana</h3>
 
             <div className="flex-1 w-full min-h-[320px] relative">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                         data={chartData}
                         layout="vertical"
-                        margin={{ left: 8, right: 95, top: 0, bottom: 10 }}
+                        margin={{ left: 8, right: 95, top: 0, bottom: 30 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                         <XAxis
@@ -53,6 +55,7 @@ export function BencanaTypeChart() {
                             tickLine={false}
                             tick={{ fontSize: 12, fill: '#94a3b8' }}
                             tickFormatter={val => val.toString()}
+                            label={{ value: 'Jumlah Kasus', position: 'insideBottom', offset: -15, fill: '#64748b', fontSize: 12, fontWeight: 'bold' }}
                         />
                         <YAxis
                             dataKey="name"
@@ -77,13 +80,13 @@ export function BencanaTypeChart() {
                                     const label = `${value} kasus (${pct}%)`
                                     return (
                                         <text
-                                            x={isSmall ? x + width + 8 : x + width - 8}
+                                            x={isSmall ? x + width + 8 : x + 10}
                                             y={y + height / 2}
                                             fill={isSmall ? '#64748b' : '#fff'}
                                             fontSize={11}
                                             fontWeight="bold"
                                             dominantBaseline="middle"
-                                            textAnchor={isSmall ? 'start' : 'end'}
+                                            textAnchor="start"
                                         >
                                             {label}
                                         </text>
@@ -110,7 +113,7 @@ export function BencanaResolution() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full gap-5'>
-            <p className="text-md font-semibold text-slate-400 mb-1">Data Korban</p>
+            <p className="text-md font-bold text-black dark:text-white mb-1">Data Korban</p>
 
             {/* Legend rows */}
             <div className="flex flex-col gap-2.5">
@@ -187,7 +190,7 @@ const bencanaPerFasilitas = [
 export function BencanaImpactSummary() {
     return (
         <Card className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 mt-6'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Kategori Bencana per Fasilitas Yang Rusak</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Kategori Bencana per Fasilitas Yang Rusak</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {bencanaPerFasilitas.map((bencana) => (

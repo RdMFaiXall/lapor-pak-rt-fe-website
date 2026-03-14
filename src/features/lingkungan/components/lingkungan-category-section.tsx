@@ -1,3 +1,4 @@
+import React from 'react'
 import {
     Bar,
     BarChart,
@@ -17,6 +18,8 @@ import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { mockLingkunganData } from '../data/data'
 import { Lingkungan } from '../data/schema'
+import { format, subDays } from 'date-fns'
+import { id } from 'date-fns/locale'
 
 // ─── Shared Components ────────────────────────────────────────────────────────
 
@@ -86,7 +89,7 @@ function SectionContainer({
                         <div className="flex flex-col items-end">
                             <span className={cn('px-3 py-1.5 rounded-xl text-2xl font-black leading-none flex items-baseline gap-1', iconColorClasses[color])}>
                                 {count}
-                                <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
+                                <span className="text-[15px] font-bold uppercase tracking-wider opacity-70">Kasus</span>
                             </span>
                         </div>
                     )}
@@ -134,8 +137,8 @@ export function LingkunganStatusChart({ data }: { data: Lingkungan[] }) {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full min-h-[300px]'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Perkiraan Tingkat Penumpukan</h3>
-            <div className='flex flex-col lg:flex-row gap-4 items-start h-[calc(100%-48px)]'>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Perkiraan Tingkat Penumpukan</h3>
+            <div className='flex flex-col gap-4 items-start h-[calc(100%-48px)]'>
                 <div className='flex-1 h-full min-h-[200px] w-full'>
                     <ResponsiveContainer width="100%" height={240}>
                         <BarChart
@@ -168,7 +171,7 @@ export function LingkunganStatusChart({ data }: { data: Lingkungan[] }) {
                                 axisLine={false}
                                 tickLine={false}
                             />
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={50}>
                                 {chartData.map((item, index) => (
                                     <Cell key={`cell-${index}`} fill={item.color} />
                                 ))}
@@ -176,9 +179,11 @@ export function LingkunganStatusChart({ data }: { data: Lingkungan[] }) {
                                     dataKey="value"
                                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                     content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
+                                        const { x, y, width, height, value, index } = props;
                                         if (value === undefined || value === null) return null;
+                                        const pct = chartData[index]?.percentage;
                                         const isSmallValue = value < 2;
+                                        const label = `${value} kasus (${pct}%)`;
                                         return (
                                             <text
                                                 x={isSmallValue ? x + width + 8 : x + 10}
@@ -187,8 +192,9 @@ export function LingkunganStatusChart({ data }: { data: Lingkungan[] }) {
                                                 fontSize={11}
                                                 fontWeight="bold"
                                                 dominantBaseline="middle"
+                                                textAnchor="start"
                                             >
-                                                {value} kasus
+                                                {label}
                                             </text>
                                         );
                                     }}
@@ -197,73 +203,110 @@ export function LingkunganStatusChart({ data }: { data: Lingkungan[] }) {
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
-
-                <div className='w-full lg:w-auto shrink-0 space-y-4'>
-                    {chartData.map((item, index) => {
-                        // fullLabel e.g. "Parah (Menutup Akses / Bau Menyengat)"
-                        // split into shortLabel and sub part
-                        const parenMatch = item.fullLabel?.match(/^([^(]+?)(\s*\(.+\))?$/)
-                        const short = parenMatch?.[1]?.trim() ?? item.name
-                        const sub = parenMatch?.[2]?.trim() ?? ''
-                        return (
-                            <div key={index} className='flex items-start gap-3'>
-                                <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: item.color }} />
-                                <div>
-                                    <p className='text-xs font-semibold text-gray-700 dark:text-gray-300 leading-tight'>{short}</p>
-                                    {sub && (
-                                        <div className='text-[11px] text-gray-400 font-medium leading-[1.2] mt-0.5'>
-                                            {sub.split(' / ').map((part, i, arr) => (
-                                                <div key={i}>{part}{i < arr.length - 1 ? ' /' : ''}</div>
-                                            ))}
-                                        </div>
-                                    )}
-                                    <p className='text-sm font-bold text-gray-900 dark:text-gray-100 mt-0.5'>{item.percentage}%</p>
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
             </div>
         </div>
     )
 }
 
-// ─── Tanggal Laporan (Line Chart) ─────────────────────────────────────────────
+// Static per-date sampah data (distributed across last 4 weeks, total = 12 kasus)
+const SAMPAH_STATIC_DATES: Record<string, number> = (() => {
+    const today = new Date()
+    const dates: Record<string, number> = {}
+    const distribution = [
+        // week -3 ago
+        { offset: 25, count: 1 },
+        { offset: 23, count: 1 },
+        { offset: 21, count: 1 },
+        // week -2 ago
+        { offset: 17, count: 1 },
+        { offset: 15, count: 2 },
+        { offset: 11, count: 1 },
+        // last week
+        { offset: 7, count: 1 },
+        { offset: 5, count: 1 },
+        { offset: 4, count: 1 },
+        { offset: 2, count: 1 },
+        { offset: 1, count: 1 },
+    ]
+    distribution.forEach(({ offset, count }) => {
+        const d = subDays(today, offset)
+        const key = format(d, 'yyyy-MM-dd')
+        dates[key] = count
+    })
+    return dates
+})()
 
-const trendData = [
-    { tanggal: '1 Maret', kasus: 1 },
-    { tanggal: '2 Maret', kasus: 2 },
-    { tanggal: '3 Maret', kasus: 1 },
-    { tanggal: '4 Maret', kasus: 3 },
-    { tanggal: '5 Maret', kasus: 2 },
-    { tanggal: '6 Maret', kasus: 4 },
-    { tanggal: '7 Maret', kasus: 3 },
-    { tanggal: '8 Maret', kasus: 5 },
-    { tanggal: '9 Maret', kasus: 2 },
-    { tanggal: '10 Maret', kasus: 4 },
-    { tanggal: '11 Maret', kasus: 3 },
-    { tanggal: '12 Maret', kasus: 5 },
-]
+export function LingkunganTanggalLaporan({ data: _data }: { data: Lingkungan[] }) {
+    const [weekOffset, setWeekOffset] = React.useState(0) // 0 = current week, 1 = last week, etc.
+    const isCurrentWeek = weekOffset === 0
 
-const TrendTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-        return (
-            <div className="rounded-lg border bg-white dark:bg-gray-800 p-2.5 shadow-sm text-xs">
-                <p className="font-semibold text-gray-600 dark:text-gray-300 mb-1">{label}</p>
-                <p className="font-bold text-emerald-500">{payload[0].value} kasus</p>
-            </div>
-        )
+    const weekDays = Array.from({ length: 7 }).map((_, i) => {
+        return subDays(new Date(), (weekOffset * 7) + (6 - i))
+    })
+
+    const chartData = weekDays.map(date => {
+        const key = format(date, 'yyyy-MM-dd')
+        return {
+            tanggal: format(date, 'd MMMM', { locale: id }),
+            kasus: SAMPAH_STATIC_DATES[key] || 0
+        }
+    })
+
+    const weekTotal = chartData.reduce((s, d) => s + d.kasus, 0)
+
+    const TrendTooltip = ({ active, payload, label }: any) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="rounded-lg border bg-white dark:bg-gray-800 p-2.5 shadow-sm text-xs">
+                    <p className="font-semibold text-gray-600 dark:text-gray-300 mb-1">{label}</p>
+                    <p className="font-bold text-emerald-500">{payload[0].value} kasus</p>
+                </div>
+            )
+        }
+        return null
     }
-    return null
-}
 
-export function LingkunganTanggalLaporan() {
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full min-h-[300px]'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Tanggal Laporan</h3>
-            <ResponsiveContainer width="100%" height={240}>
+            <div className='flex items-start justify-between mb-6'>
+                <div>
+                    <h3 className="text-md font-bold text-black dark:text-white">Tanggal Laporan</h3>
+                    <p className='text-[11px] text-gray-400 font-medium'>
+                        {isCurrentWeek ? 'Minggu Ini' : `${weekOffset} Minggu Lalu`}
+                    </p>
+                </div>
+                <div className='flex items-center gap-1 bg-gray-100 dark:bg-gray-700/60 rounded-xl p-1'>
+                    <button
+                        onClick={() => setWeekOffset(prev => prev + 1)}
+                        title="Minggu Sebelumnya"
+                        className='flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-600 hover:text-gray-800 dark:hover:text-white hover:shadow-sm transition-all'
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                        Sebelumnya
+                    </button>
+                    <button
+                        onClick={() => setWeekOffset(prev => Math.max(0, prev - 1))}
+                        disabled={isCurrentWeek}
+                        title="Minggu Berikutnya"
+                        className={cn(
+                            'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all',
+                            isCurrentWeek
+                                ? 'text-gray-300 dark:text-gray-600 cursor-not-allowed'
+                                : 'text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-600 hover:text-gray-800 dark:hover:text-white hover:shadow-sm'
+                        )}
+                    >
+                        Berikutnya
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
                 <LineChart
-                    data={trendData}
+                    data={chartData}
                     margin={{ left: 8, right: 16, top: 8, bottom: 24 }}
                 >
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
@@ -271,8 +314,8 @@ export function LingkunganTanggalLaporan() {
                         dataKey="tanggal"
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fontSize: 11, fill: '#94a3b8' }}
-                        interval={1}
+                        tick={{ fontSize: 10, fill: '#94a3b8' }}
+                        interval={0}
                         label={{
                             value: 'Tanggal',
                             position: 'insideBottom',
@@ -312,9 +355,11 @@ export function LingkunganTanggalLaporan() {
 
             {/* Summary row */}
             <div className="flex items-center justify-between mt-4 px-1">
-                <span className="text-xs text-slate-400">1 Maret – 12 Maret 2026</span>
+                <span className="text-xs text-slate-400">
+                    {format(weekDays[0], 'd MMMM', { locale: id })} – {format(weekDays[weekDays.length - 1], 'd MMMM yyyy', { locale: id })}
+                </span>
                 <span className="text-xs font-bold text-emerald-500">
-                    {trendData.reduce((s, d) => s + d.kasus, 0)} kasus total
+                    {weekTotal} kasus
                 </span>
             </div>
         </div>
@@ -342,7 +387,7 @@ export function SaluranStatusPieChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Kondisi Genangan</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Kondisi Genangan</h3>
             <div className='flex flex-col items-center justify-center flex-1 w-full'>
                 <div className='h-[250px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
@@ -384,17 +429,22 @@ export function SaluranStatusPieChart() {
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full max-w-[260px] mx-auto grid grid-cols-1 gap-y-2.5 mt-4 shrink-0'>
-                    {GENANGAN_META.map((item, index) => (
-                        <div key={index} className='flex items-center gap-2'>
-                            <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: item.color }} />
-                            <div className='flex flex-col'>
-                                <p className='text-xs text-gray-700 dark:text-gray-300 font-semibold leading-tight'>
-                                    {item.label} <span className="font-normal text-gray-500">{item.sub}</span>
-                                </p>
+                <div className='w-fit mx-auto grid grid-cols-1 gap-y-3 mt-6 shrink-0'>
+                    {GENANGAN_META.map((item, index) => {
+                        const dataItem = SALURAN_GENANGAN_DATA.find(d => d.color === item.color)
+                        const percentage = total > 0 ? ((dataItem?.value || 0) / total * 100).toFixed(1) : '0'
+                        return (
+                            <div key={index} className='flex items-start gap-2'>
+                                <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: item.color }} />
+                                <div className='flex flex-col'>
+                                    <p className='text-xs text-gray-700 dark:text-gray-300 font-medium leading-tight'>
+                                        {item.label} <span className="font-bold text-gray-900 dark:text-white ml-0.5">({percentage}%)</span>
+                                    </p>
+                                    <p className='text-[10px] text-gray-500 font-medium leading-tight mt-0.5'>{item.sub}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
             </div>
         </div>
@@ -430,8 +480,8 @@ export function SaluranKondisiSumbatan() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Kondisi Sumbatan</h3>
-            <div className='flex flex-col lg:flex-row gap-8 items-start flex-1'>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Kondisi Sumbatan</h3>
+            <div className='flex flex-col gap-8 items-start flex-1'>
                 <div className='flex-1 h-[320px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
@@ -442,7 +492,7 @@ export function SaluranKondisiSumbatan() {
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
                                 type="number"
-                                domain={[0, maxValue + 1]}
+                                domain={[0, maxValue]}
                                 axisLine={false}
                                 tickLine={false}
                                 tick={{ fontSize: 12, fill: '#94a3b8' }}
@@ -464,7 +514,7 @@ export function SaluranKondisiSumbatan() {
                                 axisLine={false}
                                 tickLine={false}
                             />
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={38}>
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={50}>
                                 {chartData.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={SUMBATAN_COLORS[index % SUMBATAN_COLORS.length]} />
                                 ))}
@@ -472,9 +522,11 @@ export function SaluranKondisiSumbatan() {
                                     dataKey="value"
                                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                     content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
+                                        const { x, y, width, height, value, index } = props;
                                         if (value === undefined || value === null) return null;
+                                        const pct = chartData[index]?.percentage;
                                         const isSmallValue = value < 2;
+                                        const label = `${value} kasus (${pct}%)`;
                                         return (
                                             <text
                                                 x={isSmallValue ? x + width + 8 : x + 10}
@@ -483,8 +535,9 @@ export function SaluranKondisiSumbatan() {
                                                 fontSize={11}
                                                 fontWeight="bold"
                                                 dominantBaseline="middle"
+                                                textAnchor="start"
                                             >
-                                                {value} kasus
+                                                {label}
                                             </text>
                                         );
                                     }}
@@ -492,18 +545,6 @@ export function SaluranKondisiSumbatan() {
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
-                </div>
-
-                <div className='w-full lg:w-auto shrink-0 space-y-4'>
-                    {chartData.map((item, index) => (
-                        <div key={index} className='flex items-start gap-3'>
-                            <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: SUMBATAN_COLORS[index % SUMBATAN_COLORS.length] }} />
-                            <div>
-                                <p className='text-xs text-gray-400 font-medium'>{item.name}</p>
-                                <p className='text-sm font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
-                            </div>
-                        </div>
-                    ))}
                 </div>
             </div>
         </div>
@@ -535,40 +576,49 @@ const SUMBATAN_PER_GENANGAN: Record<string, Record<string, number>> = {
     },
 }
 
-const GENANGAN_COLORS: Record<string, string> = {
-    'Ringan': '#22c55e',
-    'Sedang': '#f97316',
-    'Parah': '#ef4444',
-}
-
 export function SaluranKondisiSumbatanPerGenangan() {
+    // Transform data: group by Sumbatan instead of Genangan
+    const sumbatanBreakdown = SUMBATAN_META.map(meta => {
+        const breakdown: Record<string, number> = {}
+        let total = 0
+        Object.entries(SUMBATAN_PER_GENANGAN).forEach(([genangan, map]) => {
+            const count = map[meta.label] || 0
+            breakdown[genangan] = count
+            total += count
+        })
+        return {
+            ...meta,
+            total,
+            breakdown
+        }
+    })
+
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className='text-md font-semibold text-slate-400 mb-6'>
+            <h3 className='text-md font-bold text-black dark:text-white mb-6'>
                 Kondisi Sumbatan per Kondisi Genangan
             </h3>
 
-            <div className='flex-1 overflow-y-auto pr-1 grid grid-cols-1 sm:grid-cols-3 gap-4'>
-                {Object.entries(SUMBATAN_PER_GENANGAN).map(([genangan, sumbatanMap]) => {
-                    const total = Object.values(sumbatanMap).reduce((a, b) => a + b, 0)
-                    const color = GENANGAN_COLORS[genangan] || '#94a3b8'
+            <div className='flex-1 overflow-y-auto pr-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+                {sumbatanBreakdown.map((item) => {
+                    // const color = item.color || '#94a3b8'
 
                     return (
-                        <div key={genangan} className="flex flex-col bg-gray-50/50 dark:bg-gray-900/20 p-4 rounded-xl border border-gray-100 dark:border-gray-800/50">
+                        <div key={item.label} className="flex flex-col bg-gray-50/50 dark:bg-gray-900/20 p-4 rounded-xl border border-gray-100 dark:border-gray-800/50">
                             <div className='flex items-center justify-between mb-4'>
-                                <span className='text-sm font-semibold' style={{ color }}>
-                                    {genangan}
+                                <span className='text-sm font-semibold text-gray-900 dark:text-white'>
+                                    {item.label}
                                 </span>
                                 <div className='flex items-center gap-1.5 px-2.5 py-1 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700'>
-                                    <span className='text-xs font-bold text-gray-900 dark:text-white'>{total}</span>
+                                    <span className='text-xs font-bold text-gray-900 dark:text-white'>{item.total}</span>
                                     <span className='text-[10px] text-gray-500 font-medium'>kasus</span>
                                 </div>
                             </div>
 
                             <div className='space-y-3.5'>
-                                {SUMBATAN_META.map((meta) => {
-                                    const count = sumbatanMap[meta.label] || 0
-                                    const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : '0'
+                                {GENANGAN_META.map((meta) => {
+                                    const count = item.breakdown[meta.label] || 0
+                                    const percentage = item.total > 0 ? ((count / item.total) * 100).toFixed(1) : '0'
 
                                     return (
                                         <div key={meta.label}>
@@ -668,14 +718,14 @@ export function JalanJenisChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Jenis Jalan</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Jenis Jalan</h3>
             <div className='flex flex-col gap-6 items-start'>
                 <div className='w-full h-[220px]'>
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
                             data={chartData}
                             layout="vertical"
-                            margin={{ left: 8, right: 30, top: 0, bottom: 30 }}
+                            margin={{ left: 8, right: 60, top: 0, bottom: 30 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
@@ -702,7 +752,7 @@ export function JalanJenisChart() {
                                 axisLine={false}
                                 tickLine={false}
                             />
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={38}>
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={44}>
                                 {chartData.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={JENIS_JALAN_COLORS[index % JENIS_JALAN_COLORS.length]} />
                                 ))}
@@ -710,9 +760,11 @@ export function JalanJenisChart() {
                                     dataKey="value"
                                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                     content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
+                                        const { x, y, width, height, value, index } = props;
                                         if (value === undefined || value === null) return null;
+                                        const pct = chartData[index]?.percentage;
                                         const isSmallValue = value < 2;
+                                        const label = `${value} kasus (${pct}%)`;
                                         return (
                                             <text
                                                 x={isSmallValue ? x + width + 8 : x + 10}
@@ -721,8 +773,9 @@ export function JalanJenisChart() {
                                                 fontSize={11}
                                                 fontWeight="bold"
                                                 dominantBaseline="middle"
+                                                textAnchor="start"
                                             >
-                                                {value} kasus
+                                                {label}
                                             </text>
                                         );
                                     }}
@@ -730,18 +783,6 @@ export function JalanJenisChart() {
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
-                </div>
-
-                <div className='w-full flex flex-wrap justify-center gap-x-8 gap-y-4 pt-2 border-t border-gray-100 dark:border-gray-800/60'>
-                    {chartData.map((item, index) => (
-                        <div key={index} className='flex items-center gap-2.5'>
-                            <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: JENIS_JALAN_COLORS[index % JENIS_JALAN_COLORS.length] }} />
-                            <div className='flex items-center gap-2'>
-                                <p className='text-xs text-gray-500 font-medium'>{item.name}</p>
-                                <p className='text-xs font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
-                            </div>
-                        </div>
-                    ))}
                 </div>
             </div>
         </div>
@@ -766,7 +807,7 @@ export function JalanKondisiKerusakanChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mt-2 mb-4">Kondisi Kerusakan</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Kondisi Kerusakan</h3>
             <div className='flex flex-col items-center justify-center flex-1 w-full'>
                 <div className='h-[250px] w-full'>
                     <ResponsiveContainer width="100%" height="100%">
@@ -798,7 +839,7 @@ export function JalanKondisiKerusakanChart() {
                                     <Cell key={`cell-${index}`} fill={d.color} />
                                 ))}
                             </Pie>
-                                <Tooltip
+                            <Tooltip
                                 contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', backgroundColor: 'rgba(255,255,255,0.95)' }}
                                 itemStyle={{ color: '#1f2937', fontWeight: 'bold' }}
                                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -808,17 +849,22 @@ export function JalanKondisiKerusakanChart() {
                     </ResponsiveContainer>
                 </div>
 
-                <div className='w-full max-w-[280px] mx-auto grid grid-cols-1 gap-y-2.5 mt-4 shrink-0'>
-                    {KONDISI_KERUSAKAN_META.map((item, index) => (
-                        <div key={index} className='flex items-center gap-2'>
-                            <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: item.color }} />
-                            <div className='flex flex-col'>
-                                <p className='text-xs text-gray-700 dark:text-gray-300 font-semibold leading-tight'>
-                                    {item.shortLabel} <span className="font-normal text-gray-500">{item.label.replace(item.shortLabel, '').trim()}</span>
-                                </p>
+                <div className='w-fit mx-auto grid grid-cols-1 gap-y-3 mt-6 shrink-0'>
+                    {KONDISI_KERUSAKAN_META.map((item, index) => {
+                        const dataItem = KONDISI_KERUSAKAN_DATA.find(d => d.name === item.shortLabel)
+                        const percentage = total > 0 ? ((dataItem?.value || 0) / total * 100).toFixed(1) : '0'
+                        return (
+                            <div key={index} className='flex items-start gap-2'>
+                                <div className='w-3 h-3 rounded-full mt-1 shrink-0' style={{ backgroundColor: item.color }} />
+                                <div className='flex flex-col'>
+                                    <p className='text-xs text-gray-700 dark:text-gray-300 font-medium leading-tight'>
+                                        {item.shortLabel} <span className="font-bold text-gray-900 dark:text-white ml-0.5">({percentage}%)</span>
+                                    </p>
+                                    <p className='text-[10px] text-gray-500 font-medium leading-tight mt-0.5'>{item.label.replace(item.shortLabel, '').trim()}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
             </div>
         </div>
@@ -859,7 +905,7 @@ const KONDISI_LABEL_SHORT: Record<string, string> = {
 export function JalanKondisiPerJenis() {
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className='text-md font-semibold text-slate-400 mb-6'>
+            <h3 className='text-md font-bold text-black dark:text-white mb-6'>
                 Kondisi Kerusakan per Jenis Jalan
             </h3>
 
@@ -965,88 +1011,78 @@ const STATUS_PENERANGAN_DATA = [
 ]
 
 export function PeneranganStatusChart() {
-    const total = STATUS_PENERANGAN_DATA.reduce((sum, item) => sum + item.value, 0)
-    const chartData = STATUS_PENERANGAN_DATA.map(d => ({
-        ...d,
-        percentage: total > 0 ? ((d.value / total) * 100).toFixed(1) : '0'
-    }))
-    const maxValue = Math.max(...chartData.map(d => d.value), 0)
+    const sudah = STATUS_PENERANGAN_DATA.find(d => d.name === 'Sudah ada lampu')?.value || 0
+    const belum = STATUS_PENERANGAN_DATA.find(d => d.name === 'Belum ada lampu')?.value || 0
+    const total = sudah + belum
+    const sudahPct = total > 0 ? (sudah / total) * 100 : 0
+    const belumPct = total > 0 ? (belum / total) * 100 : 0
+
+    const SUDAH_COLOR = '#10b981'
+    const BELUM_COLOR = '#f43f5e'
 
     return (
-        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Status Penerangan</h3>
-            <div className='flex flex-col gap-6 items-start flex-1'>
-                <div className='w-full h-[160px]'>
-                    <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                            data={chartData}
-                            layout="vertical"
-                            margin={{ left: 8, right: 30, top: 0, bottom: 30 }}
-                        >
-                            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
-                            <XAxis
-                                type="number"
-                                domain={[0, maxValue]}
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{ fontSize: 12, fill: '#94a3b8' }}
-                                tickFormatter={(val) => Number.isInteger(val) ? val.toString() : ''}
-                                label={{
-                                    value: 'Jumlah Kasus',
-                                    position: 'insideBottom',
-                                    offset: -16,
-                                    fontSize: 11,
-                                    fill: '#94a3b8',
-                                    fontWeight: 700,
-                                }}
-                            />
-                            <YAxis
-                                dataKey="name"
-                                type="category"
-                                width={120}
-                                tick={{ fontSize: 11, fontWeight: 600, fill: '#64748b' }}
-                                axisLine={false}
-                                tickLine={false}
-                            />
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={28}>
-                                {chartData.map((d, index) => (
-                                    <Cell key={`cell-${index}`} fill={d.color} />
-                                ))}
-                                <LabelList
-                                    dataKey="value"
-                                    content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
-                                        if (value == null) return null;
-                                        const isSmallValue = value < 2;
-                                        return (
-                                            <text
-                                                x={isSmallValue ? x + width + 8 : x + 10}
-                                                y={y + height / 2}
-                                                fill={isSmallValue ? "#64748b" : "#fff"}
-                                                fontSize={11}
-                                                fontWeight="bold"
-                                                dominantBaseline="middle"
-                                            >
-                                                {value} kasus
-                                            </text>
-                                        );
-                                    }}
-                                />
-                            </Bar>
-                        </BarChart>
-                    </ResponsiveContainer>
+        <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full gap-5'>
+            {/* Title */}
+            <h3 className="text-md font-bold text-black dark:text-white">
+                Status Penerangan
+            </h3>
+
+            {/* Comparison stats */}
+            <div className="flex flex-col gap-2.5">
+                <div className="flex items-start gap-2.5">
+                    <span className="mt-0.5 w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: SUDAH_COLOR }} />
+                    <div>
+                        <p className="text-xs font-bold text-slate-500 leading-tight">Sudah ada lampu</p>
+                        <p className="text-sm font-extrabold text-gray-900 dark:text-white leading-tight">
+                            {sudahPct.toFixed(1)}%
+                        </p>
+                    </div>
+                </div>
+                <div className="flex items-start gap-2.5">
+                    <span className="mt-0.5 w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: BELUM_COLOR }} />
+                    <div>
+                        <p className="text-xs font-bold text-slate-500 leading-tight">Belum ada lampu</p>
+                        <p className="text-sm font-extrabold text-gray-900 dark:text-white leading-tight">
+                            {belumPct.toFixed(1)}%
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Horizontal stacked bar */}
+            <div className="flex-1 flex flex-col justify-center gap-3">
+                {/* Total label */}
+                <div className="flex items-baseline gap-1.5">
+                    <span className="text-3xl font-black text-gray-900 dark:text-white leading-none">{total}</span>
+                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">total titik</span>
                 </div>
 
-                <div className='w-full flex flex-wrap justify-center gap-x-8 gap-y-4 pt-2 border-t border-gray-100 dark:border-gray-800/60'>
-                    {chartData.map((item, index) => (
-                        <div key={index} className='flex items-center gap-2.5'>
-                            <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: item.color }} />
-                            <div className='flex items-center gap-2'>
-                                <p className='text-xs text-gray-500 font-medium'>{item.name}</p>
-                                <p className='text-xs font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
-                            </div>
-                        </div>
-                    ))}
+                {/* Stacked bar */}
+                <div className="flex h-12 rounded-xl overflow-hidden gap-1">
+                    {/* Sudah */}
+                    <div
+                        className="flex items-center justify-center transition-all duration-700 rounded-l-xl"
+                        style={{ width: `${sudahPct}%`, backgroundColor: SUDAH_COLOR }}
+                    >
+                        <span className="text-white font-extrabold text-sm drop-shadow-sm">
+                            {sudah} titik
+                        </span>
+                    </div>
+                    {/* Belum */}
+                    <div
+                        className="flex items-center justify-center transition-all duration-700 rounded-r-xl"
+                        style={{ width: `${belumPct}%`, backgroundColor: BELUM_COLOR }}
+                    >
+                        <span className="text-white font-extrabold text-sm drop-shadow-sm">
+                            {belum} titik
+                        </span>
+                    </div>
+                </div>
+
+                {/* Bottom labels */}
+                <div className="flex justify-between text-xs text-slate-400 font-medium">
+                    <span>Sudah dipasang</span>
+                    <span>Butuh pemasangan</span>
                 </div>
             </div>
         </div>
@@ -1071,14 +1107,14 @@ export function PeneranganTitikTerdampakChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-semibold text-slate-400 mb-6">Jumlah Titik Terdampak</h3>
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">Jumlah Titik Terdampak</h3>
             <div className='flex flex-col gap-6 items-start flex-1'>
                 <div className='w-full h-[200px]'>
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
                             data={chartData}
                             layout="vertical"
-                            margin={{ left: 8, right: 30, top: 0, bottom: 30 }}
+                            margin={{ left: 8, right: 90, top: 0, bottom: 30 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
@@ -1105,7 +1141,7 @@ export function PeneranganTitikTerdampakChart() {
                                 axisLine={false}
                                 tickLine={false}
                             />
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={28}>
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
                                 {chartData.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={TITIK_TERDAMPAK_COLORS[index % TITIK_TERDAMPAK_COLORS.length]} />
                                 ))}
@@ -1113,9 +1149,10 @@ export function PeneranganTitikTerdampakChart() {
                                     dataKey="value"
                                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                     content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
+                                        const { x, y, width, height, value, index } = props;
                                         if (value == null) return null;
                                         const isSmallValue = value < 2;
+                                        const percentage = chartData[index]?.percentage || '0';
                                         return (
                                             <text
                                                 x={isSmallValue ? x + width + 8 : x + 10}
@@ -1125,7 +1162,7 @@ export function PeneranganTitikTerdampakChart() {
                                                 fontWeight="bold"
                                                 dominantBaseline="middle"
                                             >
-                                                {value} kasus
+                                                {value} kasus ({percentage}%)
                                             </text>
                                         );
                                     }}
@@ -1133,18 +1170,6 @@ export function PeneranganTitikTerdampakChart() {
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
-                </div>
-
-                <div className='w-full flex flex-wrap justify-center gap-x-8 gap-y-4 pt-2 border-t border-gray-100 dark:border-gray-800/60'>
-                    {chartData.map((item, index) => (
-                        <div key={index} className='flex items-center gap-2.5'>
-                            <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: TITIK_TERDAMPAK_COLORS[index % TITIK_TERDAMPAK_COLORS.length] }} />
-                            <div className='flex items-center gap-2'>
-                                <p className='text-xs text-gray-500 font-medium'>{item.name}</p>
-                                <p className='text-xs font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
-                            </div>
-                        </div>
-                    ))}
                 </div>
             </div>
         </div>
@@ -1169,7 +1194,7 @@ export function PeneranganKondisiLampuPerJenis() {
 
     return (
         <div className="flex flex-col bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full">
-            <h3 className="text-md font-semibold text-slate-400 mb-6">
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">
                 Kondisi Lampu (Sudah ada Lampu)
             </h3>
 
@@ -1179,7 +1204,7 @@ export function PeneranganKondisiLampuPerJenis() {
                         <BarChart
                             data={chartData}
                             layout="vertical"
-                            margin={{ left: 8, right: 30, top: 0, bottom: 30 }}
+                            margin={{ left: 8, right: 90, top: 0, bottom: 30 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
@@ -1206,16 +1231,17 @@ export function PeneranganKondisiLampuPerJenis() {
                                 axisLine={false}
                                 tickLine={false}
                             />
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={24}>
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={34}>
                                 {chartData.map((d, index) => (
                                     <Cell key={`cell-${index}`} fill={d.color} />
                                 ))}
                                 <LabelList
                                     dataKey="value"
                                     content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
+                                        const { x, y, width, height, value, index } = props;
                                         if (value == null) return null;
                                         const isSmallValue = value < 2;
+                                        const percentage = chartData[index]?.percentage || '0';
                                         return (
                                             <text
                                                 x={isSmallValue ? x + width + 8 : x + 10}
@@ -1225,7 +1251,7 @@ export function PeneranganKondisiLampuPerJenis() {
                                                 fontWeight="bold"
                                                 dominantBaseline="middle"
                                             >
-                                                {value} kasus
+                                                {value} kasus ({percentage}%)
                                             </text>
                                         );
                                     }}
@@ -1233,18 +1259,6 @@ export function PeneranganKondisiLampuPerJenis() {
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
-                </div>
-
-                <div className='w-full flex flex-wrap justify-center gap-x-6 gap-y-3 pt-2 border-t border-gray-100 dark:border-gray-800/60'>
-                    {chartData.map((item, index) => (
-                        <div key={index} className='flex items-center gap-2'>
-                            <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: item.color }} />
-                            <div className='flex items-center gap-1.5'>
-                                <p className='text-xs text-gray-500 font-medium'>{item.name}</p>
-                                <p className='text-xs font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
-                            </div>
-                        </div>
-                    ))}
                 </div>
             </div>
         </div>
@@ -1267,17 +1281,17 @@ export function PeneranganKebutuhanPerJenis() {
 
     return (
         <div className="flex flex-col bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full">
-            <h3 className="text-md font-semibold text-slate-400 mb-6">
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">
                 Kebutuhan Penerangan (Belum ada Lampu)
             </h3>
 
             <div className='flex flex-col gap-6 items-start flex-1'>
-                <div className='w-full h-[180px]'>
+                <div className='w-full h-[200px]'>
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
                             data={chartData}
                             layout="vertical"
-                            margin={{ left: 8, right: 30, top: 0, bottom: 30 }}
+                            margin={{ left: 8, right: 90, top: 0, bottom: 30 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
                             <XAxis
@@ -1304,16 +1318,17 @@ export function PeneranganKebutuhanPerJenis() {
                                 axisLine={false}
                                 tickLine={false}
                             />
-                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={26}>
+                            <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={40}>
                                 {chartData.map((d, index) => (
                                     <Cell key={`cell-${index}`} fill={d.color} />
                                 ))}
                                 <LabelList
                                     dataKey="value"
                                     content={(props: any) => {
-                                        const { x, y, width, height, value } = props;
+                                        const { x, y, width, height, value, index } = props;
                                         if (value == null) return null;
                                         const isSmallValue = value < 2;
+                                        const percentage = chartData[index]?.percentage || '0';
                                         return (
                                             <text
                                                 x={isSmallValue ? x + width + 8 : x + 10}
@@ -1323,7 +1338,7 @@ export function PeneranganKebutuhanPerJenis() {
                                                 fontWeight="bold"
                                                 dominantBaseline="middle"
                                             >
-                                                {value} kasus
+                                                {value} kasus ({percentage}%)
                                             </text>
                                         );
                                     }}
@@ -1331,18 +1346,6 @@ export function PeneranganKebutuhanPerJenis() {
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
-                </div>
-
-                <div className='w-full flex flex-wrap justify-center gap-x-6 gap-y-3 pt-2 border-t border-gray-100 dark:border-gray-800/60'>
-                    {chartData.map((item, index) => (
-                        <div key={index} className='flex items-center gap-2'>
-                            <div className='w-3 h-3 rounded-full shrink-0' style={{ backgroundColor: item.color }} />
-                            <div className='flex items-center gap-1.5'>
-                                <p className='text-xs text-gray-500 font-medium'>{item.name}</p>
-                                <p className='text-xs font-bold text-gray-900 dark:text-gray-100'>{item.percentage}%</p>
-                            </div>
-                        </div>
-                    ))}
                 </div>
             </div>
         </div>
@@ -1390,7 +1393,7 @@ const TITIK_LABELS = [
 export function PeneranganKondisiLampuPerTitikChart() {
     return (
         <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full mt-6">
-            <h3 className="text-md font-semibold text-slate-400 mb-6">
+            <h3 className="text-md font-bold text-black dark:text-white mb-6">
                 Kondisi Lampu per Jumlah Titik Terdampak
             </h3>
 
@@ -1480,7 +1483,7 @@ export function PeneranganCategorySection({ title, description, icon, color, cou
                     <PeneranganTitikTerdampakChart />
                 </div>
             </div>
-            
+
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                 <div>
                     <PeneranganKondisiLampuPerJenis />
@@ -1523,7 +1526,7 @@ export function LingkunganCategorySection({ categoryId, title, description, icon
                     <LingkunganStatusChart data={data} />
                 </div>
                 <div className='flex flex-col gap-8'>
-                    <LingkunganTanggalLaporan />
+                    <LingkunganTanggalLaporan data={data} />
                 </div>
             </div>
         </SectionContainer>

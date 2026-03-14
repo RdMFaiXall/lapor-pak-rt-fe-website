@@ -100,13 +100,11 @@ function StatCard({ label, count, pct, color, bg, border, text, icon: Icon, onCl
                         {label}
                     </span>
                 </div>
-                <div className="flex flex-col items-end">
+                <div className="flex flex-col items-end shrink-0">
                     <span className={`text-3xl font-black leading-none ${text}`}>
                         {count}
                     </span>
-                    <span className={`text-[10px] font-bold uppercase tracking-wider opacity-70 mt-1 ${text}`}>
-                        Kasus
-                    </span>
+                    <span className="text-[11px] font-semibold uppercase tracking-wide mt-0.5" style={{ color }}> kasus</span>
                 </div>
             </div>
 
@@ -139,7 +137,7 @@ export function LingkunganSummary() {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="flex items-baseline gap-3">
                         <h2 className="text-lg font-semibold text-gray-500 dark:text-gray-400">
-                            Total Laporan
+                            Total Semua Kasus
                         </h2>
                         <span className="text-4xl font-black text-gray-900 dark:text-white leading-none">
                             {grandTotal}
@@ -220,7 +218,7 @@ export function LingkunganSummary() {
 
 export default function MonitoringDashboard() {
     return (
-        <div className='space-y-4'>
+        <div className='min-h-screen bg-gray-50 dark:bg-gray-950'>
             <Header>
                 <Search />
                 <div className='ms-auto flex items-center gap-4'>
@@ -231,12 +229,26 @@ export default function MonitoringDashboard() {
             </Header>
 
             <Main>
-                <div className='mb-8'>
-                    <h1 className='text-3xl font-bold tracking-tight text-foreground'>Kualitas Lingkungan Hidup</h1>
-                    <p className='text-lg text-muted-foreground mt-2'>
-                        Per {format(new Date(), 'dd MMMM yyyy', { locale: id })}, kondisi lingkungan terpantau <span className='font-semibold text-green-600'>Kondusif</span>.
-                        Isu utama minggu ini adalah penumpukan sampah di beberapa titik, yang sedang dalam proses penanganan oleh petugas kebersihan.
-                    </p>
+                <div className='mb-6'>
+                    <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3'>
+                        <div>
+                            <h1 className='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
+                                Kualitas Lingkungan Hidup
+                            </h1>
+                            <p className='text-sm text-gray-500 dark:text-gray-400 mt-0.5'>
+                                Rekapitulasi laporan kondisi lingkungan, mencakup pengelolaan sampah, drainase, infrastruktur jalan, dan penerangan umum.
+                            </p>
+                        </div>
+                        <div className='flex items-center gap-2 bg-white dark:bg-gray-900 rounded-lg px-4 py-2 shadow-sm border border-gray-200 dark:border-gray-800 self-start'>
+                            <div className='w-2 h-2 rounded-full bg-emerald-400 animate-pulse' />
+                            <div>
+                                <p className='text-xs text-gray-400'>Update terakhir</p>
+                                <p className='text-xs font-semibold text-gray-700 dark:text-gray-300'>
+                                    {format(new Date(), 'dd MMMM yyyy, HH:mm', { locale: id })} WIB
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <LingkunganSummary />

@@ -61,7 +61,7 @@ export function LingkunganCategoryChart() {
     return (
         <div className='col-span-1 lg:col-span-4'>
             <div className='mb-4'>
-                <h3 className='text-lg font-semibold text-foreground'>Statistik Isu Lingkungan</h3>
+                <h3 className='text-lg font-bold text-black dark:text-white'>Statistik Isu Lingkungan</h3>
                 <p className='text-sm text-muted-foreground'>
                     Laporan terbanyak berkaitan dengan {chartData[0]?.name}.
                 </p>
@@ -106,7 +106,7 @@ export function LingkunganPriorityChart() {
     return (
         <div className='col-span-1 lg:col-span-3'>
             <div className='mb-4'>
-                <h3 className='text-lg font-semibold text-foreground'>Proporsi Isu</h3>
+                <h3 className='text-lg font-bold text-black dark:text-white'>Proporsi Isu</h3>
                 <p className='text-sm text-muted-foreground'>
                     Distribusi jenis laporan lingkungan yang masuk.
                 </p>

@@ -27,6 +27,8 @@ import {
     KondisiKesehatanChart,
     KondisiTempatTinggalChart,
 } from './lansia-terlantar-charts'
+
+
 import {
     PenyebabPerJenjangChart,
     JenjangPendidikanChart,

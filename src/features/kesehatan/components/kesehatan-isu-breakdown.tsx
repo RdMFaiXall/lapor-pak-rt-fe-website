@@ -8,9 +8,10 @@ import {
     PerkembanganKasusChart,
     PerkembanganPerLokasiChart,
     IndikasiPertumbuhanChart,
-    UsiaKandunganChart,
-    FaktorRisikoChart,
-    AlasanBPJSChart
+    TingkatRisikoPerJenisRisikoChart,
+    KepemilikanBPJSChart,
+    AlasanBPJSChart,
+    JenisPekerjaanBPJSChart,
 } from './kesehatan-charts'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -138,20 +139,13 @@ function IbuHamilSection() {
     return (
         <SectionContainer
             title='Ibu Hamil Berisiko'
-            description='Monitoring usia kandungan berisiko tinggi dan faktor penyebabnya.'
+            description='Monitoring tingkat risiko ibu hamil berdasarkan jenis faktor risiko.'
             icon={Stethoscope}
             color='violet'
             count={ibuHamilData.length}
             id="section-ibuhamil"
         >
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div>
-                    <UsiaKandunganChart />
-                </div>
-                <div className="lg:col-span-2">
-                    <FaktorRisikoChart />
-                </div>
-            </div>
+            <TingkatRisikoPerJenisRisikoChart />
         </SectionContainer>
     )
 }
@@ -159,18 +153,25 @@ function IbuHamilSection() {
 function BPJSSection() {
     return (
         <SectionContainer
-            title='Bantuan Memiliki BPJS'
-            description='Analisis alasan warga tidak memiliki BPJS.'
+            title='Warga Belum Memiliki BPJS'
+            description='Analisis status kepemilikan, alasan, dan latar belakang pekerjaan warga yang belum ber-BPJS.'
             icon={UserPlus}
             color='blue'
             count={bpjsData.length}
             id="section-bpjs"
         >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Row 1: Status kepemilikan (left) + Alasan (right) */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div>
+                    <KepemilikanBPJSChart />
+                </div>
                 <div className="lg:col-span-2">
                     <AlasanBPJSChart />
                 </div>
             </div>
+
+            {/* Row 2: Jenis Pekerjaan (full width) */}
+            <JenisPekerjaanBPJSChart />
         </SectionContainer>
     )
 }
@@ -212,7 +213,7 @@ const issues = (grandTotal: number) => [
         id: 'section-ibuhamil',
     },
     {
-        label: 'Memiliki BPJS',
+        label: 'Belum Memiliki BPJS',
         count: bpjsData.length,
         color: '#3b82f6',
         bg: 'bg-blue-50 dark:bg-blue-950/20',

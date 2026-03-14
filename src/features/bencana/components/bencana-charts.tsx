@@ -38,7 +38,7 @@ export function BencanaTypeChart() {
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-full flex flex-col'>
-            <h3 className="text-md font-bold text-black dark:text-white mb-6">Kategori Bencana</h3>
+            <h3 className=" ">Kategori Bencana</h3>
 
             <div className="flex-1 w-full min-h-[320px] relative">
                 <ResponsiveContainer width="100%" height="100%">

@@ -5,6 +5,10 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { EkonomiIsuBreakdown } from './ekonomi-isu-breakdown'
 import ScrollToTopButton from './scroll-to-top-button'
+import { EkonomiTable } from './ekonomi-table'
+import { columns } from './columns'
+import { mockData } from '../constants'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function MonitoringView() {
     return (
@@ -25,6 +29,17 @@ export default function MonitoringView() {
                 </div>
 
                 <EkonomiIsuBreakdown />
+
+                <div className='mt-8'>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Daftar Laporan Ekonomi</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <EkonomiTable columns={columns} data={mockData} />
+                        </CardContent>
+                    </Card>
+                </div>
             </Main>
             <ScrollToTopButton />
         </>

@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import * as React from 'react'
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -26,22 +26,24 @@ import {
 
 import { DataTablePagination } from '@/components/data-table/pagination'
 import { DataTableToolbar } from '@/components/data-table/toolbar'
-import { LingkunganBulkActions } from './lingkungan-bulk-actions'
-import { categories } from '../data/data'
+import { KesehatanBulkActions } from './kesehatan-bulk-actions'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function LaporanTable<TData, TValue>({
+export function KesehatanTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
-    const [rowSelection, setRowSelection] = useState({})
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-    const [sorting, setSorting] = useState<SortingState>([])
+    const [rowSelection, setRowSelection] = React.useState({})
+    const [columnVisibility, setColumnVisibility] =
+        React.useState<VisibilityState>({})
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+        []
+    )
+    const [sorting, setSorting] = React.useState<SortingState>([])
 
     const table = useReactTable({
         data,
@@ -67,20 +69,25 @@ export function LaporanTable<TData, TValue>({
 
     return (
         <div className='flex flex-1 flex-col gap-4'>
-            <DataTableToolbar 
-                table={table} 
-                searchKey='Pelapor'
-                searchPlaceholder='Cari pelapor...'
+            <DataTableToolbar
+                table={table}
+                searchKey="Pelapor"
+                searchPlaceholder='Cari pelapor atau nama warga...'
                 filters={[
                     {
-                        columnId: 'Kategori',
-                        title: 'Kategori',
-                        options: categories,
+                        columnId: 'Masalah Utama',
+                        title: 'Masalah Kesehatan',
+                        options: [
+                            { label: 'Wabah DBD', value: 'Wabah DBD' },
+                            { label: 'Stunting / Gizi Buruk', value: 'Stunting / Gizi Buruk' },
+                            { label: 'Ibu Hamil Berisiko', value: 'Ibu Hamil Berisiko' },
+                            { label: 'Warga Belum BPJS', value: 'Warga Belum BPJS' },
+                        ]
                     },
                 ]}
             />
-            <LingkunganBulkActions table={table} />
-            <div>
+            <KesehatanBulkActions table={table} />
+            <div className='rounded-md border'>
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

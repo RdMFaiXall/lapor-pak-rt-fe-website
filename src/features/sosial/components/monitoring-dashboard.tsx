@@ -8,6 +8,10 @@ import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { DemografiIsuBreakdown } from './demografi-isu-breakdown'
 import ScrollToTopButton from './scroll-to-top-button'
+import { LaporanTable } from './laporan-table'
+import { sosialColumns } from './laporan-columns'
+import { mockSosialData } from '../data/data'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function MonitoringDashboard() {
     return (
@@ -45,6 +49,17 @@ export default function MonitoringDashboard() {
                 </div>
 
                 <DemografiIsuBreakdown />
+
+                <div className='mt-8'>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Daftar Laporan Sosial</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <LaporanTable columns={sosialColumns} data={mockSosialData} />
+                        </CardContent>
+                    </Card>
+                </div>
             </Main>
 
             <ScrollToTopButton />

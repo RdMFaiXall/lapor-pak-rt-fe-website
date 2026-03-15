@@ -1,27 +1,52 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from '@/components/data-table/column-header'
 import { DisasterReport } from '../constants'
 import { Button } from '@/components/ui/button'
 import { DisasterDetailModal } from './report-detail-modal'
 import { useState } from 'react'
-import { Eye } from 'lucide-react'
+import { Eye, Edit, Trash2, MoreHorizontal } from 'lucide-react'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { toast } from 'sonner'
 
 const ActionCell = ({ report }: { report: DisasterReport }) => {
     const [open, setOpen] = useState(false)
 
     return (
         <>
-            <Button
-                variant='ghost'
-                size='icon'
-                className='h-8 w-8 p-0'
-                onClick={() => setOpen(true)}
-            >
-                <span className='sr-only'>Open menu</span>
-                <Eye className='h-4 w-4' />
-            </Button>
+            <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        variant='ghost'
+                        className='flex h-8 w-8 p-0 data-[state=open]:bg-muted'
+                    >
+                        <MoreHorizontal className='h-4 w-4' />
+                        <span className='sr-only'>Buka menu</span>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='end' className='w-[160px]'>
+                    <DropdownMenuItem onClick={() => setOpen(true)}>
+                        <Eye className='mr-2 h-4 w-4' />
+                        Lihat Detail
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => toast.info('Fitur sedang dikembangkan')}>
+                        <Edit className='mr-2 h-4 w-4' />
+                        Edit Data
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                        onClick={() => toast.info('Fitur sedang dikembangkan')}
+                        className='text-rose-600 focus:text-rose-600 dark:text-rose-400 dark:focus:text-rose-400'
+                    >
+                        <Trash2 className='mr-2 h-4 w-4' />
+                        Hapus Data
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
             <DisasterDetailModal open={open} onOpenChange={setOpen} report={report} />
         </>
     )
@@ -53,24 +78,49 @@ export const columns: ColumnDef<DisasterReport>[] = [
         enableHiding: false,
     },
     {
+        id: 'no',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='No.' />
+        ),
+        cell: ({ row, table }) => {
+            const index = table.getSortedRowModel().flatRows.indexOf(row) + 1
+            return (
+                <span className='font-medium text-muted-foreground'>
+                    {index}
+                </span>
+            )
+        },
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
         accessorKey: 'pelapor',
+        id: 'Pelapor',
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title='Pelapor' />
         ),
         cell: ({ row }) => (
-            <div className='flex flex-col'>
-                <span className='font-medium'>{row.getValue('pelapor')}</span>
-                <span className='text-xs text-muted-foreground'>RT {row.original.rt}</span>
-            </div>
+            <span className='font-medium'>{row.getValue('Pelapor')}</span>
+        ),
+    },
+    {
+        accessorKey: 'rt',
+        id: 'RT',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='RT' />
+        ),
+        cell: ({ row }) => (
+            <span className='font-medium text-gray-900 dark:text-gray-100'>RT {row.getValue('RT')}</span>
         ),
     },
     {
         accessorKey: 'tanggal_laporan',
+        id: 'Tanggal Melapor',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Tanggal' />
+            <DataTableColumnHeader column={column} title='Tanggal Melapor' />
         ),
         cell: ({ row }) => {
-            const date = new Date(row.getValue('tanggal_laporan'))
+            const date = new Date(row.getValue('Tanggal Melapor'))
             const formattedDate = date.toLocaleDateString('id-ID', {
                 weekday: 'long',
                 day: '2-digit',
@@ -88,37 +138,15 @@ export const columns: ColumnDef<DisasterReport>[] = [
     },
     {
         accessorKey: 'jenis_bencana',
+        id: 'Jenis Bencana',
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title='Jenis Bencana' />
         ),
         cell: ({ row }) => {
             return (
                 <div className='flex w-[150px] items-center'>
-                    <span className='font-medium truncate'>{row.getValue('jenis_bencana')}</span>
+                    <span className='font-medium truncate'>{row.getValue('Jenis Bencana')}</span>
                 </div>
-            )
-        },
-        filterFn: (row, id, value) => {
-            return value.includes(row.getValue(id))
-        },
-    },
-    {
-        accessorKey: 'status_penanganan',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Status' />
-        ),
-        cell: ({ row }) => {
-            const status = row.getValue('status_penanganan') as string
-            let variant: 'default' | 'destructive' | 'outline' | 'secondary' = 'outline'
-
-            if (status === 'Selesai') variant = 'default'
-            if (status === 'Darurat') variant = 'destructive'
-            if (status === 'Dalam Penanganan') variant = 'secondary'
-
-            return (
-                <Badge variant={variant} className='text-[10px]'>
-                    {status}
-                </Badge>
             )
         },
         filterFn: (row, id, value) => {

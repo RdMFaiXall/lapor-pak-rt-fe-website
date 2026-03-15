@@ -8,6 +8,10 @@ import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { KesehatanIsuBreakdown } from './kesehatan-isu-breakdown'
 import ScrollToTopButton from '@/features/sosial/components/scroll-to-top-button'
+import { KesehatanTable } from './kesehatan-table'
+import { columns } from './columns'
+import { mockData } from '../constants'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export function MonitoringView() {
     return (
@@ -45,6 +49,17 @@ export function MonitoringView() {
                 </div>
 
                 <KesehatanIsuBreakdown />
+
+                <div className='mt-8'>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Daftar Laporan Kesehatan</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <KesehatanTable columns={columns} data={mockData} />
+                        </CardContent>
+                    </Card>
+                </div>
             </Main>
 
             <ScrollToTopButton />

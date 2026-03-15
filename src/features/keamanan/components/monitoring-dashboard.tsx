@@ -8,6 +8,10 @@ import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { KeamananIsuBreakdown } from './keamanan-isu-breakdown'
 import ScrollToTopButton from './scroll-to-top-button'
+import { KeamananTable } from './keamanan-table'
+import { keamananColumns } from './keamanan-columns'
+import { mockKeamananData } from '../data/data'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function MonitoringDashboard() {
     return (
@@ -45,6 +49,17 @@ export default function MonitoringDashboard() {
                 </div>
 
                 <KeamananIsuBreakdown />
+
+                <div className='mt-8'>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Daftar Laporan Keamanan</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <KeamananTable columns={keamananColumns} data={mockKeamananData} />
+                        </CardContent>
+                    </Card>
+                </div>
             </Main>
 
             <ScrollToTopButton />

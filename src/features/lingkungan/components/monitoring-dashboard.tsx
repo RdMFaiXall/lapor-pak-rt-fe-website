@@ -14,6 +14,9 @@ import { mockLingkunganData, categories } from '../data/data'
 import { LingkunganMap } from './lingkungan-map'
 import { LingkunganCategorySection, SaluranCategorySection, JalanCategorySection, PeneranganCategorySection } from './lingkungan-category-section'
 import ScrollToTopButton from './scroll-to-top-button'
+import { LaporanTable } from './laporan-table'
+import { lingkunganColumns } from './laporan-columns'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 // ─── Summary Calculation ────────────────────────────────────────────────────────
 
@@ -306,6 +309,17 @@ export default function MonitoringDashboard() {
                         <div className='rounded-xl overflow-hidden h-[400px] border'>
                             <LingkunganMap />
                         </div>
+                    </div>
+
+                    <div className='mt-8'>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Daftar Laporan Lingkungan</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <LaporanTable columns={lingkunganColumns} data={mockLingkunganData} />
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             </Main>

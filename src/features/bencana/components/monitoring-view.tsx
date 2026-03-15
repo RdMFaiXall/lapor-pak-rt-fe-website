@@ -10,6 +10,8 @@ import { Card } from '@/components/ui/card'
 import { BencanaTypeChart, BencanaResolution, BencanaImpactSummary, kategoriBencanaTotal } from './bencana-charts'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import { mockData } from '../constants'
+import { BencanaTable } from './bencana-table'
 
 // ─── Shared Components ────────────────────────────────────────────────────────
 
@@ -144,6 +146,14 @@ export default function MonitoringView() {
                             <BencanaImpactSummary />
                         </div>
                     </SectionContainer>
+
+                    {/* Data Table Section (Outside SectionContainer) */}
+                    <div className='space-y-6'>
+                        <div className='flex items-center justify-between'>
+                            <h4 className='text-lg font-bold text-gray-900 dark:text-white'>Daftar Laporan Bencana</h4>
+                        </div>
+                        <BencanaTable data={mockData} />
+                    </div>
                 </div>
             </Main>
         </div>

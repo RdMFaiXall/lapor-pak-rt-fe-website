@@ -164,14 +164,14 @@ export function DataTableBulkActions<TData>({
                 onClick={handleClearSelection}
                 className='size-6 rounded-full'
                 aria-label='Clear selection'
-                title='Clear selection (Escape)'
+                title='Bersihkan seleksi (Escape)'
               >
                 <X />
-                <span className='sr-only'>Clear selection</span>
+                <span className='sr-only'>Bersihkan seleksi</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Clear selection (Escape)</p>
+              <p>Bersihkan seleksi (Escape)</p>
             </TooltipContent>
           </Tooltip>
 
@@ -188,15 +188,14 @@ export function DataTableBulkActions<TData>({
             <Badge
               variant='default'
               className='min-w-8 rounded-lg'
-              aria-label={`${selectedCount} selected`}
+              aria-label={`${selectedCount} terpilih`}
             >
               {selectedCount}
             </Badge>{' '}
             <span className='hidden sm:inline'>
               {entityName}
-              {selectedCount > 1 ? 's' : ''}
             </span>{' '}
-            selected
+            terpilih
           </div>
 
           <Separator

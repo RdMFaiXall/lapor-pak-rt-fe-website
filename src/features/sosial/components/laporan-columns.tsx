@@ -1,11 +1,53 @@
-
 import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 import { DataTableColumnHeader } from '@/components/data-table/column-header'
 import { Sosial } from '../data/schema'
-import { priorities, categories } from '../data/data'
-import { format } from 'date-fns'
+import { categories } from '../data/data'
+import { Eye, Edit, Trash2, MoreHorizontal } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { toast } from 'sonner'
+
+const ActionCell = ({ report: _report }: { report: Sosial }) => {
+    return (
+        <>
+            <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        variant='ghost'
+                        className='flex h-8 w-8 p-0 data-[state=open]:bg-muted'
+                    >
+                        <MoreHorizontal className='h-4 w-4' />
+                        <span className='sr-only'>Buka menu</span>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='end' className='w-[160px]'>
+                    <DropdownMenuItem onClick={() => toast.info('Fitur detail sedang dikembangkan')}>
+                        <Eye className='mr-2 h-4 w-4' />
+                        Lihat Detail
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => toast.info('Fitur sedang dikembangkan')}>
+                        <Edit className='mr-2 h-4 w-4' />
+                        Edit Data
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                        onClick={() => toast.info('Fitur sedang dikembangkan')}
+                        className='text-rose-600 focus:text-rose-600 dark:text-rose-400 dark:focus:text-rose-400'
+                    >
+                        <Trash2 className='mr-2 h-4 w-4' />
+                        Hapus Data
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </>
+    )
+}
 
 export const sosialColumns: ColumnDef<Sosial>[] = [
     {
@@ -33,85 +75,59 @@ export const sosialColumns: ColumnDef<Sosial>[] = [
         enableHiding: false,
     },
     {
-        accessorKey: 'id',
+        id: 'no',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='ID' />
+            <DataTableColumnHeader column={column} title='No.' />
         ),
-        cell: ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>,
+        cell: ({ row, table }) => {
+            const index = table.getSortedRowModel().flatRows.indexOf(row) + 1
+            return (
+                <span className='font-medium text-muted-foreground'>
+                    {index}
+                </span>
+            )
+        },
         enableSorting: false,
         enableHiding: false,
     },
     {
-        accessorKey: 'title',
+        accessorKey: 'reportedBy',
+        id: 'Pelapor',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Judul' />
+            <DataTableColumnHeader column={column} title='Pelapor' />
+        ),
+        cell: ({ row }) => <span className='font-medium'>{row.getValue('Pelapor')}</span>,
+    },
+    {
+        accessorKey: 'location',
+        id: 'RT',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='RT' />
         ),
         cell: ({ row }) => {
-            const category = categories.find(
-                (cat) => cat.value === row.original.category
-            )
-
+            const fullLocation = row.getValue('RT')?.toString() || ''
+            const rtPart = fullLocation.split('/')[0].trim()
             return (
-                <div className='flex space-x-2'>
-                    {category && <Badge variant='outline'>{category.label}</Badge>}
-                    <span className='max-w-[500px] truncate font-medium'>
-                        {row.getValue('title')}
-                    </span>
-                </div>
+                <span className='font-medium text-gray-900 dark:text-gray-100'>
+                    {rtPart.includes('RT') ? rtPart : `RT ${rtPart}`}
+                </span>
             )
         },
     },
-    // {
-    //     accessorKey: 'status',
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='Status' />
-    //     ),
-    //     cell: ({ row }) => {
-    //         const status = statuses.find(
-    //             (status) => status.value === row.getValue('status')
-    //         )
-
-    //         if (!status) {
-    //             return null
-    //         }
-
-    //         const Icon = status.icon
-
-    //         return (
-    //             <div className='flex w-[100px] items-center'>
-    //                 {Icon && (
-    //                     <Icon className='mr-2 h-4 w-4 text-muted-foreground' />
-    //                 )}
-    //                 <span>{status.label}</span>
-    //             </div>
-    //         )
-    //     },
-    //     filterFn: (row, id, value) => {
-    //         return value.includes(row.getValue(id))
-    //     },
-    // },
     {
-        accessorKey: 'priority',
+        accessorKey: 'category',
+        id: 'Kategori',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Prioritas' />
+            <DataTableColumnHeader column={column} title='Kategori' />
         ),
         cell: ({ row }) => {
-            const priority = priorities.find(
-                (priority) => priority.value === row.getValue('priority')
+            const category = categories.find(
+                (cat) => cat.value === row.getValue('Kategori')
             )
-
-            if (!priority) {
-                return null
-            }
-
-            const Icon = priority.icon
-
+            if (!category) return null
             return (
                 <div className='flex items-center'>
-                    {Icon && (
-                        <Icon className='mr-2 h-4 w-4 text-muted-foreground' />
-                    )}
-                    <span>{priority.label}</span>
+                    <Badge variant='outline' className='text-[10px]'>{category.label}</Badge>
                 </div>
             )
         },
@@ -121,9 +137,28 @@ export const sosialColumns: ColumnDef<Sosial>[] = [
     },
     {
         accessorKey: 'date',
+        id: 'Tanggal Melapor',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Tanggal' />
+            <DataTableColumnHeader column={column} title='Tanggal Melapor' />
         ),
-        cell: ({ row }) => <div>{format(new Date(row.getValue('date')), 'dd/MM/yyyy')}</div>
+        cell: ({ row }) => {
+            const date = new Date(row.getValue('Tanggal Melapor'))
+            return (
+                <span className='font-medium'>
+                    {date.toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                    })}
+                </span>
+            )
+        }
+    },
+    {
+        id: 'actions',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='Aksi' />
+        ),
+        cell: ({ row }) => <ActionCell report={row.original} />,
     },
 ]

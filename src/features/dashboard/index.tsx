@@ -15,8 +15,9 @@ import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { DashboardOverview } from './components/dashboard-overview'
 import { RecentSales } from './components/recent-sales'
-import { EmergencyHotline } from './components/emergency-hotline'
 import { QuickAgenda } from './components/quick-agenda'
+import { VillagePerformance } from './components/village-performance'
+import { VillageBroadcast } from './components/village-broadcast'
 
 export function Dashboard() {
   return (
@@ -56,30 +57,33 @@ export function Dashboard() {
         </div>
 
         <div className='space-y-6'>
-          {/* Section 1: Ringkasan Utama */}
+          {/* Section 1: Ringkasan Utama Desa */}
           <DashboardOverview />
 
-          {/* Section 2: Kontak & Agenda */}
-          <div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
-            <EmergencyHotline />
-            <QuickAgenda />
+          {/* Section 2: Village Head Tools (Performance & Broadcast) */}
+          <div className='grid grid-cols-1 gap-6 lg:grid-cols-5'>
+            <div className='lg:col-span-3'>
+              <VillagePerformance />
+            </div>
+            <div className='lg:col-span-2'>
+              <VillageBroadcast />
+            </div>
           </div>
 
-          {/* Section 3: Detail Lainnya */}
-          <div className='grid grid-cols-1 gap-4 lg:grid-cols-1'>
-            <div className='lg:col-span-1'>
-              <Card className='rounded-2xl border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden'>
-                <CardHeader>
-                  <CardTitle className='text-lg font-bold'>Laporan Terbaru dari Warga</CardTitle>
-                  <CardDescription>
-                    Terdapat 265 laporan bulan ini.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <RecentSales />
-                </CardContent>
-              </Card>
-            </div>
+          {/* Section 3: Detail & Agenda */}
+          <div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
+            <Card className='rounded-2xl border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden'>
+              <CardHeader>
+                <CardTitle className='text-lg font-bold'>Laporan Terbaru dari Warga</CardTitle>
+                <CardDescription>
+                  Terdapat 265 laporan bulan ini dari seluruh RT.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RecentSales />
+              </CardContent>
+            </Card>
+            <QuickAgenda />
           </div>
         </div>
       </Main>

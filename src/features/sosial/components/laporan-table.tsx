@@ -25,7 +25,9 @@ import {
 } from '@/components/ui/table'
 
 import { DataTablePagination } from '@/components/data-table/pagination'
-import { DataTableToolbar } from './laporan-toolbar'
+import { DataTableToolbar } from '@/components/data-table/toolbar'
+import { SosialBulkActions } from './sosial-bulk-actions'
+import { categories } from '../data/data'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -64,8 +66,24 @@ export function LaporanTable<TData, TValue>({
     })
 
     return (
-        <div className='space-y-4'>
-            <DataTableToolbar table={table} />
+        <div className='flex flex-1 flex-col gap-4'>
+            <DataTableToolbar 
+                table={table} 
+                searchKey='Pelapor'
+                searchPlaceholder='Cari pelapor...'
+                filters={[
+                    {
+                        columnId: 'Kategori',
+                        title: 'Kategori',
+                        options: categories.map(cat => ({
+                            label: cat.label,
+                            value: cat.value,
+                            icon: undefined // Emojis aren't components
+                        })),
+                    },
+                ]}
+            />
+            <SosialBulkActions table={table} />
             <div>
                 <Table>
                     <TableHeader>
@@ -94,7 +112,7 @@ export function LaporanTable<TData, TValue>({
                                     data-state={row.getIsSelected() && 'selected'}
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
+                                        <TableCell key={cell.id} className='py-1.5'>
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext()

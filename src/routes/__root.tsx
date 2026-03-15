@@ -44,7 +44,7 @@ export const Route = createRootRouteWithContext<{
           <ScrollToTop />
           <Outlet />
           <ScrollRestoration />
-          <Toaster duration={5000} />
+          <Toaster duration={5000} position='top-center' richColors />
         </SearchProvider>
         {import.meta.env.MODE === 'development' && (
           <>

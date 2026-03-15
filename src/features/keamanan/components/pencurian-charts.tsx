@@ -12,8 +12,8 @@ import {
 // Replaced PencurianResolution: compare Barang Pribadi vs Aset/Fasilitas Umum
 
 const objekData = [
-    { name: 'Barang Pribadi', value: 38, color: '#ef4444' },
-    { name: 'Aset/Fasilitas Umum', value: 22, color: '#3b82f6' },
+    { name: 'Barang Pribadi', value: 115, color: '#ef4444' },
+    { name: 'Aset/Fasilitas Umum', value: 65, color: '#3b82f6' },
 ]
 
 export const pencurianTotal = objekData.reduce((s, d) => s + d.value, 0)
@@ -82,18 +82,18 @@ export function ObjekPencurian() {
 // ─── Status Laporan Pencurian (Line Chart – tanggal pencurian) ────────────────
 
 const trendData = [
-    { tanggal: '1 Maret', kasus: 2 },
-    { tanggal: '2 Maret', kasus: 1 },
-    { tanggal: '3 Maret', kasus: 3 },
-    { tanggal: '4 Maret', kasus: 2 },
-    { tanggal: '5 Maret', kasus: 4 },
-    { tanggal: '6 Maret', kasus: 3 },
-    { tanggal: '7 Maret', kasus: 5 },
-    { tanggal: '8 Maret', kasus: 4 },
-    { tanggal: '9 Maret', kasus: 6 },
-    { tanggal: '10 Maret', kasus: 4 },
-    { tanggal: '11 Maret', kasus: 7 },
-    { tanggal: '12 Maret', kasus: 5 },
+    { tanggal: '1 Maret', kasus: 12 },
+    { tanggal: '2 Maret', kasus: 8 },
+    { tanggal: '3 Maret', kasus: 15 },
+    { tanggal: '4 Maret', kasus: 11 },
+    { tanggal: '5 Maret', kasus: 20 },
+    { tanggal: '6 Maret', kasus: 14 },
+    { tanggal: '7 Maret', kasus: 22 },
+    { tanggal: '8 Maret', kasus: 16 },
+    { tanggal: '9 Maret', kasus: 18 },
+    { tanggal: '10 Maret', kasus: 13 },
+    { tanggal: '11 Maret', kasus: 21 },
+    { tanggal: '12 Maret', kasus: 10 },
 ]
 
 const TrendTooltip = ({ active, payload, label }: any) => {
@@ -179,17 +179,17 @@ const COLORS_PRIBADI = ['#06b6d4', '#22c55e', '#f97316', '#ef4444']
 const COLORS_UMUM = ['#06b6d4', '#22c55e', '#f97316', '#ef4444']
 
 const barangPribadi = [
-    { label: 'Kendaraan', value: 15, color: COLORS_PRIBADI[0] },
-    { label: 'Barang Berharga', value: 12, color: COLORS_PRIBADI[1] },
-    { label: 'Barang Elektronik', value: 8, color: COLORS_PRIBADI[2] },
-    { label: 'Barang Rumah Tangga', value: 5, color: COLORS_PRIBADI[3] },
+    { label: 'Kendaraan', value: 45, color: COLORS_PRIBADI[0] },
+    { label: 'Barang Berharga', value: 35, color: COLORS_PRIBADI[1] },
+    { label: 'Barang Elektronik', value: 22, color: COLORS_PRIBADI[2] },
+    { label: 'Barang Rumah Tangga', value: 13, color: COLORS_PRIBADI[3] },
 ]
 
 const asetUmum = [
-    { label: 'Infrastruktur', value: 9, color: COLORS_UMUM[0] },
-    { label: 'Barang Milik Negara', value: 7, color: COLORS_UMUM[1] },
-    { label: 'Uang Kas Umum', value: 4, color: COLORS_UMUM[2] },
-    { label: 'Lainnya', value: 2, color: COLORS_UMUM[3] },
+    { label: 'Infrastruktur', value: 26, color: COLORS_UMUM[0] },
+    { label: 'Barang Milik Negara', value: 18, color: COLORS_UMUM[1] },
+    { label: 'Uang Kas Umum', value: 12, color: COLORS_UMUM[2] },
+    { label: 'Lainnya', value: 9, color: COLORS_UMUM[3] },
 ]
 
 function FasilitasPanel({

@@ -13,13 +13,13 @@ import { Card } from '@/components/ui/card'
 // ─── 1. Kategori Bencana — vertical bar chart (style: jenis-penyakit.tsx) ────
 
 const kategoriBencanaData = [
-    { name: 'Banjir', value: 18 },
-    { name: 'Kebakaran', value: 13 },
-    { name: 'Tanah Longsor', value: 9 },
-    { name: 'Gempa', value: 6 },
-    { name: 'Tsunami', value: 3 },
-    { name: 'Gunung Meletus', value: 2 },
-    { name: 'Pohon Tumbang', value: 7 },
+    { name: 'Banjir', value: 140 },
+    { name: 'Tanah Longsor', value: 90 },
+    { name: 'Kebakaran', value: 80 },
+    { name: 'Pohon Tumbang', value: 80 },
+    { name: 'Gempa', value: 30 },
+    { name: 'Gunung Meletus', value: 20 },
+    { name: 'Tsunami', value: 10 },
 ]
 
 export const kategoriBencanaTotal = kategoriBencanaData.reduce((s, d) => s + d.value, 0)
@@ -104,12 +104,12 @@ export function BencanaTypeChart() {
 // ─── 2. Data Korban — same design as old BencanaResolution ────────────────────
 
 const korbanMeta = [
-    { label: 'Ada Korban', color: '#ef4444', pct: 56 },
-    { label: 'Tidak Ada Korban', color: '#22c55e', pct: 44 },
+    { label: 'Ada Korban', color: '#ef4444', pct: 60 },
+    { label: 'Tidak Ada Korban', color: '#22c55e', pct: 40 },
 ]
 
 export function BencanaResolution() {
-    const total = 58 // static mock total
+    const total = 450 // fixed static scalable total
 
     return (
         <div className='bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full gap-5'>
@@ -175,13 +175,14 @@ const FASILITAS_GROUPS = [
 ]
 
 const bencanaPerFasilitas = [
-    { name: 'Banjir', rumahWarga: 8, tiangListrik: 3, jembatanJalan: 4, sekolahMasjid: 2, tidakAda: 1, lainnya: 0 },
-    { name: 'Kebakaran', rumahWarga: 2, tiangListrik: 1, jembatanJalan: 1, sekolahMasjid: 1, tidakAda: 0, lainnya: 0 },
-    { name: 'Tanah Longsor', rumahWarga: 4, tiangListrik: 1, jembatanJalan: 3, sekolahMasjid: 0, tidakAda: 1, lainnya: 0 },
-    { name: 'Gempa', rumahWarga: 3, tiangListrik: 2, jembatanJalan: 1, sekolahMasjid: 2, tidakAda: 0, lainnya: 1 },
+    { name: 'Banjir', rumahWarga: 70, tiangListrik: 15, jembatanJalan: 35, sekolahMasjid: 10, tidakAda: 5, lainnya: 5 },
+    { name: 'Tanah Longsor', rumahWarga: 45, tiangListrik: 10, jembatanJalan: 30, sekolahMasjid: 0, tidakAda: 5, lainnya: 0 },
+    { name: 'Kebakaran', rumahWarga: 55, tiangListrik: 10, jembatanJalan: 5, sekolahMasjid: 5, tidakAda: 5, lainnya: 0 },
+    { name: 'Pohon Tumbang', rumahWarga: 30, tiangListrik: 25, jembatanJalan: 10, sekolahMasjid: 0, tidakAda: 10, lainnya: 5 },
+    { name: 'Gempa', rumahWarga: 15, tiangListrik: 5, jembatanJalan: 5, sekolahMasjid: 5, tidakAda: 0, lainnya: 0 },
+    { name: 'Gunung Meletus', rumahWarga: 12, tiangListrik: 0, jembatanJalan: 3, sekolahMasjid: 2, tidakAda: 3, lainnya: 0 },
     { name: 'Tsunami', rumahWarga: 5, tiangListrik: 1, jembatanJalan: 2, sekolahMasjid: 1, tidakAda: 0, lainnya: 1 },
-    { name: 'Gunung Meletus', rumahWarga: 2, tiangListrik: 0, jembatanJalan: 1, sekolahMasjid: 0, tidakAda: 1, lainnya: 0 },
-    { name: 'Pohon Tumbang', rumahWarga: 1, tiangListrik: 2, jembatanJalan: 1, sekolahMasjid: 0, tidakAda: 3, lainnya: 0 },
+
 ].map(d => ({
     ...d,
     total: d.rumahWarga + d.tiangListrik + d.jembatanJalan + d.sekolahMasjid + d.tidakAda + d.lainnya,

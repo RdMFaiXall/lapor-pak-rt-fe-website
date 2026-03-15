@@ -16,11 +16,11 @@ import {
 // ─── 1. Jenis Gangguan — vertical bar chart (style: jenis-penyakit.tsx) ────────
 
 const jenisGangguanData = [
-    { name: 'Keributan Malam', value: 18 },
-    { name: 'Musik Bervolume Tinggi', value: 13 },
-    { name: 'Kendaraan Bising', value: 9 },
-    { name: 'Petasan Berlebihan', value: 6 },
-    { name: 'Lainnya', value: 4 },
+    { name: 'Keributan Malam', value: 65 },
+    { name: 'Musik Bervolume Tinggi', value: 42 },
+    { name: 'Kendaraan Bising', value: 28 },
+    { name: 'Petasan Berlebihan', value: 15 },
+    { name: 'Lainnya', value: 10 },
 ]
 
 export const gangguanTotal = jenisGangguanData.reduce((s, d) => s + d.value, 0)
@@ -103,9 +103,9 @@ export function KeributanLocationChart() {
 // ─── 2. Pihak yang Terlibat — donut / pie chart ───────────────────────────────
 
 const pihakData = [
-    { name: 'Warga Sendiri', value: 22, color: '#dc2626' },
-    { name: 'Warga Luar', value: 14, color: '#f97316' },
-    { name: 'Tidak Dikenal', value: 8, color: '#6b7280' },
+    { name: 'Warga Sendiri', value: 72, color: '#dc2626' },
+    { name: 'Warga Luar', value: 54, color: '#f97316' },
+    { name: 'Tidak Dikenal', value: 34, color: '#6b7280' },
 ]
 
 
@@ -190,11 +190,11 @@ const PIHAK_GROUPS = [
 ]
 
 const gangguanPerPihak = [
-    { name: 'Keributan Malam', wargaSendiri: 8, wargaLuar: 7, tidakDikenal: 3 },
-    { name: 'Musik Bervolume Tinggi', wargaSendiri: 7, wargaLuar: 4, tidakDikenal: 2 },
-    { name: 'Kendaraan Bising', wargaSendiri: 4, wargaLuar: 3, tidakDikenal: 2 },
-    { name: 'Petasan Berlebihan', wargaSendiri: 2, wargaLuar: 3, tidakDikenal: 1 },
-    { name: 'Lainnya', wargaSendiri: 1, wargaLuar: 2, tidakDikenal: 1 },
+    { name: 'Keributan Malam', wargaSendiri: 30, wargaLuar: 22, tidakDikenal: 13 },
+    { name: 'Musik Bervolume Tinggi', wargaSendiri: 19, wargaLuar: 15, tidakDikenal: 8 },
+    { name: 'Kendaraan Bising', wargaSendiri: 12, wargaLuar: 10, tidakDikenal: 6 },
+    { name: 'Petasan Berlebihan', wargaSendiri: 6, wargaLuar: 5, tidakDikenal: 4 },
+    { name: 'Lainnya', wargaSendiri: 5, wargaLuar: 2, tidakDikenal: 3 },
 ].map(d => ({
     ...d,
     total: d.wargaSendiri + d.wargaLuar + d.tidakDikenal,

@@ -1,3 +1,10 @@
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 interface PenerimaBantuanProps {
     count: number;
     totalPenduduk?: number;
@@ -49,27 +56,43 @@ export default function PenerimaBantuan({ count, totalPenduduk = 18 }: PenerimaB
                     <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">total warga</span>
                 </div>
 
-                {/* Stacked bar */}
-                <div className="flex h-12 rounded-xl overflow-hidden gap-1">
-                    {/* Sudah */}
-                    <div
-                        className="flex items-center justify-center transition-all duration-700 rounded-l-xl"
-                        style={{ width: `${sudahPct}%`, backgroundColor: SUDAH_COLOR }}
-                    >
-                        <span className="text-white font-extrabold text-sm drop-shadow-sm">
-                            {count} warga
-                        </span>
+                <TooltipProvider delayDuration={100}>
+                    <div className="flex h-12 rounded-xl overflow-hidden gap-1">
+                        {/* Sudah */}
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <div
+                                    className="flex items-center justify-center transition-all duration-700 rounded-l-xl cursor-default"
+                                    style={{ width: `${sudahPct}%`, backgroundColor: SUDAH_COLOR }}
+                                >
+                                    <span className="text-white font-extrabold text-xs drop-shadow-sm truncate px-1">
+                                        {count} warga
+                                    </span>
+                                </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p className="font-semibold">{count} warga sudah menerima bantuan</p>
+                            </TooltipContent>
+                        </Tooltip>
+
+                        {/* Belum */}
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <div
+                                    className="flex items-center justify-center transition-all duration-700 rounded-r-xl cursor-default"
+                                    style={{ width: `${belumPct}%`, backgroundColor: BELUM_COLOR }}
+                                >
+                                    <span className="text-white font-extrabold text-xs drop-shadow-sm truncate px-1">
+                                        {belum} warga
+                                    </span>
+                                </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p className="font-semibold">{belum} warga belum menerima bantuan</p>
+                            </TooltipContent>
+                        </Tooltip>
                     </div>
-                    {/* Belum */}
-                    <div
-                        className="flex items-center justify-center transition-all duration-700 rounded-r-xl"
-                        style={{ width: `${belumPct}%`, backgroundColor: BELUM_COLOR }}
-                    >
-                        <span className="text-white font-extrabold text-sm drop-shadow-sm">
-                            {belum} warga
-                        </span>
-                    </div>
-                </div>
+                </TooltipProvider>
 
                 {/* Bottom labels */}
                 <div className="flex justify-between text-xs text-slate-400 font-medium">

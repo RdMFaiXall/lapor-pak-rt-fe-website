@@ -12,10 +12,10 @@ import { Card } from '@/components/ui/card'
 // ─── Jenis Keributan (badge grid style) ──────────────────────────────────────
 
 const jenisKeributanData = [
-    { abbr: 'CA', label: 'Cekcok Antar Warga', value: 18, color: '#ef4444', bg: '#fee2e2' },
-    { abbr: 'KW', label: 'Keributan Warga', value: 13, color: '#f97316', bg: '#ffedd5' },
-    { abbr: 'KM', label: 'Keributan Karena Mabuk', value: 9, color: '#eab308', bg: '#fef9c3' },
-    { abbr: 'LN', label: 'Lainnya', value: 5, color: '#22c55e', bg: '#dcfce7' },
+    { abbr: 'CA', label: 'Cekcok Antar Warga', value: 58, color: '#ef4444', bg: '#fee2e2' },
+    { abbr: 'KW', label: 'Keributan Warga', value: 42, color: '#f97316', bg: '#ffedd5' },
+    { abbr: 'KM', label: 'Keributan Karena Mabuk', value: 30, color: '#eab308', bg: '#fef9c3' },
+    { abbr: 'LN', label: 'Lainnya', value: 15, color: '#22c55e', bg: '#dcfce7' },
 ]
 
 export const keributanTotal = jenisKeributanData.reduce((s, d) => s + d.value, 0)
@@ -81,18 +81,18 @@ export function GangguanStatusChart() {
 // ─── Tanggal Kejadian (Line Chart) ───────────────────────────────────────────
 
 const trendDataGangguan = [
-    { tanggal: '1 Maret', kasus: 3 },
-    { tanggal: '2 Maret', kasus: 2 },
-    { tanggal: '3 Maret', kasus: 4 },
-    { tanggal: '4 Maret', kasus: 3 },
-    { tanggal: '5 Maret', kasus: 5 },
-    { tanggal: '6 Maret', kasus: 4 },
-    { tanggal: '7 Maret', kasus: 6 },
-    { tanggal: '8 Maret', kasus: 3 },
-    { tanggal: '9 Maret', kasus: 7 },
-    { tanggal: '10 Maret', kasus: 5 },
-    { tanggal: '11 Maret', kasus: 8 },
-    { tanggal: '12 Maret', kasus: 6 },
+    { tanggal: '1 Maret', kasus: 10 },
+    { tanggal: '2 Maret', kasus: 7 },
+    { tanggal: '3 Maret', kasus: 14 },
+    { tanggal: '4 Maret', kasus: 9 },
+    { tanggal: '5 Maret', kasus: 16 },
+    { tanggal: '6 Maret', kasus: 12 },
+    { tanggal: '7 Maret', kasus: 20 },
+    { tanggal: '8 Maret', kasus: 11 },
+    { tanggal: '9 Maret', kasus: 15 },
+    { tanggal: '10 Maret', kasus: 8 },
+    { tanggal: '11 Maret', kasus: 14 },
+    { tanggal: '12 Maret', kasus: 9 },
 ]
 
 const TrendTooltip = ({ active, payload, label }: any) => {

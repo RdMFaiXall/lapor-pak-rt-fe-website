@@ -208,25 +208,42 @@ export function LingkunganStatusChart({ data }: { data: Lingkungan[] }) {
     )
 }
 
-// Static per-date sampah data (distributed across last 4 weeks, total = 12 kasus)
+// Static per-date sampah data (distributed across last 4 weeks, total = 120 kasus)
 const SAMPAH_STATIC_DATES: Record<string, number> = (() => {
     const today = new Date()
     const dates: Record<string, number> = {}
     const distribution = [
-        // week -3 ago
-        { offset: 25, count: 1 },
-        { offset: 23, count: 1 },
-        { offset: 21, count: 1 },
-        // week -2 ago
-        { offset: 17, count: 1 },
-        { offset: 15, count: 2 },
-        { offset: 11, count: 1 },
-        // last week
-        { offset: 7, count: 1 },
-        { offset: 5, count: 1 },
-        { offset: 4, count: 1 },
+        // week -3 ago (30 kasus)
+        { offset: 27, count: 5 },
+        { offset: 26, count: 4 },
+        { offset: 25, count: 7 },
+        { offset: 24, count: 3 },
+        { offset: 23, count: 6 },
+        { offset: 22, count: 2 },
+        { offset: 21, count: 3 },
+        // week -2 ago (35 kasus)
+        { offset: 20, count: 4 },
+        { offset: 19, count: 6 },
+        { offset: 18, count: 5 },
+        { offset: 17, count: 8 },
+        { offset: 16, count: 3 },
+        { offset: 15, count: 7 },
+        { offset: 14, count: 2 },
+        // last week (40 kasus)
+        { offset: 13, count: 6 },
+        { offset: 12, count: 5 },
+        { offset: 11, count: 8 },
+        { offset: 10, count: 4 },
+        { offset: 9, count: 7 },
+        { offset: 8, count: 3 },
+        { offset: 7, count: 7 },
+        // current week so far (15 kasus)
+        { offset: 6, count: 4 },
+        { offset: 5, count: 3 },
+        { offset: 4, count: 2 },
+        { offset: 3, count: 5 },
         { offset: 2, count: 1 },
-        { offset: 1, count: 1 },
+        { offset: 1, count: 0 },
     ]
     distribution.forEach(({ offset, count }) => {
         const d = subDays(today, offset)
@@ -377,9 +394,9 @@ const GENANGAN_META = [
 
 // Static mock data for pie (mapped from status buckets)
 const SALURAN_GENANGAN_DATA = [
-    { name: 'Ringan (Air Mengalir Lambat)', value: 6, color: '#22c55e' },
-    { name: 'Sedang (Air Tergenang)', value: 9, color: '#f97316' },
-    { name: 'Parah (Meluber / Potensi Banjir)', value: 5, color: '#ef4444' },
+    { name: 'Ringan (Air Mengalir Lambat)', value: 50, color: '#22c55e' },
+    { name: 'Sedang (Air Tergenang)', value: 65, color: '#f97316' },
+    { name: 'Parah (Meluber / Potensi Banjir)', value: 30, color: '#ef4444' },
 ]
 
 export function SaluranStatusPieChart() {
@@ -461,11 +478,11 @@ const SUMBATAN_META = [
 ]
 
 const SUMBATAN_DATA = [
-    { name: 'Banyak Sampah', value: 8 },
-    { name: 'Endapan Lumpur', value: 6 },
-    { name: 'Tutup Drainase Rusak', value: 4 },
-    { name: 'Bau Tidak Sedap', value: 3 },
-    { name: 'Tidak Diketahui', value: 2 },
+    { name: 'Banyak Sampah', value: 58 },
+    { name: 'Endapan Lumpur', value: 37 },
+    { name: 'Tutup Drainase Rusak', value: 24 },
+    { name: 'Bau Tidak Sedap', value: 16 },
+    { name: 'Tidak Diketahui', value: 10 },
 ]
 
 const SUMBATAN_COLORS = SUMBATAN_META.map(m => m.color)
@@ -551,28 +568,27 @@ export function SaluranKondisiSumbatan() {
     )
 }
 
-// Kondisi Sumbatan per Kondisi Genangan (like Jenis Penyakit per Kelompok Usia)
 const SUMBATAN_PER_GENANGAN: Record<string, Record<string, number>> = {
     'Ringan': {
-        'Banyak Sampah': 3,
-        'Endapan Lumpur': 2,
-        'Tutup Drainase Rusak': 0,
-        'Bau Tidak Sedap': 1,
-        'Tidak Diketahui': 0,
+        'Banyak Sampah': 18,
+        'Endapan Lumpur': 12,
+        'Tutup Drainase Rusak': 5,
+        'Bau Tidak Sedap': 10,
+        'Tidak Diketahui': 5,
     },
     'Sedang': {
-        'Banyak Sampah': 3,
-        'Endapan Lumpur': 3,
-        'Tutup Drainase Rusak': 2,
-        'Bau Tidak Sedap': 1,
-        'Tidak Diketahui': 0,
+        'Banyak Sampah': 28,
+        'Endapan Lumpur': 18,
+        'Tutup Drainase Rusak': 10,
+        'Bau Tidak Sedap': 5,
+        'Tidak Diketahui': 4,
     },
     'Parah': {
-        'Banyak Sampah': 2,
-        'Endapan Lumpur': 1,
-        'Tutup Drainase Rusak': 2,
+        'Banyak Sampah': 12,
+        'Endapan Lumpur': 7,
+        'Tutup Drainase Rusak': 9,
         'Bau Tidak Sedap': 1,
-        'Tidak Diketahui': 2,
+        'Tidak Diketahui': 1,
     },
 }
 
@@ -701,9 +717,9 @@ const JENIS_JALAN_META = [
 ]
 
 const JENIS_JALAN_DATA = [
-    { name: 'Aspal', value: 9 },
-    { name: 'Paving', value: 5 },
-    { name: 'Tanah / Belum dicor', value: 3 },
+    { name: 'Aspal', value: 72 },
+    { name: 'Paving', value: 38 },
+    { name: 'Tanah / Belum dicor', value: 20 },
 ]
 
 const JENIS_JALAN_COLORS = JENIS_JALAN_META.map(m => m.color)
@@ -797,9 +813,9 @@ const KONDISI_KERUSAKAN_META = [
 ]
 
 const KONDISI_KERUSAKAN_DATA = [
-    { name: 'Ringan', value: 4, color: '#22c55e' },
-    { name: 'Sedang', value: 8, color: '#f97316' },
-    { name: 'Parah', value: 5, color: '#ef4444' },
+    { name: 'Ringan', value: 35, color: '#22c55e' },
+    { name: 'Sedang', value: 58, color: '#f97316' },
+    { name: 'Parah', value: 37, color: '#ef4444' },
 ]
 
 export function JalanKondisiKerusakanChart() {
@@ -871,22 +887,21 @@ export function JalanKondisiKerusakanChart() {
     )
 }
 
-// Kondisi Kerusakan per Jenis Jalan (like Jenis Penyakit per Kelompok Usia)
 const KONDISI_PER_JENIS: Record<string, Record<string, number>> = {
     'Aspal': {
-        'Ringan': 2,
-        'Sedang': 5,
-        'Parah': 2,
+        'Ringan': 18,
+        'Sedang': 35,
+        'Parah': 19,
     },
     'Paving': {
-        'Ringan': 1,
-        'Sedang': 3,
-        'Parah': 2,
+        'Ringan': 12,
+        'Sedang': 15,
+        'Parah': 11,
     },
     'Tanah / Belum dicor': {
-        'Ringan': 1,
-        'Sedang': 1,
-        'Parah': 1,
+        'Ringan': 5,
+        'Sedang': 8,
+        'Parah': 7,
     },
 }
 
@@ -1006,8 +1021,8 @@ export function JalanCategorySection({ title, description, icon, color, count }:
 
 // 1. Status Penerangan (Progress Bars, like Penerima Bantuan)
 const STATUS_PENERANGAN_DATA = [
-    { name: 'Sudah ada lampu', value: 12, color: '#10b981' }, // Emerald
-    { name: 'Belum ada lampu', value: 5, color: '#f43f5e' }, // Rose
+    { name: 'Sudah ada lampu', value: 85, color: '#10b981' }, // Emerald
+    { name: 'Belum ada lampu', value: 55, color: '#f43f5e' }, // Rose
 ]
 
 export function PeneranganStatusChart() {
@@ -1091,9 +1106,9 @@ export function PeneranganStatusChart() {
 
 // 2. Jumlah Titik Terdampak (Vertical Bar Chart like Jenis Jalan)
 const TITIK_TERDAMPAK_DATA = [
-    { name: '1 Titik', value: 8 },
-    { name: '2-3 Titik', value: 5 },
-    { name: 'Lebih dari 3 titik', value: 4 },
+    { name: '1 Titik', value: 65 },
+    { name: '2-3 Titik', value: 45 },
+    { name: 'Lebih dari 3 titik', value: 30 },
 ]
 const TITIK_TERDAMPAK_COLORS = ['#3b82f6', '#8b5cf6', '#ec4899']
 
@@ -1178,10 +1193,10 @@ export function PeneranganTitikTerdampakChart() {
 
 // 3. Kondisi Lampu & Kebutuhan Penerangan (Card breakdown)
 const KONDISI_LAMPU_DATA = [
-    { name: 'Mati Total', value: 5, color: '#ef4444' },
-    { name: 'Berkedip / Tidak Stabil', value: 3, color: '#f97316' },
-    { name: 'Redup', value: 2, color: '#eab308' },
-    { name: 'Penutup / Kaca Rusak', value: 2, color: '#64748b' },
+    { name: 'Mati Total', value: 38, color: '#ef4444' },
+    { name: 'Berkedip / Tidak Stabil', value: 22, color: '#f97316' },
+    { name: 'Redup', value: 15, color: '#eab308' },
+    { name: 'Penutup / Kaca Rusak', value: 10, color: '#64748b' },
 ]
 
 export function PeneranganKondisiLampuPerJenis() {
@@ -1266,9 +1281,9 @@ export function PeneranganKondisiLampuPerJenis() {
 }
 
 const KEBUTUHAN_PENERANGAN_DATA = [
-    { name: 'Perlu Penambahan 1 Titik', value: 2, color: '#3b82f6' },
-    { name: 'Perlu Beberapa Titik', value: 2, color: '#8b5cf6' },
-    { name: 'Area Sangat Gelap', value: 1, color: '#10b981' },
+    { name: 'Perlu Penambahan 1 Titik', value: 25, color: '#3b82f6' },
+    { name: 'Perlu Beberapa Titik', value: 18, color: '#8b5cf6' },
+    { name: 'Area Sangat Gelap', value: 12, color: '#10b981' },
 ]
 
 export function PeneranganKebutuhanPerJenis() {
@@ -1356,31 +1371,31 @@ export function PeneranganKebutuhanPerJenis() {
 const KONDISI_PER_TITIK_DATA = [
     {
         name: 'Mati Total',
-        total: 5,
-        '1 Titik': 2,
-        '2-3 Titik': 2,
-        'Lebih dari 3 titik': 1,
+        total: 38,
+        '1 Titik': 15,
+        '2-3 Titik': 13,
+        'Lebih dari 3 titik': 10,
     },
     {
         name: 'Berkedip / Tidak Stabil',
-        total: 3,
-        '1 Titik': 1,
-        '2-3 Titik': 1,
-        'Lebih dari 3 titik': 1,
+        total: 22,
+        '1 Titik': 10,
+        '2-3 Titik': 8,
+        'Lebih dari 3 titik': 4,
     },
     {
         name: 'Redup',
-        total: 2,
-        '1 Titik': 1,
-        '2-3 Titik': 1,
-        'Lebih dari 3 titik': 0,
+        total: 15,
+        '1 Titik': 8,
+        '2-3 Titik': 5,
+        'Lebih dari 3 titik': 2,
     },
     {
         name: 'Penutup / Kaca Rusak',
-        total: 2,
-        '1 Titik': 2,
-        '2-3 Titik': 0,
-        'Lebih dari 3 titik': 0,
+        total: 10,
+        '1 Titik': 7,
+        '2-3 Titik': 1,
+        'Lebih dari 3 titik': 2,
     },
 ]
 

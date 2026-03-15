@@ -384,12 +384,36 @@ const TINGKAT_RISIKO = [
 
 // Static data: each jenis risiko broken down by tingkat risiko
 const RISIKO_DATA: Record<string, Record<string, number>> = {
-    'Usia < 20 Tahun': { perlu_pemantauan: 1, perlu_pendampingan: 2, perlu_penanganan_segera: 0 },
-    'Usia > 35 Tahun': { perlu_pemantauan: 2, perlu_pendampingan: 1, perlu_penanganan_segera: 1 },
-    'Tekanan Darah Tinggi': { perlu_pemantauan: 1, perlu_pendampingan: 2, perlu_penanganan_segera: 2 },
-    'Anemia': { perlu_pemantauan: 2, perlu_pendampingan: 1, perlu_penanganan_segera: 0 },
-    'Riwayat Komplikasi': { perlu_pemantauan: 0, perlu_pendampingan: 1, perlu_penanganan_segera: 2 },
-    'Lainnya': { perlu_pemantauan: 1, perlu_pendampingan: 0, perlu_penanganan_segera: 0 },
+    "Usia < 20 Tahun": {
+        "perlu_pemantauan": 3,
+        "perlu_pendampingan": 2,
+        "perlu_penanganan_segera": 11
+    },
+    "Usia > 35 Tahun": {
+        "perlu_pemantauan": 6,
+        "perlu_pendampingan": 5,
+        "perlu_penanganan_segera": 5
+    },
+    "Tekanan Darah Tinggi": {
+        "perlu_pemantauan": 6,
+        "perlu_pendampingan": 4,
+        "perlu_penanganan_segera": 4
+    },
+    "Anemia": {
+        "perlu_pemantauan": 1,
+        "perlu_pendampingan": 3,
+        "perlu_penanganan_segera": 8
+    },
+    "Riwayat Komplikasi": {
+        "perlu_pemantauan": 6,
+        "perlu_pendampingan": 7,
+        "perlu_penanganan_segera": 4
+    },
+    "Lainnya": {
+        "perlu_pemantauan": 6,
+        "perlu_pendampingan": 6,
+        "perlu_penanganan_segera": 8
+    }
 }
 
 export function TingkatRisikoPerJenisRisikoChart() {
@@ -467,17 +491,57 @@ export function TingkatRisikoPerJenisRisikoChart() {
 
 // Static data sesuai form
 const KEPEMILIKAN_DATA = [
-    { name: 'Tidak Memiliki', value: 5, color: '#ef4444', bg: '#fee2e2' },
-    { name: 'Tidak Aktif', value: 3, color: '#f97316', bg: '#ffedd5' },
-    { name: 'Proses Daftar', value: 2, color: '#3b82f6', bg: '#dbeafe' },
+    {
+        "name": "Tidak Memiliki",
+        "value": 27,
+        "color": "#ef4444",
+        "bg": "#fee2e2"
+    },
+    {
+        "name": "Tidak Aktif",
+        "value": 31,
+        "color": "#f97316",
+        "bg": "#ffedd5"
+    },
+    {
+        "name": "Proses Daftar",
+        "value": 27,
+        "color": "#3b82f6",
+        "bg": "#dbeafe"
+    }
 ]
 
 const ALASAN_DATA = [
-    { name: 'Tidak Mampu Membayar Iuran', value: 3, color: '#ef4444', abbr: 'MBY' },
-    { name: 'Tidak Mengetahui Cara Daftar', value: 2, color: '#f97316', abbr: 'DFT' },
-    { name: 'Terkendala Administrasi', value: 2, color: '#eab308', abbr: 'ADM' },
-    { name: 'Baru Pindah Domisili', value: 1, color: '#8b5cf6', abbr: 'DOM' },
-    { name: 'Lainnya', value: 2, color: '#64748b', abbr: 'LNY' },
+    {
+        "name": "Tidak Mampu Membayar Iuran",
+        "value": 18,
+        "color": "#ef4444",
+        "abbr": "MBY"
+    },
+    {
+        "name": "Tidak Mengetahui Cara Daftar",
+        "value": 19,
+        "color": "#f97316",
+        "abbr": "DFT"
+    },
+    {
+        "name": "Terkendala Administrasi",
+        "value": 17,
+        "color": "#eab308",
+        "abbr": "ADM"
+    },
+    {
+        "name": "Baru Pindah Domisili",
+        "value": 15,
+        "color": "#8b5cf6",
+        "abbr": "DOM"
+    },
+    {
+        "name": "Lainnya",
+        "value": 16,
+        "color": "#64748b",
+        "abbr": "LNY"
+    }
 ]
 
 const JENIS_PEKERJAAN = [
@@ -501,17 +565,61 @@ const BPJS_STATUS_GROUPS = [
 ]
 
 const PEKERJAAN_BPJS_DATA: Record<string, Record<string, number>> = {
-    'Tidak Bekerja': { tidak_memiliki: 1, tidak_aktif: 1, proses: 0 },
-    'Ibu Rumah Tangga': { tidak_memiliki: 1, tidak_aktif: 0, proses: 1 },
-    'Pelajar / Mahasiswa': { tidak_memiliki: 0, tidak_aktif: 1, proses: 0 },
-    'Buruh': { tidak_memiliki: 1, tidak_aktif: 0, proses: 0 },
-    'Petani / Nelayan': { tidak_memiliki: 1, tidak_aktif: 0, proses: 0 },
-    'Pedagang / UMKM': { tidak_memiliki: 0, tidak_aktif: 1, proses: 0 },
-    'Wiraswasta': { tidak_memiliki: 1, tidak_aktif: 0, proses: 0 },
-    'Karyawan Swasta': { tidak_memiliki: 0, tidak_aktif: 0, proses: 1 },
-    'PNS / TNI / Polri': { tidak_memiliki: 0, tidak_aktif: 0, proses: 0 },
-    'Pensiunan': { tidak_memiliki: 0, tidak_aktif: 0, proses: 0 },
-    'Lainnya': { tidak_memiliki: 0, tidak_aktif: 0, proses: 0 },
+    "Tidak Bekerja": {
+        "tidak_memiliki": 3,
+        "tidak_aktif": 5,
+        "proses": 3
+    },
+    "Ibu Rumah Tangga": {
+        "tidak_memiliki": 1,
+        "tidak_aktif": 2,
+        "proses": 1
+    },
+    "Pelajar / Mahasiswa": {
+        "tidak_memiliki": 5,
+        "tidak_aktif": 4,
+        "proses": 6
+    },
+    "Buruh": {
+        "tidak_memiliki": 5,
+        "tidak_aktif": 2,
+        "proses": 3
+    },
+    "Petani / Nelayan": {
+        "tidak_memiliki": 3,
+        "tidak_aktif": 2,
+        "proses": 4
+    },
+    "Pedagang / UMKM": {
+        "tidak_memiliki": 5,
+        "tidak_aktif": 2,
+        "proses": 3
+    },
+    "Wiraswasta": {
+        "tidak_memiliki": 1,
+        "tidak_aktif": 4,
+        "proses": 3
+    },
+    "Karyawan Swasta": {
+        "tidak_memiliki": 1,
+        "tidak_aktif": 2,
+        "proses": 2
+    },
+    "PNS / TNI / Polri": {
+        "tidak_memiliki": 2,
+        "tidak_aktif": 2,
+        "proses": 1
+    },
+    "Pensiunan": {
+        "tidak_memiliki": 0,
+        "tidak_aktif": 2,
+        "proses": 1
+    },
+    "Lainnya": {
+        "tidak_memiliki": 1,
+        "tidak_aktif": 4,
+        "proses": 0
+    }
 }
 
 export function KepemilikanBPJSChart() {

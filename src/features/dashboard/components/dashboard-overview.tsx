@@ -5,133 +5,84 @@ import {
     CardTitle,
 } from '@/components/ui/card'
 import {
-    ShieldAlert,
-    Siren,
-    Trees,
     Users,
-    HeartPulse,
-    Coins,
+    MessageSquare,
     ArrowUpRight,
 } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 import { mockKeamananData } from '@/features/keamanan/data/data'
-import { mockData as mockBencanaData } from '@/features/bencana/constants'
 import { mockLingkunganData } from '@/features/lingkungan/data/data'
-import { dashboardStats as sosialStats } from '@/features/sosial/data/data'
 import { mockData as mockKesehatanData } from '@/features/kesehatan/constants'
-import { mockData as mockEkonomiData } from '@/features/ekonomi/constants'
 
 export function DashboardOverview() {
-    // Keamanan Metrics
-    const keamananTotal = mockKeamananData.length
-    const keamananOpen = mockKeamananData.filter((d) => d.status === 'open').length
-
-    // Bencana Metrics
-    const bencanaTotal = mockBencanaData.length
-    const bencanaDarurat = mockBencanaData.filter((d) => d.status_penanganan === 'Darurat').length
-
-    // Lingkungan Metrics
-    const lingkunganTotal = mockLingkunganData.length
-    const lingkunganOpen = mockLingkunganData.filter((d) => d.status === 'open').length
-
-    // Kesehatan Metrics
+    // Basic aggregation for clear senior display
     const kesehatanTotal = mockKesehatanData.length
-    const kesehatanKritis = mockKesehatanData.filter((d) => d.status_kesehatan === 'Kritis').length
+    const laporanTotal = mockKeamananData.length + mockLingkunganData.length
 
-    // Ekonomi Metrics
-    const ekonomiTotal = mockEkonomiData.length
-    const pengangguran = mockEkonomiData.filter((d) => d.kategori_isu_ekonomi === 'Warga tidak punya pekerjaan').length
-
-    const overviewItems = [
+    const stats = [
         {
-            title: 'Keamanan',
-            value: keamananTotal,
-            description: `${keamananOpen} Laporan Baru`,
-            icon: ShieldAlert,
-            color: 'text-red-500',
-            bgColor: 'bg-red-500/10',
-            link: '/keamanan/monitoring',
-        },
-        {
-            title: 'Bencana',
-            value: bencanaTotal,
-            description: `${bencanaDarurat} Status Darurat`,
-            icon: Siren,
-            color: 'text-orange-500',
-            bgColor: 'bg-orange-500/10',
-            link: '/bencana/monitoring',
-        },
-        {
-            title: 'Lingkungan',
-            value: lingkunganTotal,
-            description: `${lingkunganOpen} Masalah Terbuka`,
-            icon: Trees,
-            color: 'text-green-500',
-            bgColor: 'bg-green-500/10',
-            link: '/lingkungan/monitoring',
-        },
-        {
-            title: 'Sosial',
-            value: sosialStats.totalWargaMiskin + sosialStats.totalWargaSakit,
-            description: `${sosialStats.totalWargaMiskin} Miskin Ekstrem`,
-            icon: Users,
-            color: 'text-blue-500',
-            bgColor: 'bg-blue-500/10',
-            link: '/sosial/monitoring',
-        },
-        {
-            title: 'Kesehatan',
+            title: 'Warga Sakit',
             value: kesehatanTotal,
-            description: `${kesehatanKritis} Kondisi Kritis`,
-            icon: HeartPulse,
-            color: 'text-pink-500',
-            bgColor: 'bg-pink-500/10',
-            link: '/kesehatan/monitoring',
+            description: 'Perlu Perhatian Khusus',
+            icon: Users,
+            color: 'text-red-600',
+            bgColor: 'bg-red-50 dark:bg-red-950/20',
+            link: '/kesehatan',
+            progressColor: 'bg-red-600'
         },
         {
-            title: 'Ekonomi',
-            value: ekonomiTotal,
-            description: `${pengangguran} Pengangguran`,
-            icon: Coins,
-            color: 'text-yellow-500',
-            bgColor: 'bg-yellow-500/10',
-            link: '/ekonomi/monitoring',
+            title: 'Laporan Warga',
+            value: laporanTotal,
+            description: 'Aduan Belum Selesai',
+            icon: MessageSquare,
+            color: 'text-blue-600',
+            bgColor: 'bg-blue-50 dark:bg-blue-950/20',
+            link: '/',
+            progressColor: 'bg-blue-600'
         },
     ]
 
     return (
-        <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-            {overviewItems.map((item) => (
-                <Card key={item.title} className='overflow-hidden transition-all hover:shadow-md'>
-                    <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                        <div className={`rounded-lg p-2 ${item.bgColor}`}>
-                            <item.icon className={`h-5 w-5 ${item.color}`} />
+        <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-2'>
+            {stats.map((item) => (
+                <Card key={item.title} className='relative rounded-2xl border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden transition-all hover:shadow-md group'>
+                    <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1 pt-4 px-6'>
+                        <div className='flex items-center gap-2'>
+                            <div className={`rounded-xl p-2 ${item.bgColor}`}>
+                                <item.icon className={`h-5 w-5 ${item.color}`} />
+                            </div>
+                            <CardTitle className='text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest'>
+                                {item.title}
+                            </CardTitle>
+                        </div>
+                    </CardHeader>
+                    <CardContent className='pb-5 px-6'>
+                        <div className='flex items-end justify-between'>
+                            <div className='space-y-0.5'>
+                                <div className='text-4xl font-black tracking-tight text-gray-900 dark:text-white'>
+                                    {item.value}
+                                    <span className='text-base font-bold text-gray-400 ml-1.5'>Jiwa</span>
+                                </div>
+                                <p className='text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-tight'>
+                                    {item.description}
+                                </p>
+                            </div>
+                        </div>
+                        <div className='mt-5 flex gap-1'>
+                            {[...Array(5)].map((_, i) => (
+                                <div
+                                    key={i}
+                                    className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${i < (item.value / 20) * 5 ? (item.progressColor) : 'bg-gray-100 dark:bg-gray-800'}`}
+                                />
+                            ))}
                         </div>
                         <Link
                             to={item.link}
-                            className='text-muted-foreground hover:text-primary transition-colors'
+                            className='mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'
                         >
-                            <ArrowUpRight className='h-4 w-4' />
+                            Klik untuk Lihat Detail
+                            <ArrowUpRight className='h-3.5 w-3.5' />
                         </Link>
-                    </CardHeader>
-                    <CardContent>
-                        <div className='space-y-1'>
-                            <CardTitle className='text-sm font-medium text-muted-foreground'>
-                                {item.title}
-                            </CardTitle>
-                            <div className='flex items-baseline justify-between'>
-                                <div className='text-2xl font-bold'>{item.value}</div>
-                                <div className='text-xs text-muted-foreground font-medium'>
-                                    {item.description}
-                                </div>
-                            </div>
-                        </div>
-                        <div className='mt-4 h-1.5 w-full overflow-hidden rounded-full bg-muted'>
-                            <div
-                                className={`h-full ${item.color.replace('text', 'bg')} opacity-60`}
-                                style={{ width: `${Math.min(100, (item.value / 25) * 100)}%` }}
-                            />
-                        </div>
                     </CardContent>
                 </Card>
             ))}

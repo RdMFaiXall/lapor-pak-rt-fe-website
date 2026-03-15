@@ -7,15 +7,17 @@ import { mockData } from '../constants'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import {
-    LamaMenganggurChart,
-    MinatPelatihanChart,
-    SkillTerakhirChart,
-    ButuhMediasiChart,
-    EstimasiHutangChart,
-    SumberHutangChart,
+    KategoriUsiaChart,
+    JenjangPendidikanChart,
+    LamaTidakBekerjaChart,
+    AlasanBelumBekerjaChart,
+    JenisHutangChart,
+    AlasanBerhutangChart,
+    DampakHutangPerJenisHutangChart,
+    PekerjaanKepalaKeluargaChart,
+    JumlahTanggunganChart,
     PenghasilanKKChart,
-    RiwayatBantuanChart,
-    StatusHunianChart
+    StatusTempatTinggalChart
 } from './ekonomi-charts'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -107,21 +109,26 @@ function TidakPunyaPekerjaanSection() {
     return (
         <SectionContainer
             title='Tidak Memiliki Pekerjaan'
-            description='Data pengangguran warga, durasi, skill, serta minat pelatihan yang dibutuhkan.'
+            description='Data pengangguran warga, kategori usia, pendidikan, serta durasi menganggur.'
             icon={Briefcase}
             color='blue'
             count={pengangguranData.length}
             id="section-pekerjaan"
         >
-            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-                <div className='lg:col-span-1'>
-                    <LamaMenganggurChart />
+            <div className='space-y-6'>
+                <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                    <div className='lg:col-span-1'>
+                        <KategoriUsiaChart />
+                    </div>
+                    <div className='lg:col-span-1'>
+                        <JenjangPendidikanChart />
+                    </div>
+                    <div className='lg:col-span-1'>
+                        <LamaTidakBekerjaChart />
+                    </div>
                 </div>
-                <div className='lg:col-span-1'>
-                    <MinatPelatihanChart />
-                </div>
-                <div className='lg:col-span-1'>
-                    <SkillTerakhirChart />
+                <div>
+                    <AlasanBelumBekerjaChart />
                 </div>
             </div>
         </SectionContainer>
@@ -134,7 +141,7 @@ function WargaBerhutangSection() {
     return (
         <SectionContainer
             title='Warga Berhutang'
-            description='Analisis data hutang warga beserta angka estimasi total dan kebutuhan mediasi.'
+            description='Analisis data hutang warga beserta jenis hutang, alasan berhutang, dan dampaknya.'
             icon={Wallet}
             color='rose'
             count={hutangData.length}
@@ -142,15 +149,15 @@ function WargaBerhutangSection() {
         >
             <div className="space-y-6">
                 <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-                    <div className='lg:col-span-2'>
-                        <SumberHutangChart />
+                    <div className='lg:col-span-1'>
+                        <JenisHutangChart />
                     </div>
-                    <div>
-                        <ButuhMediasiChart />
+                    <div className='lg:col-span-2'>
+                        <AlasanBerhutangChart />
                     </div>
                 </div>
                 <div>
-                    <EstimasiHutangChart />
+                    <DampakHutangPerJenisHutangChart />
                 </div>
             </div>
         </SectionContainer>
@@ -163,7 +170,7 @@ function CalonPenerimaBansosSection() {
     return (
         <SectionContainer
             title='Calon Penerima Bansos'
-            description='Data keadaan hunian, penghasilan kepala keluarga, dan riwayat bantuan.'
+            description='Data keadaan ekonomi, tanggungan, status tempat tinggal, dan pekerjaan kepala keluarga.'
             icon={Gift}
             color='amber'
             count={bansosData.length}
@@ -171,15 +178,18 @@ function CalonPenerimaBansosSection() {
         >
             <div className="space-y-6">
                 <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-                    <div className='lg:col-span-2'>
+                    <div>
                         <PenghasilanKKChart />
                     </div>
                     <div>
-                        <StatusHunianChart />
+                        <JumlahTanggunganChart />
+                    </div>
+                    <div>
+                        <StatusTempatTinggalChart />
                     </div>
                 </div>
                 <div>
-                    <RiwayatBantuanChart />
+                    <PekerjaanKepalaKeluargaChart />
                 </div>
             </div>
         </SectionContainer>
@@ -299,7 +309,7 @@ export function EkonomiSummary() {
                     {/* Title + grand total */}
                     <div className="flex items-baseline gap-3">
                         <h2 className="text-lg font-semibold text-gray-500 dark:text-gray-400">
-                            Total Laporan (3 Kategori Utama)
+                            Total Laporan
                         </h2>
                         <span className="text-4xl font-black text-gray-900 dark:text-white leading-none">
                             {grandTotal}

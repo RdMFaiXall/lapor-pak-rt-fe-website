@@ -4,6 +4,7 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { EkonomiIsuBreakdown } from './ekonomi-isu-breakdown'
+import ScrollToTopButton from './scroll-to-top-button'
 
 export default function MonitoringView() {
     return (
@@ -25,6 +26,7 @@ export default function MonitoringView() {
 
                 <EkonomiIsuBreakdown />
             </Main>
+            <ScrollToTopButton />
         </>
     )
 }

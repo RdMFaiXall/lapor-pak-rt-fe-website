@@ -1,8 +1,6 @@
 import {
-  AudioWaveform,
   Coins,
   Command,
-  GalleryVerticalEnd,
   HeartPulse,
   LayoutDashboard,
   ShieldAlert,
@@ -14,8 +12,8 @@ import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
   user: {
-    name: 'satnaing',
-    email: 'satnaingdev@gmail.com',
+    name: 'Pak/Bu RT',
+    email: 'rt@laporpakrt.id',
     avatar: '/avatars/shadcn.jpg',
   },
   teams: [
@@ -23,16 +21,6 @@ export const sidebarData: SidebarData = {
       name: 'Lapor Pak RT',
       logo: Command,
       plan: 'Warga',
-    },
-    {
-      name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
-    },
-    {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
-      plan: 'Startup',
     },
   ],
   navGroups: [
@@ -86,45 +74,5 @@ export const sidebarData: SidebarData = {
         },
       ],
     },
-    // {
-    //   title: 'Apps & Tools',
-    //   items: [
-    //     {
-    //       title: 'Tasks',
-    //       url: '/tasks',
-    //       icon: CheckSquare,
-    //     },
-    //     {
-    //       title: 'Chats',
-    //       url: '/chats',
-    //       icon: MessageSquare,
-    //     },
-    //     {
-    //       title: 'Users',
-    //       url: '/users',
-    //       icon: UserCog,
-    //     },
-    //     {
-    //       title: 'Apps',
-    //       url: '/apps',
-    //       icon: Grid,
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: 'Lainnya',
-    //   items: [
-    //     {
-    //       title: 'Settings',
-    //       url: '/settings',
-    //       icon: Settings,
-    //     },
-    //     {
-    //       title: 'Help Center',
-    //       url: '/help-center',
-    //       icon: HelpCircle,
-    //     },
-    //   ],
-    // },
   ],
 }

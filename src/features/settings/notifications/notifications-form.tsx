@@ -21,7 +21,7 @@ const notificationsFormSchema = z.object({
   type: z.enum(['all', 'mentions', 'none'], {
     error: (iss) =>
       iss.input === undefined
-        ? 'Please select a notification type.'
+        ? 'Harap pilih jenis notifikasi.'
         : undefined,
   }),
   mobile: z.boolean().default(false).optional(),
@@ -58,7 +58,7 @@ export function NotificationsForm() {
           name='type'
           render={({ field }) => (
             <FormItem className='relative space-y-3'>
-              <FormLabel>Notify me about...</FormLabel>
+              <FormLabel>Kirimkan Notifikasi untuk...</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
@@ -69,23 +69,19 @@ export function NotificationsForm() {
                     <FormControl>
                       <RadioGroupItem value='all' />
                     </FormControl>
-                    <FormLabel className='font-normal'>
-                      All new messages
-                    </FormLabel>
+                      Semua laporan dan aktivitas baru
                   </FormItem>
                   <FormItem className='flex items-center'>
                     <FormControl>
                       <RadioGroupItem value='mentions' />
                     </FormControl>
-                    <FormLabel className='font-normal'>
-                      Direct messages and mentions
-                    </FormLabel>
+                      Laporan gawat darurat dan pesan penting saja
                   </FormItem>
                   <FormItem className='flex items-center'>
                     <FormControl>
                       <RadioGroupItem value='none' />
                     </FormControl>
-                    <FormLabel className='font-normal'>Nothing</FormLabel>
+                    <FormLabel className='font-normal'>Jangan kirim notifikasi</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
@@ -94,7 +90,7 @@ export function NotificationsForm() {
           )}
         />
         <div className='relative'>
-          <h3 className='mb-4 text-lg font-medium'>Email Notifications</h3>
+          <h3 className='mb-4 text-lg font-medium'>Notifikasi Email</h3>
           <div className='space-y-4'>
             <FormField
               control={form.control}
@@ -103,10 +99,10 @@ export function NotificationsForm() {
                 <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
                   <div className='space-y-0.5'>
                     <FormLabel className='text-base'>
-                      Communication emails
+                      Email Laporan Warga
                     </FormLabel>
                     <FormDescription>
-                      Receive emails about your account activity.
+                      Terima email setiap kali ada warga yang membuat laporan baru.
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -125,10 +121,10 @@ export function NotificationsForm() {
                 <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
                   <div className='space-y-0.5'>
                     <FormLabel className='text-base'>
-                      Marketing emails
+                      Email Sistem
                     </FormLabel>
                     <FormDescription>
-                      Receive emails about new products, features, and more.
+                      Terima email pembaruan tentang fitur baru sistem Lapor Pak RT.
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -146,9 +142,9 @@ export function NotificationsForm() {
               render={({ field }) => (
                 <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
                   <div className='space-y-0.5'>
-                    <FormLabel className='text-base'>Social emails</FormLabel>
+                    <FormLabel className='text-base'>Email Interaksi</FormLabel>
                     <FormDescription>
-                      Receive emails for friend requests, follows, and more.
+                      Terima email saat warga mengomentari pengumuman atau laporan.
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -166,9 +162,9 @@ export function NotificationsForm() {
               render={({ field }) => (
                 <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
                   <div className='space-y-0.5'>
-                    <FormLabel className='text-base'>Security emails</FormLabel>
+                    <FormLabel className='text-base'>Email Keamanan</FormLabel>
                     <FormDescription>
-                      Receive emails about your account activity and security.
+                      Terima peringatan tentang aktivitas masuk dan keamanan akun Anda.
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -197,23 +193,22 @@ export function NotificationsForm() {
               </FormControl>
               <div className='space-y-1 leading-none'>
                 <FormLabel>
-                  Use different settings for my mobile devices
+                  Gunakan pengaturan berbeda untuk perangkat seluler
                 </FormLabel>
                 <FormDescription>
-                  You can manage your mobile notifications in the{' '}
+                  Anda dapat mengatur notifikasi perangkat di halaman{' '}
                   <Link
                     to='/settings'
                     className='underline decoration-dashed underline-offset-4 hover:decoration-solid'
                   >
-                    mobile settings
-                  </Link>{' '}
-                  page.
+                    pengaturan aplikasi mobile
+                  </Link>.
                 </FormDescription>
               </div>
             </FormItem>
           )}
         />
-        <Button type='submit'>Update notifications</Button>
+        <Button type='submit'>Simpan Pengaturan Notifikasi</Button>
       </form>
     </Form>
   )

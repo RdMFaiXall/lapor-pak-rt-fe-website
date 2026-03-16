@@ -16,34 +16,34 @@ import {
 
 const items = [
   {
-    id: 'recents',
-    label: 'Recents',
+    id: 'keamanan',
+    label: 'Keamanan',
   },
   {
-    id: 'home',
-    label: 'Home',
+    id: 'bencana',
+    label: 'Bencana',
   },
   {
-    id: 'applications',
-    label: 'Applications',
+    id: 'lingkungan',
+    label: 'Lingkungan',
   },
   {
-    id: 'desktop',
-    label: 'Desktop',
+    id: 'sosial',
+    label: 'Sosial',
   },
   {
-    id: 'downloads',
-    label: 'Downloads',
+    id: 'kesehatan',
+    label: 'Kesehatan',
   },
   {
-    id: 'documents',
-    label: 'Documents',
+    id: 'ekonomi',
+    label: 'Ekonomi',
   },
 ] as const
 
 const displayFormSchema = z.object({
   items: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: 'You have to select at least one item.',
+    message: 'Harap pilih setidaknya satu item.',
   }),
 })
 
@@ -51,7 +51,7 @@ type DisplayFormValues = z.infer<typeof displayFormSchema>
 
 // This can come from your database or API.
 const defaultValues: Partial<DisplayFormValues> = {
-  items: ['recents', 'home'],
+  items: ['keamanan', 'bencana', 'lingkungan', 'sosial', 'kesehatan', 'ekonomi'],
 }
 
 export function DisplayForm() {
@@ -72,9 +72,9 @@ export function DisplayForm() {
           render={() => (
             <FormItem>
               <div className='mb-4'>
-                <FormLabel className='text-base'>Sidebar</FormLabel>
+                <FormLabel className='text-base'>Menu Sidebar</FormLabel>
                 <FormDescription>
-                  Select the items you want to display in the sidebar.
+                  Pilih elemen atau menu yang ingin Anda tampilkan di bilah samping (sidebar).
                 </FormDescription>
               </div>
               {items.map((item) => (
@@ -114,7 +114,7 @@ export function DisplayForm() {
             </FormItem>
           )}
         />
-        <Button type='submit'>Update display</Button>
+        <Button type='submit'>Simpan Pengaturan Layar</Button>
       </form>
     </Form>
   )

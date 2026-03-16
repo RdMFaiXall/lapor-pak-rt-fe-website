@@ -59,8 +59,6 @@ const JenisPenyakit = ({ data }: JenisPenyakitProps) => {
                                     if (value === undefined || value === null) return null;
                                     const displayValue = `${value} kasus (${chartData[props.index]?.percentage}%)`;
                                     
-                                    // Semua text dibuat align left saja dalam bar (seperti permintaan)
-                                    // Jika value sangat kecil sehingga text tidak muat di bar, kita lempar ke luar bar.
                                     const isSmallValue = value < maxValue * 0.15;
                                     
                                     return (

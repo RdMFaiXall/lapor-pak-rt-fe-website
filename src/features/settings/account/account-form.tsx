@@ -47,7 +47,6 @@ const accountFormSchema = z.object({
 
 type AccountFormValues = z.infer<typeof accountFormSchema>
 
-// This can come from your database or API.
 const defaultValues: Partial<AccountFormValues> = {
   name: 'Pak/Bu RT',
   language: 'id',

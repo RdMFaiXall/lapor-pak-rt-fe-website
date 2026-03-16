@@ -163,7 +163,6 @@ export function BencanaResolution() {
 }
 
 // ─── 3. Kategori Bencana per Fasilitas Yang Rusak ────────────────────────────
-// Style: warga-sakit-jenis-penyakit-by-age-chart.tsx
 
 const FASILITAS_GROUPS = [
     { key: 'rumahWarga', label: 'Rumah Warga', color: '#ef4444' },

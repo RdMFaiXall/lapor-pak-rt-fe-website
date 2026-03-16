@@ -7,7 +7,6 @@ import { mockData as mockKesehatanData } from '@/features/kesehatan/constants'
 import { ShieldAlert, Siren, Trees, Users, HeartPulse } from 'lucide-react'
 
 export function RecentSales() {
-  // Extract and combine the latest activities
   const allActivities = [
     ...mockKeamananData.map(d => ({ ...d, type: 'Keamanan', icon: ShieldAlert, color: 'text-red-500', name: d.reportedBy, title: d.title, date: d.date })),
     ...mockBencanaData.map(d => ({ ...d, type: 'Bencana', icon: Siren, color: 'text-orange-500', name: d.pelapor, title: d.jenis_bencana, date: d.tanggal_laporan })),

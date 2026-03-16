@@ -38,10 +38,8 @@ const PENYEBAB_COLORS = [
 // ─── Chart 1: Penyebab per Jenjang Pendidikan Terakhir (stacked) ──────────────
 
 function buildPenyebabByJenjangData() {
-    // Unique penyebab
     const allPenyebab = [...new Set(anakPutusSekolahData.map(w => w.penyebab))]
 
-    // Group rows by penyebab, then count per jenjang
     const map: Record<string, Record<string, number>> = {}
     for (const w of anakPutusSekolahData) {
         if (!map[w.penyebab]) {
@@ -50,7 +48,6 @@ function buildPenyebabByJenjangData() {
         map[w.penyebab][w.jenjang] = (map[w.penyebab][w.jenjang] || 0) + 1
     }
 
-    // Unique jenjang
     const rawJenjang = [...new Set(anakPutusSekolahData.map(w => w.jenjang))]
     const jenjangOrder = ['SD', 'SMP', 'SMA', 'SMK', 'MTS']
     const allJenjang = jenjangOrder.filter(j => rawJenjang.includes(j)).concat(rawJenjang.filter(j => !jenjangOrder.includes(j)))

@@ -2,7 +2,6 @@
 import MapComponent from '@/components/ui/maps';
 import { mockLingkunganData, categories } from '../data/data';
 
-// Map mockData to MapComponent expected format
 const mapData = mockLingkunganData.map(item => ({
     ...item,
     position: [item.lat, item.lng],

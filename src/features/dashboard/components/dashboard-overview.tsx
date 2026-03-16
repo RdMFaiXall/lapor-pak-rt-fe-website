@@ -15,7 +15,6 @@ import { mockLingkunganData } from '@/features/lingkungan/data/data'
 import { mockData as mockKesehatanData } from '@/features/kesehatan/constants'
 
 export function DashboardOverview() {
-    // Basic aggregation for clear senior display
     const kesehatanTotal = mockKesehatanData.length
     const laporanTotal = mockKeamananData.length + mockLingkunganData.length
 

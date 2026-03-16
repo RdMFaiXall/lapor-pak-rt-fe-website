@@ -25,7 +25,6 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Users, Activity, HeartPulse, GraduationCap, AlertTriangle } from 'lucide-react'
 
-// --- Existing Charts (Preserved) ---
 
 const totalReports = mockSosialData.length
 const chartData = categories.map((cat: { label: string; value: string; color: string }) => {
@@ -160,7 +159,6 @@ export function SosialPriorityChart() {
     )
 }
 
-// --- New Context Data Charts ---
 
 interface AggregatedItem {
     name: string;
@@ -169,7 +167,6 @@ interface AggregatedItem {
     [key: string]: any;
 }
 
-// Helper to aggregate data
 const aggregateData = (data: any[], key: string): AggregatedItem[] => {
     const counts = data.reduce((acc, curr) => {
         const val = curr[key] || 'Lainnya';
@@ -184,7 +181,6 @@ const aggregateData = (data: any[], key: string): AggregatedItem[] => {
     })).sort((a: AggregatedItem, b: AggregatedItem) => b.value - a.value);
 };
 
-// Simple hash for colors
 const stringToColor = (str: string) => {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
@@ -196,7 +192,6 @@ const stringToColor = (str: string) => {
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
-// 1. Total Laporan Summary Cards
 export function SocialSummaryCards() {
     const stats = [
         { title: 'Warga Sakit', count: wargaSakitData.length, icon: Activity, color: 'text-red-500' },
@@ -228,7 +223,6 @@ export function SocialSummaryCards() {
     );
 }
 
-// 2. Warga Sakit Charts
 export function WargaSakitCharts() {
     const diseaseData = aggregateData(wargaSakitData, 'jenisPenyakit');
 
@@ -251,7 +245,6 @@ export function WargaSakitCharts() {
     );
 }
 
-// 3. Warga Meninggal Charts
 export function WargaMeninggalCharts() {
     const causeData = aggregateData(wargaMeninggalData, 'penyebab');
 
@@ -283,7 +276,6 @@ export function WargaMeninggalCharts() {
     );
 }
 
-// 4. Warga Miskin Charts (Ekonomi & Bantuan)
 export function WargaMiskinCharts() {
     const economyData = aggregateData(wargaMiskinData, 'kondisiEkonomi');
     const aidData = aggregateData(wargaMiskinData, 'jenisBantuan');
@@ -344,7 +336,6 @@ export function WargaMiskinCharts() {
     );
 }
 
-// 5. Lansia Terlantar Charts
 export function LansiaCharts() {
     const conditionData = aggregateData(lansiaTerlantarData, 'kondisi');
 
@@ -366,7 +357,6 @@ export function LansiaCharts() {
     );
 }
 
-// 6. Anak Tidak Sekolah Charts
 export function AnakPutusSekolahCharts() {
     const levelData = aggregateData(anakTidakSekolahData, 'jenjang');
     const causeData = aggregateData(anakTidakSekolahData, 'penyebab');

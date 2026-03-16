@@ -1,4 +1,3 @@
-// --- Tipe Data Sesuai Excel "Kesehatan" (New Schema) ---
 
 export type HealthReport = {
     id: string
@@ -7,40 +6,33 @@ export type HealthReport = {
     pelapor: string
     rt: string
 
-    // [Excel Row 43] Masalah Utama
     isu_kesehatan:
     | 'Wabah DBD'
     | 'Stunting / Gizi Buruk'
     | 'Ibu Hamil Berisiko'
     | 'Warga Belum BPJS'
 
-    // LOGIC A: Jika "Wabah DBD"
     perkembangan_kasus?: 'Terindikasi DBD' | 'Positif DBD' | 'Sembuh' | 'Meninggal'
     lokasi_perawatan?: 'Di rumah' | 'Puskesmas' | 'Rumah Sakit'
     lingkungan_dbd?: string[] // Checkbox: Genangan air, Tetangga sakit, Butuh fogging
 
-    // LOGIC B: Jika "Stunting / Gizi Buruk"
     berat_badan?: number // kg
     tinggi_badan?: number // cm
     umur_bulan?: number // bulan
     status_pmt?: boolean // Sudah dapat MT?
     indikasi_pertumbuhan?: string[] // Checkbox: Tubuh Anak Terlihat Pendek, Anak Terlihat Sangat Kurus, Sering Sakit (Batuk/Diare Berulang), Belum/Jarang ke Posyandu
 
-    // LOGIC C: Jika "Ibu Hamil Berisiko"
     usia_kandungan?: 'Trimester 1 (1-3 Bulan)' | 'Trimester 2 (4-6 Bulan)' | 'Trimester 3 (7-9 Bulan)'
     faktor_risiko?: string[] // Checkbox: Usia muda/tua, Hipertensi, KEK, Jarak dekat
 
-    // LOGIC D: Jika "Warga Belum BPJS"
     alasan_bpjs?: 'Tidak Mampu Bayar Iuran' | 'Tidak Tahu Cara Daftar' | 'KTP/KK Bermasalah' | 'BPJS Mati (Tunggakan)'
 
-    // Universal Fields
     intervensi_rt?: string[] // Checkbox: Lapor Bidan, Bantu Adminduk, PMT, Kerja Bakti
     status_kesehatan: 'Stabil' | 'Dalam Pemantauan' | 'Kritis' // Radio
     tanggal_laporan: string
     foto_dokumentasi?: string[]
 }
 
-// --- Dummy Data (New Schema) ---
 export const mockData: HealthReport[] = [
     {
         "id": "1",

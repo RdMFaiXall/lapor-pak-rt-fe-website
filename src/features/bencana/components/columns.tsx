@@ -153,16 +153,6 @@ export const columns: ColumnDef<DisasterReport>[] = [
             return value.includes(row.getValue(id))
         },
     },
-    // Hidden columns (Available in detail)
-    // {
-    //     accessorKey: 'lokasi',
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='Lokasi' />
-    //     ),
-    //     cell: ({ row }) => (
-    //         <div className='w-[150px] truncate'>{row.getValue('lokasi')}</div>
-    //     ),
-    // },
     {
         id: 'actions',
         header: ({ column }) => (

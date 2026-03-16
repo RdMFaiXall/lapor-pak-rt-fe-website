@@ -1,4 +1,3 @@
-// --- Tipe Data Sesuai Excel "Ekonomi" (New Schema) ---
 
 export type EconomyReport = {
     id: string
@@ -7,30 +6,25 @@ export type EconomyReport = {
     pelapor: string // Bu RT / Pak RT
     rt: string // RT asal pelapor
 
-    // [Excel Row 70] Kategori Utama
     kategori_isu_ekonomi:
     | 'Warga tidak punya pekerjaan'
     | 'UMKM tidak berkembang'
     | 'Warga berhutang'
     | 'Calon penerima bansos'
 
-    // LOGIC A: Jika "Warga tidak punya pekerjaan"
     lama_menganggur?: '< 3 Bulan' | '3 - 6 Bulan' | '> 1 Tahun'
     skill_terakhir?: string[] // Input Text / Tags
     minat_pelatihan?: string[] // Checkbox
     umur?: number // tambahan untuk chart kategori usia
 
-    // LOGIC B: Jika "UMKM tidak berkembang"
     nama_jenis_usaha?: string
     kendala_umkm?: string[] // Checkbox
     omzet_rata_rata?: '< 1 Juta' | '1 - 3 Juta' | '3 - 5 Juta' | '> 5 Juta'
 
-    // LOGIC C: Jika "Warga berhutang"
     sumber_hutang?: 'Pinjol (Online)' | 'Rentenir / Bank Keliling' | 'Bank Resmi' | 'Tetangga/Perorangan'
     estimasi_total_hutang?: '< 2 Juta' | '2 - 10 Juta' | '> 10 Juta'
     butuh_mediasi?: boolean
 
-    // LOGIC D: Jika "Calon penerima bansos"
     status_hunian?: 'Milik Sendiri' | 'Sewa/Kontrak' | 'Menumpang'
     jumlah_tanggungan?: number
     penghasilan_kk?: 'Tidak Ada' | '< 1.5 Juta' | '1.5 - 3 Juta' | '> 3 Juta'
@@ -39,7 +33,6 @@ export type EconomyReport = {
     tanggal_laporan: string
 }
 
-// --- Dummy Data (New Schema) ---
 export const mockData: EconomyReport[] = [
     {
         "id": "1",

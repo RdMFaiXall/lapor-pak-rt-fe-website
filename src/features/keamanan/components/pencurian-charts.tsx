@@ -9,7 +9,6 @@ import {
 } from 'recharts'
 
 // ─── Objek Pencurian ──────────────────────────────────────────────────────────
-// Replaced PencurianResolution: compare Barang Pribadi vs Aset/Fasilitas Umum
 
 const objekData = [
     { name: 'Barang Pribadi', value: 115, color: '#ef4444' },
@@ -173,7 +172,6 @@ export function PencurianStatusChart() {
 }
 
 // ─── Jenis Fasilitas yang Dicuri ──────────────────────────────────────────────
-// 2 side-by-side panels, list style like the reference image
 
 const COLORS_PRIBADI = ['#06b6d4', '#22c55e', '#f97316', '#ef4444']
 const COLORS_UMUM = ['#06b6d4', '#22c55e', '#f97316', '#ef4444']

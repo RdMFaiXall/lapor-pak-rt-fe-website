@@ -104,7 +104,6 @@ function SectionContainer({
 
 // ─── Category Charts ──────────────────────────────────────────────────────────
 
-// Status Laporan: Ringan / Sedang / Parah
 const SEVERITY_META = [
     { value: 'ringan', shortLabel: 'Ringan', label: 'Ringan (Mulai Terlihat)', color: '#22c55e' },
     { value: 'sedang', shortLabel: 'Sedang', label: 'Sedang (Sudah Mengganggu)', color: '#f97316' },
@@ -112,8 +111,6 @@ const SEVERITY_META = [
 ]
 
 export function LingkunganStatusChart({ data }: { data: Lingkungan[] }) {
-    // Map existing statuses to severity buckets for demo purposes
-    // open → ringan, in-progress → sedang, resolved/closed → parah
     const severityCount = data.reduce((acc, curr) => {
         let bucket: string
         if (curr.status === 'open') bucket = 'ringan'
@@ -208,12 +205,10 @@ export function LingkunganStatusChart({ data }: { data: Lingkungan[] }) {
     )
 }
 
-// Static per-date sampah data (distributed across last 4 weeks, total = 120 kasus)
 const SAMPAH_STATIC_DATES: Record<string, number> = (() => {
     const today = new Date()
     const dates: Record<string, number> = {}
     const distribution = [
-        // week -3 ago (30 kasus)
         { offset: 27, count: 5 },
         { offset: 26, count: 4 },
         { offset: 25, count: 7 },
@@ -221,7 +216,6 @@ const SAMPAH_STATIC_DATES: Record<string, number> = (() => {
         { offset: 23, count: 6 },
         { offset: 22, count: 2 },
         { offset: 21, count: 3 },
-        // week -2 ago (35 kasus)
         { offset: 20, count: 4 },
         { offset: 19, count: 6 },
         { offset: 18, count: 5 },
@@ -229,7 +223,6 @@ const SAMPAH_STATIC_DATES: Record<string, number> = (() => {
         { offset: 16, count: 3 },
         { offset: 15, count: 7 },
         { offset: 14, count: 2 },
-        // last week (40 kasus)
         { offset: 13, count: 6 },
         { offset: 12, count: 5 },
         { offset: 11, count: 8 },
@@ -237,7 +230,6 @@ const SAMPAH_STATIC_DATES: Record<string, number> = (() => {
         { offset: 9, count: 7 },
         { offset: 8, count: 3 },
         { offset: 7, count: 7 },
-        // current week so far (15 kasus)
         { offset: 6, count: 4 },
         { offset: 5, count: 3 },
         { offset: 4, count: 2 },
@@ -385,14 +377,12 @@ export function LingkunganTanggalLaporan({ data: _data }: { data: Lingkungan[] }
 
 // ─── Saluran Air Tersumbat – Dedicated Charts ────────────────────────────────
 
-// Status Laporan: Pie chart (like Kelompok Usia)
 const GENANGAN_META = [
     { value: 'ringan', label: 'Ringan', sub: '(Air Mengalir Lambat)', color: '#22c55e' },
     { value: 'sedang', label: 'Sedang', sub: '(Air Tergenang)', color: '#f97316' },
     { value: 'parah', label: 'Parah', sub: '(Meluber / Potensi Banjir)', color: '#ef4444' },
 ]
 
-// Static mock data for pie (mapped from status buckets)
 const SALURAN_GENANGAN_DATA = [
     { name: 'Ringan (Air Mengalir Lambat)', value: 50, color: '#22c55e' },
     { name: 'Sedang (Air Tergenang)', value: 65, color: '#f97316' },
@@ -468,7 +458,6 @@ export function SaluranStatusPieChart() {
     )
 }
 
-// Kondisi Sumbatan: Horizontal Bar Chart (like Kondisi Ekonomi)
 const SUMBATAN_META = [
     { label: 'Banyak Sampah', color: '#f97316' },
     { label: 'Endapan Lumpur', color: '#a16207' },
@@ -593,7 +582,6 @@ const SUMBATAN_PER_GENANGAN: Record<string, Record<string, number>> = {
 }
 
 export function SaluranKondisiSumbatanPerGenangan() {
-    // Transform data: group by Sumbatan instead of Genangan
     const sumbatanBreakdown = SUMBATAN_META.map(meta => {
         const breakdown: Record<string, number> = {}
         let total = 0
@@ -617,7 +605,6 @@ export function SaluranKondisiSumbatanPerGenangan() {
 
             <div className='flex-1 overflow-y-auto pr-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
                 {sumbatanBreakdown.map((item) => {
-                    // const color = item.color || '#94a3b8'
 
                     return (
                         <div key={item.label} className="flex flex-col bg-gray-50/50 dark:bg-gray-900/20 p-4 rounded-xl border border-gray-100 dark:border-gray-800/50">
@@ -709,7 +696,6 @@ export function SaluranCategorySection({ title, description, icon, color, count 
 
 // ─── Jalan Rusak – Dedicated Charts ──────────────────────────────────────────
 
-// Jenis Jalan: Horizontal Bar Chart (like Kondisi Ekonomi)
 const JENIS_JALAN_META = [
     { label: 'Aspal', color: '#64748b' },
     { label: 'Paving', color: '#6366f1' },
@@ -805,7 +791,6 @@ export function JalanJenisChart() {
     )
 }
 
-// Kondisi Kerusakan: Pie Chart (like Kelompok Usia Warga Sakit)
 const KONDISI_KERUSAKAN_META = [
     { value: 'ringan', shortLabel: 'Ringan', label: 'Ringan (Permukaan mulai rusak)', color: '#22c55e' },
     { value: 'sedang', shortLabel: 'Sedang', label: 'Sedang (Mulai sulit dilalui kendaraan)', color: '#f97316' },
@@ -1019,7 +1004,6 @@ export function JalanCategorySection({ title, description, icon, color, count }:
 
 // ─── Penerangan Jalan Category Section ─────────────────────────────────────────
 
-// 1. Status Penerangan (Progress Bars, like Penerima Bantuan)
 const STATUS_PENERANGAN_DATA = [
     { name: 'Sudah ada lampu', value: 85, color: '#10b981' }, // Emerald
     { name: 'Belum ada lampu', value: 55, color: '#f43f5e' }, // Rose
@@ -1104,7 +1088,6 @@ export function PeneranganStatusChart() {
     )
 }
 
-// 2. Jumlah Titik Terdampak (Vertical Bar Chart like Jenis Jalan)
 const TITIK_TERDAMPAK_DATA = [
     { name: '1 Titik', value: 65 },
     { name: '2-3 Titik', value: 45 },
@@ -1191,7 +1174,6 @@ export function PeneranganTitikTerdampakChart() {
     )
 }
 
-// 3. Kondisi Lampu & Kebutuhan Penerangan (Card breakdown)
 const KONDISI_LAMPU_DATA = [
     { name: 'Mati Total', value: 38, color: '#ef4444' },
     { name: 'Berkedip / Tidak Stabil', value: 22, color: '#f97316' },
@@ -1367,7 +1349,6 @@ export function PeneranganKebutuhanPerJenis() {
     )
 }
 
-// 4. Kondisi Lampu per Jumlah Titik Terdampak (Full width, Penyebab Meninggal style)
 const KONDISI_PER_TITIK_DATA = [
     {
         name: 'Mati Total',

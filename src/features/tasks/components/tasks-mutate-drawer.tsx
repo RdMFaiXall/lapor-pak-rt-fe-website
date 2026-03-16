@@ -57,7 +57,6 @@ export function TasksMutateDrawer({
   })
 
   const onSubmit = (data: TaskForm) => {
-    // do something with the form data
     onOpenChange(false)
     form.reset()
     showSubmittedData(data)

@@ -27,7 +27,6 @@ const USIA_COLORS: Record<string, string> = {
 const DEFAULT_COLOR = '#6366f1'
 
 const ALASAN_COLORS = ['#1e40af', '#1d4ed8', '#2563eb', '#3b82f6', '#60a5fa', '#0891b2']
-// const DOKUMEN_COLORS = ['#dc2626', '#b91c1c', '#991b1b', '#7f1d1d']
 
 // ─── Chart 1: Alasan Tidak Sekolah (horizontal bar) ───────────────────────────
 
@@ -207,12 +206,10 @@ export function KendalaDokumenChart() {
 
     return (
         <Card className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col h-full gap-5">
-            {/* Title */}
             <p className="text-md font-bold text-black dark:text-white mb-1">
                 Kelengkapan Dokumen Pendaftaran
             </p>
 
-            {/* Horizontal stacked bar */}
             <div className="flex-1 flex flex-col justify-center gap-3">
                 {/* Total label */}
                 <div className="flex items-baseline gap-1.5">
@@ -259,7 +256,6 @@ export function KendalaDokumenChart() {
 // ─── Chart 4: Alasan per Kategori Usia (Grid Toggled) ─────────────────────────
 
 export function AlasanPerUsiaChart() {
-    // Build Data based on reasons (Alasan)
     const allUsia = [...new Set(anakTidakSekolahData.map((w: any) => w.kategoriUsia))]
 
     const mapAlasan: Record<string, Record<string, number>> = {}

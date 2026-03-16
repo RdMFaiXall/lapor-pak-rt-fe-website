@@ -76,7 +76,6 @@ export function GangguanStatusChart() {
 }
 
 // ─── GangguanResolution dihapus sesuai permintaan ─────────────────────────────
-// (Tingkat Penyelesaian tidak ditampilkan lagi)
 
 // ─── Tanggal Kejadian (Line Chart) ───────────────────────────────────────────
 

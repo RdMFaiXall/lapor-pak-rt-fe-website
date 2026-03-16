@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-// We can reuse the same schema structure as Keamanan for consistency across features
 export const lingkunganSchema = z.object({
     id: z.string(),
     title: z.string(),

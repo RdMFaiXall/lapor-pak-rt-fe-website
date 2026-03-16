@@ -1,5 +1,3 @@
-// --- Tipe Data Sesuai CSV "Bencana" ---
-// Mengacu pada CSV Isu Kebencanaan (Row 106-115)
 export type DisasterReport = {
     id: string
     pelapor: string // Siapa yang melapor
@@ -8,7 +6,6 @@ export type DisasterReport = {
     lokasi: string // Alamat / RT/RW
     waktu_kejadian: string
 
-    // [CSV Source 107] Dampak Korban
     dampak_korban: {
         meninggal: number
         luka_berat: number
@@ -16,13 +13,10 @@ export type DisasterReport = {
         mengungsi: number
     }
 
-    // [CSV Source 108] Dampak Kerusakan
     dampak_kerusakan: string[] // Rumah Rusak, Fasilitas Umum, dll
 
-    // [CSV Source 109] Kebutuhan Mendesak
     kebutuhan_mendesak: string[] // Makanan, Pakaian, Obat, Tenda
 
-    // [CSV Source 110] Status Penanganan
     status_penanganan: 'Darurat' | 'Butuh Bantuan' | 'Dalam Penanganan' | 'Selesai'
 
     foto_kejadian?: string[]
@@ -30,8 +24,6 @@ export type DisasterReport = {
     keterangan_tambahan: string
 }
 
-// --- Dummy Data ---
-// Note: Total length = 450 items, exact 60% with victims / 40% without.
 export const mockData: DisasterReport[] = [
     {
         "id": "BC-1816",

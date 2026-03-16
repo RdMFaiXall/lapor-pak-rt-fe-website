@@ -18,7 +18,6 @@ import { format, parseISO } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { Badge } from '@/components/ui/badge'
 
-// Unified data type for table
 interface SocialIssue {
     id: string
     type: 'Sakit' | 'Meninggal' | 'Miskin' | 'Lansia' | 'Putus Sekolah'
@@ -28,7 +27,6 @@ interface SocialIssue {
     date: string // ISO string
 }
 
-// Combine and map data
 const allIssues: SocialIssue[] = [
     ...wargaSakitData.map(d => ({
         id: String(d.id),
@@ -72,7 +70,6 @@ const allIssues: SocialIssue[] = [
     })),
 ]
 
-// Sort by date descending and take top 10
 const sortedIssues = allIssues.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10)
 
 const getTypeColor = (type: SocialIssue['type']) => {

@@ -27,7 +27,6 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { NewChat } from './components/new-chat'
 import { type ChatUser, type Convo } from './data/chat-types'
-// Fake Data
 import { conversations } from './data/convo.json'
 
 export function Chats() {
@@ -39,7 +38,6 @@ export function Chats() {
   const [createConversationDialogOpened, setCreateConversationDialog] =
     useState(false)
 
-  // Filtered data based on the search query
   const filteredChatList = conversations.filter(({ fullName }) =>
     fullName.toLowerCase().includes(search.trim().toLowerCase())
   )
@@ -48,12 +46,10 @@ export function Chats() {
     (acc: Record<string, Convo[]>, obj) => {
       const key = format(obj.timestamp, 'd MMM, yyyy')
 
-      // Create an array for the category if it doesn't exist
       if (!acc[key]) {
         acc[key] = []
       }
 
-      // Push the current object to the array
       acc[key].push(obj)
 
       return acc

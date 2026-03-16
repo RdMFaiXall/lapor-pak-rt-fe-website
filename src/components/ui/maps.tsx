@@ -33,7 +33,6 @@ const createCustomIcon = (color: string) => {
 };
 
 const createAssetIcon = (type: string) => {
-    // Color based on asset type
     const typeColors: Record<string, string> = {
         water: '#3b82f6', // blue
         air: '#0ea5e9',   // sky
@@ -69,7 +68,6 @@ function MapViewController({ items, viewMode }: { items: any[], viewMode: string
                 duration: 1.5
             });
         } else {
-            // Default to Indonesia center
             map.flyTo([-2.5489, 118.0149], 6, { duration: 1.5 });
         }
     }, [items, map, viewMode]);

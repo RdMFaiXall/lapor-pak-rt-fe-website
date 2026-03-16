@@ -10,9 +10,6 @@ interface JenisBantuanProps {
     data: { name: string; value: number }[];
 }
 
-// All possible bantuan types matching the mobile form
-// label   = short name shown in the card
-// tooltip = kepanjangan, shown on hover (null = no tooltip)
 const ALL_BANTUAN = [
     { label: 'BLT', tooltip: 'Bantuan Langsung Tunai', abbr: 'BLT', color: '#6366f1', bg: '#ede9fe', aliases: ['BLT'] },
     { label: 'PKH', tooltip: 'Program Keluarga Harapan', abbr: 'PKH', color: '#8b5cf6', bg: '#f3e8ff', aliases: ['PKH'] },

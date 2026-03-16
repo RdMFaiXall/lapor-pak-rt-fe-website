@@ -14,12 +14,10 @@ import {
 } from 'recharts'
 import { mockData } from '../constants'
 
-// Helpers
 const pengangguranData = mockData.filter(d => d.kategori_isu_ekonomi === 'Warga tidak punya pekerjaan')
 const hutangData = mockData.filter(d => d.kategori_isu_ekonomi === 'Warga berhutang')
 const bansosData = mockData.filter(d => d.kategori_isu_ekonomi === 'Calon penerima bansos')
 
-// --- TIDAK PUNYA PEKERJAAN CHARTS ---
 
 export function KategoriUsiaChart() {
     const ageGroups = pengangguranData.reduce((acc, curr) => {
@@ -34,7 +32,6 @@ export function KategoriUsiaChart() {
         return acc
     }, {} as Record<string, number>)
 
-    // Use static representative data for the defined categories
     const total = pengangguranData.length
     const COLORS = ['#06b6d4', '#10b981', '#f59e0b']
 
@@ -265,7 +262,6 @@ export function JenjangPendidikanChart() {
     )
 }
 
-// --- ALASAN BELUM BEKERJA CHART (horizontal bar - KondisiTempatTinggal style) ---
 
 export function AlasanBelumBekerjaChart() {
     const total = pengangguranData.length
@@ -356,7 +352,6 @@ export function AlasanBelumBekerjaChart() {
     )
 }
 
-// --- WARGA BERHUTANG CHARTS ---
 
 export function JenisHutangChart() {
     const total = hutangData.length
@@ -721,7 +716,6 @@ export function ButuhMediasiChart() {
     )
 }
 
-// --- CALON PENERIMA BANSOS CHARTS ---
 
 export function PekerjaanKepalaKeluargaChart() {
     const total = bansosData.length

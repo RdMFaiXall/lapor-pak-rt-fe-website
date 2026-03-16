@@ -19,7 +19,6 @@ export function SosialDataTable() {
     const [activeTab, setActiveTab] = useState<TabType>('all')
     const [searchQuery, setSearchQuery] = useState('')
 
-    // Combine all data with category
     const allData = [
         ...wargaSakitData.map(d => ({
             ...d,
@@ -83,7 +82,6 @@ export function SosialDataTable() {
         })),
     ]
 
-    // Filter data
     const filteredData = allData
         .filter(item => activeTab === 'all' || item.category === activeTab)
         .filter(item =>

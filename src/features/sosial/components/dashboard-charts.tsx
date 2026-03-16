@@ -104,7 +104,6 @@ export function EconomicConditionChart() {
     )
 }
 
-// Total Penerima Bantuan - Progress Bars
 export function SocialAidChart() {
     const bantuanCount = wargaMiskinData.reduce((acc, curr) => {
         if (curr.jenisBantuan && curr.jenisBantuan !== '-') {
@@ -251,7 +250,6 @@ export function WargaSakitByDiseaseChart() {
     )
 }
 
-// Total Warga Meninggal - Card Stats with Better Layout
 export function WargaMeninggalByCauseChart() {
     const causeCount = wargaMeninggalData.reduce((acc, curr) => {
         acc[curr.penyebab] = (acc[curr.penyebab] || 0) + 1
@@ -330,7 +328,6 @@ export function WargaMeninggalByCauseChart() {
     )
 }
 
-// Total Lansia Terlantar - Simple Clear List with Vibrant Colors
 export function LansiaTerlantarByConditionChart() {
     const conditionCount = lansiaTerlantarData.reduce((acc, curr) => {
         acc[curr.kondisi] = (acc[curr.kondisi] || 0) + 1
@@ -395,7 +392,6 @@ export function LansiaTerlantarByConditionChart() {
     )
 }
 
-// Total Anak Tidak Sekolah by Level - Card Layout
 export function AnakPutusSekolahByLevelChart() {
     const levelCount = anakPutusSekolahData.reduce((acc, curr) => {
         acc[curr.jenjang] = (acc[curr.jenjang] || 0) + 1
@@ -460,7 +456,6 @@ export function AnakPutusSekolahByLevelChart() {
     )
 }
 
-// Total Penyebab Anak Tidak Sekolah - Vertical Bar
 export function AnakPutusSekolahByCauseChart() {
     const causeCount = anakPutusSekolahData.reduce((acc, curr) => {
         acc[curr.penyebab] = (acc[curr.penyebab] || 0) + 1

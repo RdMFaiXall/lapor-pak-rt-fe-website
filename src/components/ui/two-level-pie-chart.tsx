@@ -28,7 +28,6 @@ const DEFAULT_DATA_02 = [
     { name: 'D2', value: 50 },
 ];
 
-// #endregion
 export default function TwoLevelPieChart({
     isAnimationActive = true,
     data01 = DEFAULT_DATA_01,

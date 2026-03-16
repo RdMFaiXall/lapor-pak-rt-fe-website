@@ -111,7 +111,6 @@ function Unauthorized() {
   const [cancelled, setCancelled] = useState(false)
   const [countdown, setCountdown] = useState(COUNTDOWN)
 
-  // Set and run the countdown conditionally
   useEffect(() => {
     if (cancelled || opened) return
     const interval = setInterval(() => {
@@ -120,7 +119,6 @@ function Unauthorized() {
     return () => clearInterval(interval)
   }, [cancelled, opened])
 
-  // Navigate to sign-in page when countdown hits 0
   useEffect(() => {
     if (countdown > 0) return
     navigate({ to: '/clerk/sign-in' })

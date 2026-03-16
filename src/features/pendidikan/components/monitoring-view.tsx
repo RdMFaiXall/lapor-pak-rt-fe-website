@@ -11,7 +11,6 @@ import { PieChart as PieChartIcon, BarChart3 } from 'lucide-react'
 const COLORS = ['#2563eb', '#db2777', '#7c3aed', '#059669', '#d97706', '#0891b2']
 
 export function MonitoringView() {
-    // Data untuk Grafik
     const totalReports = mockData.length
     const chartData = Object.values(
         mockData.reduce((acc, curr) => {
@@ -34,7 +33,6 @@ export function MonitoringView() {
             }
         })
 
-    // Dynamic height for Bar Chart: at least 200px, or 60px per item
     const barChartHeight = Math.max(chartData.length * 60, 200)
 
     const CustomTooltip = ({ active, payload, label }: any) => {

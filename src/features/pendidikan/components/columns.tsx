@@ -117,45 +117,6 @@ export const columns: ColumnDef<EducationReport>[] = [
             return value.includes(row.getValue(id))
         },
     },
-    // Hidden columns to prevent horizontal scroll (available in detail modal)
-    // {
-    //     accessorKey: 'jenjang_terakhir',
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='Jenjang' />
-    //     ),
-    //     cell: ({ row }) => (
-    //         <div className='w-[80px]'>{row.getValue('jenjang_terakhir')}</div>
-    //     ),
-    //     filterFn: (row, id, value) => {
-    //         return value.includes(row.getValue(id))
-    //     },
-    // },
-    // {
-    //     accessorKey: 'nama_sekolah',
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='Sekolah' />
-    //     ),
-    //     cell: ({ row }) => (
-    //         <div className='w-[150px] truncate' title={row.getValue('nama_sekolah')}>
-    //             {row.getValue('nama_sekolah')}
-    //         </div>
-    //     ),
-    // },
-    // {
-    //     accessorKey: 'detail_info',
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='Detail & Keterangan' />
-    //     ),
-    //     cell: ({ row }) => {
-    //         return (
-    //             <div className='flex space-x-2'>
-    //                 <span className='max-w-[300px] truncate' title={row.getValue('detail_info')}>
-    //                     {row.getValue('detail_info')}
-    //                 </span>
-    //             </div>
-    //         )
-    //     },
-    // },
     {
         accessorKey: 'rekomendasi_rt',
         header: ({ column }) => (

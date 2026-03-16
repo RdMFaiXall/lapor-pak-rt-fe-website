@@ -224,37 +224,6 @@ export const columns: ColumnDef<HealthReport>[] = [
             )
         },
     },
-    // {
-    //     accessorKey: 'status_kesehatan',
-    //     header: ({ column }) => (
-    //         <DataTableColumnHeader column={column} title='Status' />
-    //     ),
-    //     cell: ({ row }) => {
-    //         const status = row.getValue('status_kesehatan') as string
-    //         let badgeClass = ''
-
-    //         switch (status) {
-    //             case 'Kritis':
-    //                 badgeClass = 'bg-red-600 hover:bg-red-700'
-    //                 break
-    //             case 'Dalam Pemantauan':
-    //                 badgeClass = 'bg-yellow-500 hover:bg-yellow-600'
-    //                 break
-    //             case 'Stabil':
-    //                 badgeClass = 'bg-green-600 hover:bg-green-700'
-    //                 break
-    //             default:
-    //                 badgeClass = 'bg-gray-500'
-    //         }
-
-    //         return (
-    //             <Badge className={badgeClass}>{status}</Badge>
-    //         )
-    //     },
-    //     filterFn: (row, id, value) => {
-    //         return value.includes(row.getValue(id))
-    //     },
-    // },
     {
         id: 'actions',
         cell: ({ row }) => <ActionCell report={row.original} />,

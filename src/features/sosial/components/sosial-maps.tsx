@@ -16,7 +16,6 @@ import { MapPin, Users, Calendar } from 'lucide-react'
 export function CleanSosialMap() {
     const [selectedIncident, setSelectedIncident] = useState<any>(null)
 
-    // Combine all data for map
     const mapData = [
         ...wargaSakitData.map(d => ({
             id: `sakit-${d.id}`,

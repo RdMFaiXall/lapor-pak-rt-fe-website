@@ -376,7 +376,6 @@ export function DemografiIsu() {
     const [activePanel, setActivePanel] = useState<string | null>(null);
     const [hoveredAction, setHoveredAction] = useState<number | null>(null);
 
-    // computed stats
     const menularCount = wargaSakitData.filter(w => w.kategori === "Menular").length;
     const sakitMenularPct = Math.round((menularCount / wargaSakitData.length) * 100);
     const belumBantuan = wargaMiskinData.filter(w => w.statusBantuan !== "Penerima").length;

@@ -14,7 +14,6 @@ function getAgeGroup(umur: number): string {
     return 'Lansia'
 }
 
-// One row per jenis penyakit; columns = age group counts
 function buildChartData() {
     const map: Record<string, Record<string, number>> = {}
 

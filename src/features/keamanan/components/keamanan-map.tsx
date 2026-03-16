@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import MapComponent from '@/components/ui/maps';
 
-// Mock Data
 const mockIncidents = [
     {
         id: 1,
@@ -48,9 +47,7 @@ const mockCategories = [
 
 export function KeamananMap() {
     const [selectedIncident, setSelectedIncident] = useState<any>(null);
-    // Use the state to avoid lint errors
     console.log(selectedIncident);
-    // Use the state to avoid lint errors
     console.log(selectedIncident);
 
     const handleIncidentSelect = (incident: any) => {

@@ -14,12 +14,10 @@ import {
 import { Card } from '@/components/ui/card'
 import { mockData } from '../constants'
 
-// Helpers
 const dbdData = mockData.filter(d => d.isu_kesehatan === 'Wabah DBD')
 const stuntingData = mockData.filter(d => d.isu_kesehatan === 'Stunting / Gizi Buruk')
 
 
-// --- WABAH DBD CHARTS ---
 
 export function LokasiPerawatanChart() {
     const lokasiCount = dbdData.reduce((acc, curr) => {
@@ -284,7 +282,6 @@ export function PerkembanganPerLokasiChart() {
 }
 
 
-// --- STUNTING CHARTS ---
 
 const INDIKASI_PERTUMBUHAN = [
     { label: 'Tubuh Anak Terlihat Pendek', abbr: 'PDK', color: '#fba11b', bg: '#fef3c7' },
@@ -365,7 +362,6 @@ export function IndikasiPertumbuhanChart() {
     );
 }
 
-// --- IBU HAMIL BERISIKO CHARTS ---
 
 const JENIS_RISIKO = [
     { label: 'Usia < 20 Tahun', abbr: '<20', color: '#f59e0b', bg: '#fef3c7' },
@@ -382,7 +378,6 @@ const TINGKAT_RISIKO = [
     { key: 'perlu_penanganan_segera', label: 'Perlu Penanganan Segera', color: '#ef4444' },
 ]
 
-// Static data: each jenis risiko broken down by tingkat risiko
 const RISIKO_DATA: Record<string, Record<string, number>> = {
     "Usia < 20 Tahun": {
         "perlu_pemantauan": 3,
@@ -487,9 +482,7 @@ export function TingkatRisikoPerJenisRisikoChart() {
     )
 }
 
-// --- BPJS CHARTS ---
 
-// Static data sesuai form
 const KEPEMILIKAN_DATA = [
     {
         "name": "Tidak Memiliki",

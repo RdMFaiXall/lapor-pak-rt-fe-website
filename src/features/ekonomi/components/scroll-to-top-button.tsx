@@ -22,20 +22,14 @@ export default function ScrollToTopButton() {
             onClick={scrollToTop}
             aria-label="Scroll ke atas"
             className={cn(
-                // base layout
                 'fixed bottom-8 right-8 z-[99]', // high z-index
                 'flex items-center justify-center',
                 'w-12 h-12 rounded-2xl',
-                // gradient background - using amber/orange for Ekonomi
                 'bg-linear-to-br from-amber-400 via-orange-500 to-red-500',
-                // glow / shadow
                 'shadow-[0_4px_24px_rgba(249,115,22,0.55)]',
-                // icon color
                 'text-white',
-                // interactions
                 'hover:scale-110 hover:shadow-[0_6px_32px_rgba(249,115,22,0.7)]',
                 'active:scale-95',
-                // show/hide animation
                 'transition-all duration-300 ease-out',
                 visible
                     ? 'opacity-100 translate-y-0 pointer-events-auto'

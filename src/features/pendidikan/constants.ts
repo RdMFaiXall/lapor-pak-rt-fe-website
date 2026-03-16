@@ -1,14 +1,10 @@
-// --- Tipe Data Sesuai CSV "Pendidikan" ---
-// Mengacu pada CSV Isu Pendidikan
 export type EducationReport = {
     id: string
     nama_warga: string
     pelapor: string
     rt: string // RT asal pelapor
-    // [CSV Source 28] Subjek: isu_pendidikan
     isu_pendidikan: 'Anak Tidak Sekolah' | 'Putus Sekolah' | 'Remaja Menganggur' | 'Mapping Potensi'
 
-    // [CSV Source 29-35] Detail (Gabungan logic dinamis)
     jenjang_terakhir: string
     nama_sekolah: string // Nama sekolah terakhir/saat ini
     alasan_putus?: string[] // Jika Putus Sekolah / ATS
@@ -18,12 +14,10 @@ export type EducationReport = {
     catatan_khusus: string // Solusi text area
     detail_info: string // Summary string for table view
 
-    // [CSV Source 36] Solusi: rekomendasi_rt
     rekomendasi_rt: string[]
     tanggal_laporan: string
 }
 
-// --- Dummy Data ---
 export const mockData: EducationReport[] = [
     {
         id: '1',
